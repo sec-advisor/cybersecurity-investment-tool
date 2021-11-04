@@ -1,0 +1,60 @@
+.profile {
+  height: calc(100% - 56px);
+
+  .container {
+    height: 100%;
+    width: 100%;
+    display: flex;
+
+    .left-container {
+      display: flex;
+      flex-direction: column;
+      width: 60%;
+      height: 70%;
+    }
+
+    .right-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      height: 80%;
+
+      .right-container-inner {
+        height: 45%;
+        width: 100%;
+        border-radius: 20% 0 0 20%;
+        border: 1px solid transparent;
+        flex-direction: column;
+
+        form {
+          width: 80%;
+        }
+
+        .form {
+          display: flex;
+          justify-content: row;
+          width: 100%;
+
+          label {
+            margin-top: 10px;
+          }
+
+          .left-form {
+            margin-right: 20px;
+            width: 100%;
+          }
+
+          .right-form {
+            width: 100%;
+
+            button {
+              margin-top: 20px;
+              float: right;
+            }
+          }
+        }
+      }
+    }
+  }
+}

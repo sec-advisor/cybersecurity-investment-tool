@@ -1,9 +1,12 @@
-<div style="text-align: center">
-  <h1>Welcome to it-security-investment-tool!</h1>
-  <img
-    width="450"
-    src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-logo.png"
-    alt="Nx - Smart, Extensible Build Framework"
-  />
+<!-- <nav class="navbar navbar-expand-lg navbar-dark bg-secondary">
+  <a class="navbar-brand" href="#">IT Cybersecurity Investments Tool </a>
+</nav> -->
+
+
+<div class="app-wrapper">
+  <app-side-bar></app-side-bar>
+  <div class="content-wrapper">
+    <router-outlet></router-outlet>
+    <!-- <app-segment-presenter></app-segment-presenter> -->
+  </div>
 </div>
-<div>Message: {{ hello$ | async | json }}</div>

@@ -1,0 +1,24 @@
+<div class="navbar d-flex flex-column flex-shrink-0 p-3 text-white bg-dark" style="width: 330px;">
+  <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+    <i class="bi bi-shield-check header-icon"></i>
+    <span class="fs-4">Cybersecurity Investment Tool</span>
+  </a>
+  <hr>
+  <ul class="nav nav-pills flex-column mb-auto">
+    <ng-container *ngFor="let page of routingService.pages">
+      <li class="pointer-cursor" (click)="routingService.browseTo(page.path)">
+        <a class="nav-link text-white" [class.active]="page.active">
+          <i class="sidebar-icons bi" [ngClass]="page.icon"></i>
+          {{ page.name }}
+        </a>
+      </li>
+    </ng-container>
+  </ul>
+  <hr>
+  <div class="sidebar-footer">
+    <a class="sidebar-icons nav-link text-white">
+      <i class="bi bi-building"></i>
+      Company
+    </a>
+  </div>
+</div>

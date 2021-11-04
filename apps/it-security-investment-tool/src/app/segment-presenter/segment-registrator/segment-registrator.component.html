@@ -1,0 +1,83 @@
+<div>
+  <button type="button" class="btn btn-primary segment-add-button" (click)="openSegmentDialog(modal)">
+    Add segment
+  </button>
+</div>
+
+<ng-template #modal let-modal>
+  <ng-container *ngIf="stream$ | async as stream">
+    <div class="modal-header">
+      <h4 class="modal-title" id="segment-registrator">Add segment</h4>
+      <button type="button" class="btn-close" aria-label="Close" tabindex="-1" (click)="modal.dismiss('Cross click')">
+      </button>
+    </div>
+    <div class="modal-body">
+      <form [formGroup]="stream.form">
+        <div class="form-group">
+          <label for="segment-name">Segment Name:</label>
+          <input id="segment-name" class="form-control" type="text" formControlName="name">
+          <label class="margin-top" for="type-selection">Segment Type:</label>
+          <select id="type-selection" class="form-select" aria-label="Type selection" formControlName="type">
+            <ng-container *ngFor="let type of stream.typeOptions">
+              <option [value]="type.id">{{ type.description }}</option>
+            </ng-container>
+          </select>
+
+          <!-- Toggle valuation support -->
+          <div *ngIf="isSegmentTypeSelected(stream.form)" class=" toggle-wrapper margin-top">
+            <label>Enable value estimation:</label>
+
+            <div class="radio-buttons">
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" id="radio-no" [value]="!supportValueEstimation"
+                  [checked]="!supportValueEstimation" (click)="toggleEstimationValue()">
+                <label class="form-check-label" for="radio-no">No</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" id="radio-yes" [checked]="supportValueEstimation"
+                  (click)="toggleEstimationValue()">
+                <label class="form-check-label" for="radio-yes">Yes</label>
+              </div>
+            </div>
+          </div>
+
+          <!-- Value Estimation -->
+          <fieldset *ngIf="isSegmentTypeSelected(stream.form) && selectedSegment && supportValueEstimation"
+            class="form-group margin-top">
+            <div class="row">
+              <legend class="col-form-label col-sm-2 pt-0">Value Estimation:</legend>
+              <div class="col-sm-10">
+                <div class="row">
+                  <ng-container *ngFor="let input of selectedSegment.valueEstimation.inputs, let i=index">
+                    <div class="col-md-6 left-style" *ngIf="i%2 === 0">
+                      <label class="small-text">{{ input.description }}</label>
+                      <input class="form-control small-input" [type]="input.type" [formControlName]="input.key">
+                    </div>
+                    <div class="col-md-6 right-style" *ngIf="i%2 !== 0">
+                      <label class="small-text">{{ input.description }}</label>
+                      <input class="form-control small-input" [type]="input.type" [formControlName]="input.key">
+                    </div>
+                  </ng-container>
+                </div>
+                <button type="button" class="btn btn-secondary btn-sm calculate-button"
+                  (click)="calculateValue(stream)">Calculate Value</button>
+              </div>
+            </div>
+          </fieldset>
+
+          <label *ngIf="isSegmentTypeSelected(stream.form)" class="margin-top" for="potential-loss">
+            Value:</label>
+          <input *ngIf="isSegmentTypeSelected(stream.form)" id="potential-loss" class="form-control" type="number"
+            formControlName="value">
+          <label *ngIf="isSegmentTypeSelected(stream.form)" class="margin-top"
+            for="vulnerability">Vulnerability:</label>
+          <input *ngIf="isSegmentTypeSelected(stream.form)" id="vulnerability" class="form-control" type="number"
+            min="0" max="1" step="0.1" formControlName="vulnerability">
+        </div>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-outline-dark" (click)="modal.close(stream.form)">Save</button>
+    </div>
+  </ng-container>
+</ng-template>

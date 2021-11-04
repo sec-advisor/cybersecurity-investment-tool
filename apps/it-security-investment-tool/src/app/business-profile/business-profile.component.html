@@ -1,0 +1,42 @@
+<app-header [text]="'Business Profile'"></app-header>
+
+<div class="bg-light profile">
+  <div class="bg-light container">
+    <div class="left-container center-content">
+      <i class="bi very-big-icon bi-building"></i>
+      <h3>Welcome</h3>
+      <h6>Please enter your company information.</h6>
+    </div>
+    <div class="right-container">
+      <div class="right-container-inner bg-secondary text-white center-content">
+        <h3>Company Information</h3>
+        <form [formGroup]="form">
+          <div class="form">
+            <div class="left-form">
+              <label for="company-name">Company Name:</label>
+              <input id="company-name" class="form-control" type="text" formControlName="company">
+              <label for="revenue">Revenue:</label>
+              <input id="revenue" class="form-control" type="number" formControlName="revenue">
+
+              <!-- <input type="text" class="form-control" id="inlineFormInputGroupUsername2" placeholder="Company Name">
+              <input type="text" class="form-control" id="inlineFormInputGroupUsername2" placeholder="Region"> -->
+            </div>
+            <div class="right-form">
+              <label for="employees">Number of Employees:</label>
+              <input id="employees" class="form-control" type="number" formControlName="employees">
+              <label for="region">Region:</label>
+
+              <select id="region-selection" class="form-select" aria-label="Region selection" formControlName="region">
+                <ng-container *ngFor="let region of regions">
+                  <option [value]="region.key">{{ region.value }}</option>
+                </ng-container>
+              </select>
+
+              <button type="button" class="btn btn-primary" [disabled]="form.invalid" (click)="save()">Save</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

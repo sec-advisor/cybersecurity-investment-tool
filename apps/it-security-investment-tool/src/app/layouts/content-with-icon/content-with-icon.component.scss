@@ -1,0 +1,19 @@
+:host {
+  width: 100%;
+
+  .wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+
+    .big-icon {
+      font-size: 220px;
+    }
+
+    section {
+      width: 100%;
+    }
+  }
+}

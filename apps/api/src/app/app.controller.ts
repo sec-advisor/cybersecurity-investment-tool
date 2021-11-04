@@ -1,12 +1,11 @@
+import { Message } from '@app/api-interfaces';
 import { Controller, Get } from '@nestjs/common';
-
-import { Message } from '@it/api-interfaces';
 
 import { AppService } from './app.service';
 
 @Controller()
 export class AppController {
-  constructor(private readonly appService: AppService) {}
+  constructor(private readonly appService: AppService) { }
 
   @Get('hello')
   getData(): Message {

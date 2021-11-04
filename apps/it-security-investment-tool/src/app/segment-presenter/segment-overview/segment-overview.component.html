@@ -1,0 +1,32 @@
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">Name</th>
+      <th scope="col">Value</th>
+      <th scope="col">Vulnerability</th>
+      <th scope="col">Suggested Investment Amount</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let segment of segmentStoreService.getSegments(); index as i">
+      <td scope="row">{{ segment.name }}</td>
+      <td>
+        {{ segment.value }}
+      </td>
+      <td>{{ segment.vulnerability }}</td>
+      <td>{{ segment.suggestedInvestment }}</td>
+      <td>
+        <button type="button" class="btn-close" aria-label="Delete"
+          (click)="segmentStoreService.deleteSegment(segment)">
+        </button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<div *ngIf="segmentStoreService.getSegments().length > 0">
+  <button type="button" class="btn btn-primary segment-add-button calculate-button">
+    Calculate Investments
+  </button>
+</div>
