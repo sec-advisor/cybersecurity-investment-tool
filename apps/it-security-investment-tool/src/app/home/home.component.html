@@ -5,29 +5,28 @@
         <h1 class="display-4">Cybersecuirty Investment Tool</h1>
         <p class="lead">This tool helps companies to investment in cybersecurity.</p>
         <hr class="my-4">
-        <p>Before you can start, please create a business profile.</p>
-        <p class="lead">
-          <a class="btn btn-primary btn-lg" role="button" (click)="routingService.browseTo('/business-profile')">Create
-            profile</a>
-        </p>
+
+        <ng-container *ngIf="(stream$ | async) as stream; else loading">
+          <ng-container *ngIf="stream.profile">
+            <h2>Hi, {{ stream.profile?.companyName }}</h2>
+            <p>Please continue with finding the best cybersecurity solutions for your company.</p>
+          </ng-container>
+          <ng-container *ngIf="!stream.profile">
+            <p>Before you can start, please create a business profile.</p>
+            <p class="lead">
+              <a class="btn btn-primary btn-lg" role="button"
+                (click)="routingService.browseTo('/business-profile')">Create
+                profile</a>
+            </p>
+          </ng-container>
+        </ng-container>
+
+        <ng-template #loading>
+          <div class="spinner-border text-light loading-spinner" role="status">
+            <span class="sr-only"></span>
+          </div>
+        </ng-template>
       </app-content-with-icon>
-      <!-- <section class="text-center center-content">
-        <div class="jumbotron">
-          <h1 class="display-4">Cybersecuirty Investment Tool</h1>
-          <p class="lead">This tool helps companies to investment in cybersecurity.</p>
-          <hr class="my-4">
-          <p>Before you can start, please create a business profile.</p>
-          <p class="lead">
-            <a class="btn btn-primary btn-lg" role="button"
-              (click)="routingService.browseTo('/business-profile')">Create profile</a>
-          </p>
-        </div>
-      </section>
-      <section class="text-center center-content">
-        <div class="jumbotron">
-          <i class="bi bi-shield-check big-icon"></i>
-        </div>
-      </section> -->
     </div>
     <div class="buttom-wrapper center-content bg-light">
       <section class="text-center container">
@@ -40,7 +39,7 @@
           <div class="text-secondary">
             <i class="bi bi-shield medium-icon"></i>
             <h4>Protection recommendation</h4>
-            <p>Get suitable IT security solutions for the company</p>
+            <p>Get suitable IT security solutions for your company</p>
           </div>
           <div class="text-secondary">
             <i class="bi bi-building medium-icon"></i>

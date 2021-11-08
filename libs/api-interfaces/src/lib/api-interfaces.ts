@@ -24,6 +24,7 @@ export interface ValueEstimation {
 }
 
 export interface BusinessProfile {
+  id?: string;
   companyName: string;
   revenue: number;
   numberOfEmployees: number;

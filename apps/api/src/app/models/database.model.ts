@@ -17,4 +17,11 @@ export const SegmentDefinitionSchema = new mongoose.Schema(
   }
 )
 
-
+export const BusinessProfileSchema = new mongoose.Schema(
+  {
+    companyName: String,
+    revenue: Number,
+    numberOfEmployees: Number,
+    region: String,
+  }
+)

@@ -5,7 +5,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { merge, Observable, of } from 'rxjs';
 import { catchError, map, switchMap, tap } from 'rxjs/operators';
 
-import { SegmentDataService } from '../../services/segment-data.service';
+import { SegmentDataService } from '../../services/backend/segment-data.service';
 import { SegmentRegistrationStream as SegmentRegistrationViewModel } from '../models/segment-registration-view.model';
 import { SegmentStoreService } from '../services/segment-store.service';
 

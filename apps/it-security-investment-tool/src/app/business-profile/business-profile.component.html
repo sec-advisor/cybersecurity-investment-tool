@@ -10,32 +10,51 @@
     <div class="right-container">
       <div class="right-container-inner bg-secondary text-white center-content">
         <h3>Company Information</h3>
-        <form [formGroup]="form">
-          <div class="form">
-            <div class="left-form">
-              <label for="company-name">Company Name:</label>
-              <input id="company-name" class="form-control" type="text" formControlName="company">
-              <label for="revenue">Revenue:</label>
-              <input id="revenue" class="form-control" type="number" formControlName="revenue">
+        <ng-container *ngIf="stream$ | async as stream">
+          <form [formGroup]="stream.form">
+            <div class="form">
+              <div class="left-form">
+                <label for="company-name">Company Name:</label>
+                <input id="company-name" class="form-control" type="text" formControlName="company">
+                <label for="revenue">Revenue:</label>
+                <input id="revenue" class="form-control" type="number" min="1" formControlName="revenue">
+              </div>
+              <div class="right-form">
+                <label for="employees">Number of Employees:</label>
+                <input id="employees" class="form-control" type="number" min="1" formControlName="employees">
+                <label for="region">Region:</label>
 
-              <!-- <input type="text" class="form-control" id="inlineFormInputGroupUsername2" placeholder="Company Name">
-              <input type="text" class="form-control" id="inlineFormInputGroupUsername2" placeholder="Region"> -->
-            </div>
-            <div class="right-form">
-              <label for="employees">Number of Employees:</label>
-              <input id="employees" class="form-control" type="number" formControlName="employees">
-              <label for="region">Region:</label>
+                <select id="region-selection" class="form-select" aria-label="Region selection"
+                  formControlName="region">
+                  <ng-container *ngFor="let region of regions">
+                    <option [value]="region.key">{{ region.value }}</option>
+                  </ng-container>
+                </select>
 
-              <select id="region-selection" class="form-select" aria-label="Region selection" formControlName="region">
-                <ng-container *ngFor="let region of regions">
-                  <option [value]="region.key">{{ region.value }}</option>
+                <ng-container *ngIf="!isEditMode; else editMode">
+                  <button *ngIf="!stream.form.disabled" type="button" class="btn btn-primary"
+                    [disabled]="stream.form.invalid" (click)="save(stream.form)">
+                    Save
+                  </button>
+                  <button *ngIf="stream.form.disabled" type="button" class="btn btn-primary"
+                    [disabled]="stream.form.invalid" (click)="edit(stream.form)">
+                    Edit
+                  </button>
                 </ng-container>
-              </select>
 
-              <button type="button" class="btn btn-primary" [disabled]="form.invalid" (click)="save()">Save</button>
+                <ng-template #editMode>
+                  <button type="button" class="btn btn-primary" [disabled]="stream.form.invalid || stream.form.pristine"
+                    (click)="update(stream.form, stream.profileId)">
+                    Update
+                  </button>
+                  <button type="button" class="btn btn-light margin-right" (click)="cancel(stream.form)">
+                    Cancel
+                  </button>
+                </ng-template>
+              </div>
             </div>
-          </div>
-        </form>
+          </form>
+        </ng-container>
       </div>
     </div>
   </div>

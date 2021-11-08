@@ -21,7 +21,7 @@
       height: 80%;
 
       .right-container-inner {
-        height: 45%;
+        height: 55%;
         width: 100%;
         border-radius: 20% 0 0 20%;
         border: 1px solid transparent;
@@ -51,6 +51,10 @@
             button {
               margin-top: 20px;
               float: right;
+
+              &.margin-right {
+                margin-right: 10px;
+              }
             }
           }
         }

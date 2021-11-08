@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { map } from 'rxjs';
 
 import { RoutingService } from '../../services/routing.service';
+import { StorageService } from '../../services/storage.service';
 
 @Component({
   selector: 'app-side-bar',
@@ -10,10 +11,10 @@ import { RoutingService } from '../../services/routing.service';
 })
 export class SideBarComponent {
 
-  constructor(
-    private router: Router,
-    public routingService: RoutingService,
-  ) {
+  readonly companyName$ = this.storageService.getBusinessProfile().pipe(map(profile => profile?.companyName));
 
-  }
+  constructor(
+    public storageService: StorageService,
+    public routingService: RoutingService,
+  ) { }
 }
