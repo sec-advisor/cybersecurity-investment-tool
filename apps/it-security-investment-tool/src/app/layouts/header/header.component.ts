@@ -7,8 +7,6 @@ import { Component, Input } from '@angular/core';
 })
 export class HeaderComponent {
 
-  constructor() { }
-
   @Input() text?: string;
 
 }

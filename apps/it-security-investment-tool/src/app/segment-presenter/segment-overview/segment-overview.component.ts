@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 import { SegmentStoreService } from '../services/segment-store.service';
 
@@ -7,11 +7,8 @@ import { SegmentStoreService } from '../services/segment-store.service';
   templateUrl: './segment-overview.component.html',
   styleUrls: ['./segment-overview.component.scss']
 })
-export class SegmentOverviewComponent implements OnInit {
+export class SegmentOverviewComponent {
 
   constructor(public segmentStoreService: SegmentStoreService) { }
-
-  ngOnInit() {
-  }
 
 }

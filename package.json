@@ -8,6 +8,7 @@
     "start": "nx serve",
     "start:api": "nx serve api",
     "start:debug": " nest start --debug --watch",
+    "lint": "nx run-many --all --target=lintyar",
     "build": "nx build",
     "test": "nx test"
   },
