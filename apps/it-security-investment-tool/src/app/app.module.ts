@@ -9,6 +9,7 @@ import { AppComponent } from './app.component';
 import { BusinessProfileModule } from './business-profile/business-profile.module';
 import { HomeModule } from './home/home.module';
 import { LayoutsModule } from './layouts/layouts.module';
+import { RecommendationModule } from './recommendation/recommendation.module';
 import { SegmentPresenterModule } from './segment-presenter/segment-presenter.module';
 
 @NgModule({
@@ -22,7 +23,8 @@ import { SegmentPresenterModule } from './segment-presenter/segment-presenter.mo
     SegmentPresenterModule,
     HomeModule,
     BusinessProfileModule,
-    LayoutsModule
+    LayoutsModule,
+    RecommendationModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

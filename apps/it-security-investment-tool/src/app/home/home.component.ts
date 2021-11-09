@@ -21,6 +21,5 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.stream$ = this.homeService.getProfile();
-    console.log('on')
   }
 }

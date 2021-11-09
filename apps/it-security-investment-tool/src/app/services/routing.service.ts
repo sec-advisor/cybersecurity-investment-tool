@@ -1,27 +1,45 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
+import { Subscriber } from 'rxjs';
+
+import { StorageService } from './storage.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class RoutingService {
+export class RoutingService implements OnDestroy {
 
-  readonly pages: { name: string; icon: string; path: string; active: boolean; }[] = [
+  private readonly subscriber = new Subscriber();
+
+  readonly pages: { name: string; icon: string; path: string; active: boolean; disabled?: boolean }[] = [
     { name: 'Home', icon: 'bi-house-door', path: '/home', active: true },
-    { name: 'Segments', icon: 'bi-pie-chart', path: '/segments', active: false },
-    { name: 'Recommendation', icon: 'bi-shield', path: '/recommendation', active: false },
     { name: 'Business Profile', icon: 'bi-building', path: '/business-profile', active: false },
+    { name: 'Segments', icon: 'bi-pie-chart', path: '/segments', active: false, disabled: true },
+    { name: 'Recommendation', icon: 'bi-shield', path: '/recommendation', active: false, disabled: true },
   ]
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private storageService: StorageService) {
+    this.subscriber.add(this.storageService.getBusinessProfile().pipe(
+    ).subscribe(profile => {
+      if (profile) {
+        this.pages.forEach(page => page.disabled = false);
+      }
+    }))
+  }
+
+  ngOnDestroy(): void {
+    this.subscriber.unsubscribe();
+  }
 
   browseTo(path: string): void {
-    this.pages.forEach(item => item.active = false);
-    const currentPage = this.pages.find(page => page.path === path);
+    const newPage = this.pages.find(page => page.path === path);
 
-    if (currentPage) {
-      currentPage.active = true;
-      this.router.navigate([currentPage.path]);
+    if (newPage) {
+      if (!newPage.disabled) {
+        this.pages.forEach(item => item.active = false);
+        newPage.active = true;
+        this.router.navigate([newPage.path]);
+      }
     } else {
       throw new Error('Error in Routing Service');
     }

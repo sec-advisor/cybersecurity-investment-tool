@@ -6,7 +6,8 @@
   <hr>
   <ul class="nav nav-pills flex-column mb-auto">
     <ng-container *ngFor="let page of routingService.pages">
-      <li class="pointer-cursor" (click)="routingService.browseTo(page.path)">
+      <li [class.pointer-cursor]="!page.disabled" [class.disabled]="page.disabled"
+        (click)="routingService.browseTo(page.path)">
         <a class="nav-link text-white" [class.active]="page.active">
           <i class="sidebar-icons bi" [ngClass]="page.icon"></i>
           {{ page.name }}
