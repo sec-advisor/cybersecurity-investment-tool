@@ -1,6 +1,7 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, registerLocaleData } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
-import { NgModule } from '@angular/core';
+import localeDECH from '@angular/common/locales/de-CH';
+import { LOCALE_ID, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -12,6 +13,8 @@ import { HomeModule } from './home/home.module';
 import { LayoutsModule } from './layouts/layouts.module';
 import { RecommendationModule } from './recommendation/recommendation.module';
 import { SegmentPresenterModule } from './segment-presenter/segment-presenter.module';
+
+registerLocaleData(localeDECH);
 
 @NgModule({
   declarations: [AppComponent],
@@ -28,7 +31,7 @@ import { SegmentPresenterModule } from './segment-presenter/segment-presenter.mo
     RecommendationModule,
     BrowserAnimationsModule,
   ],
-  providers: [],
+  providers: [{ provide: LOCALE_ID, useValue: 'de-CH' },],
   bootstrap: [AppComponent],
 })
 export class AppModule { }

@@ -23,6 +23,7 @@ export interface Segment {
   companyId?: string;
   name: string;
   type: string;
+  typeDescription: string;
   value: number;
   risk: number;
   vulnerability: number;

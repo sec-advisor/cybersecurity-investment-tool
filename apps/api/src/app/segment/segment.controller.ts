@@ -23,7 +23,7 @@ export class SegmentController {
   }
 
   @Get('segments/:companyId')
-  getProfiles(@Param('companyId') companyId: string): Observable<Segment[] | undefined> {
+  getSegment(@Param('companyId') companyId: string): Observable<Segment[] | undefined> {
     try {
       return this.segmentService.getSegments(companyId).pipe(
         catchError(() => of({} as Segment[] | undefined).pipe(
@@ -56,11 +56,12 @@ export class SegmentController {
   @Patch('segment')
   updateSegment(@Body() segment: Segment): Observable<Segment> {
     try {
-      return this.segmentService.updateSegments([segment]).pipe(
+      return this.investmentCalculatorService.calculateInvestments([segment]).pipe(
+        switchMap(segments => this.segmentService.updateSegments(segments)),
         map(segments => segments?.[0]),
         catchError(() => of({} as Segment).pipe(
           tap(() => { throw new HttpException('Update segment failed!', HttpStatus.INTERNAL_SERVER_ERROR) })))
-      );;
+      );
     } catch (error) {
       throw new HttpException('Update segment failed!', HttpStatus.INTERNAL_SERVER_ERROR);
     }

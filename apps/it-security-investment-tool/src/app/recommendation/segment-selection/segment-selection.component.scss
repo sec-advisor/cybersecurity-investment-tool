@@ -1,0 +1,17 @@
+.segments-overview {
+  height: 100%;
+  max-width: 380px;
+  border-color: #f8f9fa;
+  border-width: medium;
+  border-style: solid;
+  width: 300px;
+
+  .margin-right {
+    margin-right: 15px;
+  }
+}
+
+.list-group {
+  height: calc(100% - 63px);
+  overflow: auto;
+}

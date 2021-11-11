@@ -1,6 +1,6 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
-import { filter, Observable, Subscriber, tap } from 'rxjs';
+import { filter, map, merge, Observable, of, Subscriber, tap } from 'rxjs';
 
 import { StorageKey } from '../models/storage-key.enum';
 import { LocalStorageService } from './local-storage.service';
@@ -20,14 +20,14 @@ export class RoutingService implements OnDestroy {
     { name: 'Recommendation', icon: 'bi-shield', path: '/recommendation', active: false, disabled: true },
   ]
 
-  constructor(private router: Router, private storageService: StorageService, private l: LocalStorageService) {
-    // TODO CH: Load profile at beginning from other place
-    this.subscriber.add(this.storageService.getBusinessProfile().subscribe());
+  constructor(private router: Router, private storageService: StorageService, private localStorageService: LocalStorageService) {
 
-    const profileId = this.l.getItem(StorageKey.BusinessProfileId);
-    if (profileId) {
-      this.pages.forEach(page => page.disabled = false);
-    }
+    this.subscriber.add(merge(
+      this.storageService.getBusinessProfile().pipe(map(profile => !!profile)),
+      of(this.localStorageService.getItem(StorageKey.BusinessProfileId)).pipe(map(profileId => !!profileId))
+    ).pipe(
+      filter(isProfileDefined => isProfileDefined),
+    ).subscribe(() => this.pages.forEach(page => page.disabled = false)));
 
     this.subscriber.add(this.handleRouterChanges().subscribe());
   }
@@ -64,5 +64,9 @@ export class RoutingService implements OnDestroy {
         }
       })
     )
+  }
+
+  private enableAll(): void {
+
   }
 }

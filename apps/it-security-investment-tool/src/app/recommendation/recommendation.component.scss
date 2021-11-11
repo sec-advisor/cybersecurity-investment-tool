@@ -1,19 +1,5 @@
-$border-color: #f8f9fa;
-
 :host {
-  height: calc(100% - 56px);
-
-  .segments-overview {
+  .content-wrapper {
     height: calc(100% - 56px);
-    width: 30%;
-    max-width: 380px;
-    overflow-y: auto;
-    border-color: #f8f9fa;
-    border-width: medium;
-    border-style: solid;
-
-    .margin-right {
-      margin-right: 15px;
-    }
   }
 }

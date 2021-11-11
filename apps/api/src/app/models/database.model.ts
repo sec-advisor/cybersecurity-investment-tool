@@ -31,6 +31,7 @@ export const SegmentSchema = new mongoose.Schema(
     companyId: String,
     name: String,
     type: String,
+    typeDescription: String,
     value: Number,
     risk: Number,
     vulnerability: Number,

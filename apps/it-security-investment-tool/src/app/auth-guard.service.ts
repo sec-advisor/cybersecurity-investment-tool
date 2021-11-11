@@ -15,7 +15,7 @@ export class AuthGuardService implements CanActivate {
     if (this.localStorageService.getItem(StorageKey.BusinessProfileId)) {
       return true;
     } else {
-      this.routingService.browseTo('/business-profile');
+      this.routingService.browseTo('/home');
       return false;
     }
   }

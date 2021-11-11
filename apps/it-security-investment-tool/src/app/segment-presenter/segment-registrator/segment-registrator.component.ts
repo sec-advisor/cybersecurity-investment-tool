@@ -1,5 +1,5 @@
 import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Input, Segment, SegmentDefinition } from '@app/api-interfaces';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { from, merge, Observable, of, Subscriber } from 'rxjs';
@@ -36,7 +36,7 @@ export class SegmentRegistratorComponent implements OnInit, OnDestroy {
     this.subscriber.add(this.segmentDefinitionDataService.getSegmentDefinitions().pipe(
       map(segments => ({
         form: this.formBuilder.group({
-          name: 'Test',
+          name: ['Test', [Validators.required]],
           type: [undefined, [Validators.required]],
           value: [5000, [Validators.required]],
           risk: [undefined, [Validators.required]],
@@ -68,20 +68,24 @@ export class SegmentRegistratorComponent implements OnInit, OnDestroy {
         risk: segment.risk,
         vulnerability: segment.vulnerability
       });
+      this.stream.form.markAsPristine();
     }
 
-    this.subscriber.add(from(this.modalService.open(this.modal, { ariaLabelledBy: 'segment-registrator', }).result).pipe(
+    this.subscriber.add(from(this.modalService.open(this.modal, { ariaLabelledBy: 'segment-registrator' }).result).pipe(
       switchMap((stream: SegmentRegistrationViewModel) => this.storageService.getBusinessProfile().pipe(map(profile => ({ companyId: profile?.id, stream })))),
       map(({ stream, companyId }) => ({
         companyId: companyId as string,
         name: stream.form.controls.name.value,
         type: stream.form.controls.type.value,
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        typeDescription: stream.typeOptions.find(type => type.id === stream.form.controls.type.value)!.description,
         value: stream.form.controls.value.value,
         risk: stream.form.controls.risk.value,
         vulnerability: stream.form.controls.vulnerability.value
       })),
       map(s => this.isEditMode ? ({ ...s, id: segment?.id, companyId: segment?.companyId }) : s),
       switchMap(segment => this.isEditMode ? this.storageService.updateSegment(segment) : this.storageService.storeSegment(segment)),
+      tap(() => this.resetForm()),
       catchError(() => of(undefined))
     ).subscribe());
   }
@@ -106,6 +110,13 @@ export class SegmentRegistratorComponent implements OnInit, OnDestroy {
     return !!inputs[index + 1];
   }
 
+  isControlInvalid(control: AbstractControl | null): boolean {
+    if (control) {
+      return control.invalid && control.dirty;
+    }
+    return false;
+  }
+
   private getSegmentTypes(segments: SegmentDefinition[]): { id: string, description: string }[] {
     return segments.map(segment => ({ id: segment.key, description: segment.description }));
   }
@@ -122,6 +133,18 @@ export class SegmentRegistratorComponent implements OnInit, OnDestroy {
     const selectedSegment = segments.find(segment => segment.key === type);
     selectedSegment?.valueEstimation.inputs.forEach(input => form.addControl(input.key, new FormControl(0)))
     this.selectedSegment = selectedSegment;
+  }
+
+  private resetForm(): void {
+    Object.values(this.stream.form.controls).map(control => control.setValue(0, { emitValue: false }));
+    this.stream.form.patchValue({
+      name: '',
+      type: undefined,
+      value: undefined,
+      risk: undefined,
+      vulnerability: undefined
+    });
+    this.stream.form.markAsPristine();
   }
 
 }

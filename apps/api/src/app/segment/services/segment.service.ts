@@ -35,6 +35,7 @@ export class SegmentService {
       tap(model => {
         model.name = segment.name,
           model.type = segment.type,
+          model.typeDescription = segment.typeDescription,
           model.value = segment.value,
           model.risk = segment.risk,
           model.vulnerability = segment.vulnerability,
@@ -51,6 +52,7 @@ export class SegmentService {
       companyId,
       name: model.name,
       type: model.type,
+      typeDescription: model.typeDescription,
       value: model.value,
       risk: model.risk,
       vulnerability: model.vulnerability,

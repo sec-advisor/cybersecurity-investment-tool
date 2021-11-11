@@ -1,23 +1,10 @@
 <app-header text="Solution Recommendations"></app-header>
 
-<div class="d-flex flex-column align-items-stretch flex-shrink-0 bg-light segments-overview">
-  <a
-    class="d-flex align-items-center justify-content-center flex-shrink-0 p-3 link-dark text-decoration-none border-bottom">
-    <i class="bi bi-pie-chart-fill medium-icon margin-right"></i>
-    <span class="fs-5 fw-semibold">Segments</span>
-  </a>
-  <div class="list-group list-group-flush border-bottom scrollarea">
-    <ng-container *ngIf="stream$ | async as stream">
-      <ng-container *ngFor="let segment of stream.segments">
-        <a class="list-group-item list-group-item-action py-3 lh-tight pointer-cursor" [class.active]="segment.isActive"
-          aria-current="true" (click)="segmentClick(stream.segments, segment)">
-          <div class="d-flex w-100 align-items-center justify-content-between">
-            <strong class="mb-1">{{ segment.name }}</strong>
-            <small>{{ segment.type }}</small>
-          </div>
-          <div class="col-10 mb-1 small">Some placeholder content in a paragraph below the heading and date.</div>
-        </a>
-      </ng-container>
-    </ng-container>
+<div class="d-flex w-auto content-wrapper">
+  <app-segment-selection [segments]="(stream$ | async)?.segments"></app-segment-selection>
+
+  <div class="container">
+    <div class="h-50">MENTOR Configuration</div>
+    <div class="h-50">MENTOR</div>
   </div>
 </div>
