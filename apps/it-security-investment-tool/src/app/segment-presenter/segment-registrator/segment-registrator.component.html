@@ -1,7 +1,7 @@
 <ng-template #modal let-modal>
-  <ng-container *ngIf="stream$ | async as stream">
+  <ng-container *ngIf="stream">
     <div class="modal-header">
-      <h4 class="modal-title" id="segment-registrator">Add segment</h4>
+      <h4 class="modal-title" id="segment-registrator"> {{ isEditMode ? 'Edit Segment' : 'Add segment' }}</h4>
       <button type="button" class="btn-close" aria-label="Close" tabindex="-1" (click)="modal.dismiss('Cross click')">
       </button>
     </div>

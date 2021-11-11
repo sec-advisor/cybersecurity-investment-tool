@@ -16,6 +16,10 @@
 
   .action-button {
     background-color: $gray-100;
+
+    &.disabled {
+      opacity: 0.5;
+    }
   }
 
   .margin-right {

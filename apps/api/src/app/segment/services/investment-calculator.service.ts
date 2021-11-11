@@ -12,6 +12,7 @@ export class InvestmentCalculatorService {
   }
 
   private getInvestment(segment: Segment): number {
-    return segment.value * segment.risk * segment.vulnerability * 0.37;
+    const investment = segment.value * segment.risk * segment.vulnerability * 0.37;
+    return Math.round(investment * 100) / 100;
   }
 }

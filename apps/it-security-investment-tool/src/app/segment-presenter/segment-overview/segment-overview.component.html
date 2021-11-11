@@ -1,33 +1,47 @@
 <ng-container *ngIf="segments$ | async as segments">
-  <div class="container">
-    <table class="table table-bordered table-hover table-striped">
-      <thead>
-        <tr>
-          <th class="text-center" scope="col">Name</th>
-          <th class="text-center" scope="col">Type</th>
-          <th class="text-center" scope="col">Risk</th>
-          <th class="text-center" scope="col">Vulnerability</th>
-          <th class="text-center" scope="col">Value</th>
-          <th class="text-center" scope="col">Suggested Investment</th>
-          <th class="text-center" scope="col">Delete</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let segment of segments; index as i">
-          <td class="text-center" scope="row">{{ segment.name }}</td>
-          <td class="text-center">{{ segment.type }}</td>
-          <td class="text-center">{{ segment.risk }}</td>
-          <td class="text-center">{{ segment.vulnerability }}</td>
-          <td class="text-center">{{ segment.value }}</td>
-          <td class="text-center">{{ segment.suggestedInvestment }}</td>
-          <td class="text-center">
-            <!-- <a class="btn bi bi-trash text-danger" role="button"></a> -->
-            <button type="button" class="bi bi-trash text-danger icon-button" aria-label="Delete"
-              (click)="removeSegment(segment)">
-            </button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+  <ng-container *ngIf="segments.length > 0; else default">
+    <div class="container">
+      <table class="table table-bordered table-hover table-striped">
+        <thead>
+          <tr>
+            <th class="text-center" scope="col">Name</th>
+            <th class="text-center" scope="col">Type</th>
+            <th class="text-center" scope="col">Risk</th>
+            <th class="text-center" scope="col">Vulnerability</th>
+            <th class="text-center" scope="col">Value</th>
+            <th class="text-center" scope="col">Suggested Investment</th>
+            <th class="text-center" scope="col">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let segment of segments; index as i">
+            <td class="text-center" scope="row">{{ segment.name }}</td>
+            <td class="text-center">{{ segment.type }}</td>
+            <td class="text-center">{{ segment.risk }}</td>
+            <td class="text-center">{{ segment.vulnerability }}</td>
+            <td class="text-center">{{ segment.value }}</td>
+            <td class="text-center">{{ segment.suggestedInvestment }}</td>
+            <td class="text-center">
+              <button type="button" class="bi bi-pencil-fill text-secondary icon-button me-2" aria-label="Delete"
+                (click)="editSegment(segment)">
+              </button>
+              <button type="button" class="bi bi-trash text-danger icon-button" aria-label="Delete"
+                (click)="removeSegment(segment)">
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </ng-container>
+
+  <ng-template #default>
+    <div class="container d-flex justify-content-center flex-column align-items-center">
+      <i class=" bi very-big-icon bi-pie-chart"></i>
+      <h3>No data to display</h3>
+      <h6>Please create a segment.</h6>
+    </div>
+  </ng-template>
 </ng-container>
+
+<app-segment-registrator></app-segment-registrator>

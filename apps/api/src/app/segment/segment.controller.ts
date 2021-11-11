@@ -1,6 +1,6 @@
 import { Segment } from '@app/api-interfaces';
-import { Body, Controller, Delete, Get, HttpException, HttpStatus, Param, Post } from '@nestjs/common';
-import { catchError, Observable, of, switchMap, tap } from 'rxjs';
+import { Body, Controller, Delete, Get, HttpException, HttpStatus, Param, Patch, Post } from '@nestjs/common';
+import { catchError, map, Observable, of, switchMap, tap } from 'rxjs';
 
 import { InvestmentCalculatorService } from './services/investment-calculator.service';
 import { SegmentService } from './services/segment.service';
@@ -51,5 +51,18 @@ export class SegmentController {
     return this.investmentCalculatorService.calculateInvestments(segments).pipe(
       switchMap(segments => this.segmentService.updateSegments(segments))
     );
+  }
+
+  @Patch('segment')
+  updateSegment(@Body() segment: Segment): Observable<Segment> {
+    try {
+      return this.segmentService.updateSegments([segment]).pipe(
+        map(segments => segments?.[0]),
+        catchError(() => of({} as Segment).pipe(
+          tap(() => { throw new HttpException('Update segment failed!', HttpStatus.INTERNAL_SERVER_ERROR) })))
+      );;
+    } catch (error) {
+      throw new HttpException('Update segment failed!', HttpStatus.INTERNAL_SERVER_ERROR);
+    }
   }
 }

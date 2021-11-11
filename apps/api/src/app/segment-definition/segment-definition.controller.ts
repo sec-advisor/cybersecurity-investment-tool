@@ -11,6 +11,7 @@ export class SegmentDefinitionController {
 
   @Get('definitions')
   getSegmentDefinitions(): Observable<SegmentDefinition[]> {
+    console.log('hit')
     try {
       return this.segmentDefinitionService.getSegmentDefinitions().pipe(
         catchError(() => of({} as SegmentDefinition[]).pipe(tap(() => {

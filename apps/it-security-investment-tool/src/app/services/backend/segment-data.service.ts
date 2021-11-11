@@ -39,4 +39,12 @@ export class SegmentDataService {
     );
   }
 
+  updateSegment(segment: Segment): Observable<Segment> {
+    return this.http.patch<Segment>('api/segments/segment', segment).pipe(
+      catchError(err => of({} as Segment).pipe(
+        tap(() => console.error(err.error.message)))
+      )
+    );
+  }
+
 }

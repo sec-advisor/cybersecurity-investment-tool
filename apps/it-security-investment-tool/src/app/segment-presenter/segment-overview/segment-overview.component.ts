@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Segment } from '@app/api-interfaces';
 import { first, Observable } from 'rxjs';
 
 import { StorageService } from '../../services/storage.service';
+import { SegmentRegistratorComponent } from '../segment-registrator/segment-registrator.component';
 
 @Component({
   selector: 'app-segment-overview',
@@ -12,6 +13,8 @@ import { StorageService } from '../../services/storage.service';
 export class SegmentOverviewComponent implements OnInit {
 
   segments$!: Observable<Segment[]>;
+
+  @ViewChild(SegmentRegistratorComponent) segmentModal?: SegmentRegistratorComponent;
 
   constructor(private storageService: StorageService) {
   }
@@ -24,5 +27,9 @@ export class SegmentOverviewComponent implements OnInit {
     if (segment.id) {
       this.storageService.removeSegment(segment.id).pipe(first()).subscribe();
     }
+  }
+
+  editSegment(segment: Segment): void {
+    this.segmentModal?.openSegmentDialog(segment);
   }
 }

@@ -72,6 +72,12 @@ export class StorageService {
     );
   }
 
+  updateSegment(segment: Segment): Observable<Segment> {
+    return this.segmentDataServices.updateSegment(segment).pipe(
+      tap(segment => this.segmentsSource$.next([...this.segmentsSource$.value.filter(s => s.id !== segment.id), segment]))
+    );
+  }
+
   removeSegment(segmentId: string): Observable<void> {
     this.segmentsSource$.next(this.segmentsSource$.value.filter(segment => segment.id !== segmentId));
     return this.segmentDataServices.removeSegment(segmentId);

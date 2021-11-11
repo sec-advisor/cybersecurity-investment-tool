@@ -1,6 +1,6 @@
 import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { Input, SegmentDefinition } from '@app/api-interfaces';
+import { Input, Segment, SegmentDefinition } from '@app/api-interfaces';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { from, merge, Observable, of, Subscriber } from 'rxjs';
 import { catchError, map, switchMap, tap } from 'rxjs/operators';
@@ -18,8 +18,9 @@ export class SegmentRegistratorComponent implements OnInit, OnDestroy {
 
   private readonly subscriber = new Subscriber();
 
+  isEditMode = false;
   selectedSegment?: SegmentDefinition;
-  stream$?: Observable<SegmentRegistrationViewModel>;
+  stream!: SegmentRegistrationViewModel;
   supportValueEstimation = true;
 
   @ViewChild('modal', { static: true }) modal?: ElementRef;
@@ -32,7 +33,7 @@ export class SegmentRegistratorComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    this.stream$ = this.segmentDefinitionDataService.getSegmentDefinitions().pipe(
+    this.subscriber.add(this.segmentDefinitionDataService.getSegmentDefinitions().pipe(
       map(segments => ({
         form: this.formBuilder.group({
           name: 'Test',
@@ -46,7 +47,7 @@ export class SegmentRegistratorComponent implements OnInit, OnDestroy {
       })
       ),
       switchMap(stream => merge(of(stream), this.handleFormChanges(stream))),
-    )
+    ).subscribe(stream => this.stream = stream))
   }
 
   ngOnDestroy(): void {
@@ -57,19 +58,30 @@ export class SegmentRegistratorComponent implements OnInit, OnDestroy {
     return !!form.get('type')?.value
   }
 
-  openSegmentDialog(): void {
+  openSegmentDialog(segment?: Segment): void {
+    if (segment) {
+      this.isEditMode = true
+      this.stream.form.patchValue({
+        name: segment.name,
+        type: segment.type,
+        value: segment.value,
+        risk: segment.risk,
+        vulnerability: segment.vulnerability
+      });
+    }
+
     this.subscriber.add(from(this.modalService.open(this.modal, { ariaLabelledBy: 'segment-registrator', }).result).pipe(
       switchMap((stream: SegmentRegistrationViewModel) => this.storageService.getBusinessProfile().pipe(map(profile => ({ companyId: profile?.id, stream })))),
-      switchMap(({ stream, companyId }) => this.storageService.storeSegment(
-        {
-          companyId: companyId as string,
-          name: stream.form.controls.name.value,
-          type: stream.form.controls.type.value,
-          value: stream.form.controls.value.value,
-          risk: stream.form.controls.risk.value,
-          vulnerability: stream.form.controls.vulnerability.value
-        }
-      )),
+      map(({ stream, companyId }) => ({
+        companyId: companyId as string,
+        name: stream.form.controls.name.value,
+        type: stream.form.controls.type.value,
+        value: stream.form.controls.value.value,
+        risk: stream.form.controls.risk.value,
+        vulnerability: stream.form.controls.vulnerability.value
+      })),
+      map(s => this.isEditMode ? ({ ...s, id: segment?.id, companyId: segment?.companyId }) : s),
+      switchMap(segment => this.isEditMode ? this.storageService.updateSegment(segment) : this.storageService.storeSegment(segment)),
       catchError(() => of(undefined))
     ).subscribe());
   }

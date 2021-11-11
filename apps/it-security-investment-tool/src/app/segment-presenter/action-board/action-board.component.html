@@ -18,7 +18,7 @@
 
     <ng-container *ngFor="let button of buttons">
       <a class="list-group-item list-group-item-action py-3 lh-tight pointer-cursor action-button" type="button"
-        aria-current="true" (click)="execute(button)">
+        aria-current="true" [class.disabled]="button.disabled" (click)="execute(button)">
         <div class="d-flex w-100 align-items-center justify-content-between">
           <span class="mb-1 action-text">{{ button.text }}</span>
           <i class="bi action-icon ms-2" [ngClass]="button.icon"></i>
