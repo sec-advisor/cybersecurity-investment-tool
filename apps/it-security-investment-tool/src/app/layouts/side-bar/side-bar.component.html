@@ -9,7 +9,7 @@
       <li [class.pointer-cursor]="!page.disabled" [class.disabled]="page.disabled"
         (click)="routingService.browseTo(page.path)">
         <a class="nav-link text-white" [class.active]="page.active">
-          <i class="sidebar-icons bi" [ngClass]="page.icon"></i>
+          <i class="sidebar-icons bi medium-icon" [ngClass]="page.icon"></i>
           {{ page.name }}
         </a>
       </li>
@@ -18,7 +18,7 @@
   <ng-container *ngIf="companyName$ | async as companyName">
     <hr>
     <div class="sidebar-footer">
-      <a class="sidebar-icons nav-link text-white">
+      <a class="sidebar-icons medium-icon nav-link text-white">
         <i class="bi bi-building"></i>
         {{ companyName }}
       </a>

@@ -1,15 +1,16 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 
-import { SegmentDefinitionSchema } from '../models/database.model';
+import { SegmentSchema } from '../models/database.model';
 import { SegmentController } from './segment.controller';
+import { InvestmentCalculatorService } from './services/investment-calculator.service';
 import { SegmentService } from './services/segment.service';
 
 @Module({
   imports: [
-    MongooseModule.forFeature([{ name: 'segment-definitions', schema: SegmentDefinitionSchema }])
+    MongooseModule.forFeature([{ name: 'segments', schema: SegmentSchema }])
   ],
   controllers: [SegmentController],
-  providers: [SegmentService]
+  providers: [SegmentService, InvestmentCalculatorService]
 })
 export class SegmentModule { }

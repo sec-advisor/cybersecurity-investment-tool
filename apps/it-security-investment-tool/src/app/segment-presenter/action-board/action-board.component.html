@@ -1,0 +1,31 @@
+<div class="d-flex flex-column align-items-stretch flex-shrink-0 segments-overview action-board">
+  <div
+    class="d-flex align-items-center justify-content-center flex-shrink-0 p-3 link-dark text-decoration-none border-bottom action-header">
+
+    <ng-container *ngIf="(isLoading$ | async) === false; else loading">
+      <i class="bi bi-gear-fill medium-icon margin-right"></i>
+    </ng-container>
+
+    <ng-template #loading>
+      <div class="spinner-border text-dark loading-spinner" role="status">
+        <span class="sr-only"></span>
+      </div>
+    </ng-template>
+
+    <span class="fs-5 fw-semibold">Actions</span>
+  </div>
+  <div class="list-group list-group-flush border-bottom scrollarea">
+
+    <ng-container *ngFor="let button of buttons">
+      <a class="list-group-item list-group-item-action py-3 lh-tight pointer-cursor action-button" type="button"
+        aria-current="true" (click)="execute(button)">
+        <div class="d-flex w-100 align-items-center justify-content-between">
+          <span class="mb-1 action-text">{{ button.text }}</span>
+          <i class="bi action-icon ms-2" [ngClass]="button.icon"></i>
+        </div>
+      </a>
+    </ng-container>
+  </div>
+</div>
+
+<app-segment-registrator></app-segment-registrator>

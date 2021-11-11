@@ -1,33 +1,42 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { SegmentDefinition, ValueEstimation } from '@app/api-interfaces';
-import { catchError, Observable, of, throwError } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { Segment } from '@app/api-interfaces';
+import { catchError, Observable, of, tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SegmentDataService {
 
-  segments?: SegmentDefinition[];
-
   constructor(private http: HttpClient) { }
 
-  getSegmentDefinitions(): Observable<SegmentDefinition[]> {
-    return this.segments ?
-      of(this.segments) :
-      this.http.get<SegmentDefinition[]>('api/segment/segment-definitions').pipe(
-        tap(segments => this.segments = segments),
-        catchError((err) => of({} as SegmentDefinition[]).pipe(
-          tap(() => console.error(err.error.message))))
-      );
+  storeSegment(segment: Segment): Observable<string> {
+    return this.http.post<string>('api/segments/segment', segment).pipe(
+      catchError(err => of({} as string).pipe(
+        tap(() => console.error(err.error.message)))
+      )
+    );
   }
 
-  estimateValue(segment: SegmentDefinition | undefined, keyValuePairs: { key: string; value: number; }[] | undefined): Observable<number> {
-    if (segment && keyValuePairs) {
-      return this.http.post<number>('api/segment/value-estimation', { segment, keyValuePairs } as ValueEstimation);
-    } else {
-      return throwError({ error: { message: 'Wrong values for value estimation!' } })
-    }
+  getSegments(companyId: string): Observable<Segment[]> {
+    return this.http.get<Segment[]>(`api/segments/segments/${companyId}`).pipe(
+      catchError((err) => of({} as Segment[]).pipe(
+        tap(() => console.error(err.error.message))))
+    );
   }
+
+  removeSegment(segmentId: string): Observable<void> {
+    return this.http.delete<void>(`api/segments/segment/${segmentId}`).pipe(
+      catchError((err) => of(undefined).pipe(
+        tap(() => console.error(err.error.message))))
+    );
+  }
+
+  calculateInvestment(segments: Segment[]): Observable<Segment[]> {
+    return this.http.post<Segment[]>(`api/segments/investment-calculation`, segments).pipe(
+      catchError((err) => of({} as Segment[]).pipe(
+        tap(() => console.error(err.error.message))))
+    );
+  }
+
 }

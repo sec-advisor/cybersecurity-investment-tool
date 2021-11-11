@@ -7714,6 +7714,13 @@ neo-async@^2.6.2:
   resolved "https://devops.bt.siemens.com:443/artifactory/api/npm/npm-all/neo-async/-/neo-async-2.6.2.tgz#b4aafb93e3aeb2d8174ca53cf163ab7d7308305f"
   integrity sha1-tKr7k+OustgXTKU88WOrfXMIMF8=
 
+ngx-bootstrap@^7.1.0:
+  version "7.1.0"
+  resolved "https://devops.bt.siemens.com:443/artifactory/api/npm/npm-all/ngx-bootstrap/-/ngx-bootstrap-7.1.0.tgz#60cd83b1d2da52ffd9f8ca6f270e77010d55cf5a"
+  integrity sha1-YM2DsdLaUv/Z+MpvJw53AQ1Vz1o=
+  dependencies:
+    tslib "^2.0.0"
+
 nice-napi@^1.0.2:
   version "1.0.2"
   resolved "https://devops.bt.siemens.com:443/artifactory/api/npm/npm-all/nice-napi/-/nice-napi-1.0.2.tgz#dc0ab5a1eac20ce548802fc5686eaa6bc654927b"

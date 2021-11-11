@@ -15,17 +15,7 @@ export class HomeService {
   }
 
   getProfile(): Observable<{ profile: BusinessProfile | undefined }> {
-    // return of({ profile: undefined })
     return this.storageService.getBusinessProfile().pipe(map(profile => ({ profile })));
-    // return this.isFirstCall ?
-    //   this.getProfileRemotely().pipe(
-    //     delay(1000),
-    //     tap(() => {
-    //       this.isFirstCall = false;
-    //       this.isLoading = false;
-    //     })
-    //   ) :
-    //   this.getProfileLocally();
   }
 
 }

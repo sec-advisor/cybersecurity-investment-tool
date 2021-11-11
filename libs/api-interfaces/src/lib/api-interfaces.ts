@@ -11,11 +11,22 @@ export interface SegmentDefinition {
   }
 }
 
-interface Input {
+export interface Input {
   key: string;
   description: string;
   type: 'number',
   value?: number;
+}
+
+export interface Segment {
+  id?: string;
+  companyId?: string;
+  name: string;
+  type: string;
+  value: number;
+  risk: number;
+  vulnerability: number;
+  suggestedInvestment?: number;
 }
 
 export interface ValueEstimation {

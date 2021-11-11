@@ -10,7 +10,7 @@ export class BusinessProfileController {
   constructor(private businessProfileService: BusinessProfileService) { }
 
   @Post('profiles')
-  getBusinessProfile(@Body() profile: BusinessProfile): Observable<string> {
+  storeProfile(@Body() profile: BusinessProfile): Observable<string> {
     try {
       return this.businessProfileService.storeProfile(profile).pipe(
         catchError(() => of({} as string).pipe(
@@ -22,7 +22,7 @@ export class BusinessProfileController {
   }
 
   @Get('profiles/:id')
-  getProduct(@Param('id') id: string): Observable<BusinessProfile> {
+  getProfile(@Param('id') id: string): Observable<BusinessProfile> {
     try {
       return this.businessProfileService.getProfile(id).pipe(
         catchError(() => of({} as BusinessProfile).pipe(

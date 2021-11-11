@@ -1,32 +1,33 @@
-<table class="table table-striped">
-  <thead>
-    <tr>
-      <th scope="col">Name</th>
-      <th scope="col">Value</th>
-      <th scope="col">Vulnerability</th>
-      <th scope="col">Suggested Investment Amount</th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let segment of segmentStoreService.getSegments(); index as i">
-      <td scope="row">{{ segment.name }}</td>
-      <td>
-        {{ segment.value }}
-      </td>
-      <td>{{ segment.vulnerability }}</td>
-      <td>{{ segment.suggestedInvestment }}</td>
-      <td>
-        <button type="button" class="btn-close" aria-label="Delete"
-          (click)="segmentStoreService.deleteSegment(segment)">
-        </button>
-      </td>
-    </tr>
-  </tbody>
-</table>
-
-<div *ngIf="segmentStoreService.getSegments().length > 0">
-  <button type="button" class="btn btn-primary segment-add-button calculate-button">
-    Calculate Investments
-  </button>
-</div>
+<ng-container *ngIf="segments$ | async as segments">
+  <div class="container">
+    <table class="table table-bordered table-hover table-striped">
+      <thead>
+        <tr>
+          <th class="text-center" scope="col">Name</th>
+          <th class="text-center" scope="col">Type</th>
+          <th class="text-center" scope="col">Risk</th>
+          <th class="text-center" scope="col">Vulnerability</th>
+          <th class="text-center" scope="col">Value</th>
+          <th class="text-center" scope="col">Suggested Investment</th>
+          <th class="text-center" scope="col">Delete</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let segment of segments; index as i">
+          <td class="text-center" scope="row">{{ segment.name }}</td>
+          <td class="text-center">{{ segment.type }}</td>
+          <td class="text-center">{{ segment.risk }}</td>
+          <td class="text-center">{{ segment.vulnerability }}</td>
+          <td class="text-center">{{ segment.value }}</td>
+          <td class="text-center">{{ segment.suggestedInvestment }}</td>
+          <td class="text-center">
+            <!-- <a class="btn bi bi-trash text-danger" role="button"></a> -->
+            <button type="button" class="bi bi-trash text-danger icon-button" aria-label="Delete"
+              (click)="removeSegment(segment)">
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</ng-container>

@@ -1,44 +1,61 @@
-import { SegmentDefinition } from '@app/api-interfaces';
+import { Segment } from '@app/api-interfaces';
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { from, map, Observable } from 'rxjs';
+import { forkJoin, from, map, Observable, switchMap, tap } from 'rxjs';
 
 @Injectable()
 export class SegmentService {
 
-  constructor(@InjectModel('segment-definitions') private readonly segmentModel: Model<SegmentDefinition>) {
-
+  constructor(@InjectModel('segments') private readonly segmentModel: Model<Segment>) {
   }
 
-  getSegmentDefinitions(): Observable<SegmentDefinition[]> {
-    return from(this.segmentModel.find().exec()).pipe(
-      map(segments => segments.map(segment => ({
-        key: segment.key,
-        description: segment.description,
-        valueEstimation: segment.valueEstimation
-      } as SegmentDefinition)))
+  storeSegment(segment: Segment): Observable<string> {
+    return from(new this.segmentModel(segment).save()).pipe(map(value => value._id));
+  }
+
+  getSegments(companyId: string): Observable<Segment[]> {
+    return from(this.segmentModel.find({ companyId })).pipe(
+      map(segments => Array.isArray(segments) ?
+        segments.map(segment => this.mapToSegment(segment, companyId)) :
+        [this.mapToSegment(segments, companyId)]
+      )
     );
   }
 
-  calculateValue(segment: SegmentDefinition, keyValuePairs: { key: string; value: number; }[]): number {
-    try {
-      const splitedCalculationString = segment.valueEstimation.calculation.split(' ');
-      if (splitedCalculationString && keyValuePairs && keyValuePairs.every(pair => Number.isFinite(pair.value))) {
-        keyValuePairs.forEach(pair => {
-          const index = splitedCalculationString?.indexOf(pair.key);
-          if (index !== undefined && index !== -1) {
-            splitedCalculationString[index] = String(pair.value);
-          }
-        })
+  deleteSegment(id: string): Observable<void> {
+    return from(this.segmentModel.findById(id)).pipe(
+      switchMap(model => model.delete()),
+      map(() => undefined)
+    );
+  }
 
-        const mergedCalculation = splitedCalculationString.reduce((pre, curr) => pre + ` ${curr}`, '')
-        return eval(mergedCalculation);
-      } else {
-        throw new Error();
-      }
-    } catch (error) {
-      throw new Error();
+  updateSegments(segments: Segment[]): Observable<Segment[]> {
+    return forkJoin(...segments.map(segment => from(this.segmentModel.findById(segment.id)).pipe(
+      tap(model => {
+        model.name = segment.name,
+          model.type = segment.type,
+          model.value = segment.value,
+          model.risk = segment.risk,
+          model.vulnerability = segment.vulnerability,
+          model.suggestedInvestment = segment.suggestedInvestment
+      }),
+      switchMap(model => from(model.save())),
+      map(s => this.mapToSegment(s, s.companyId)),
+    )));
+  }
+
+  private mapToSegment(model: any, companyId: string): Segment {
+    return {
+      id: model._id,
+      companyId,
+      name: model.name,
+      type: model.type,
+      value: model.value,
+      risk: model.risk,
+      vulnerability: model.vulnerability,
+      suggestedInvestment: model.suggestedInvestment
     }
   }
+
 }

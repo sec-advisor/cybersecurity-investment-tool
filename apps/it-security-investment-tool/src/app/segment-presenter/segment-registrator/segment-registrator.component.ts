@@ -1,68 +1,81 @@
-import { Component, OnInit, TemplateRef } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
-import { SegmentDefinition } from '@app/api-interfaces';
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Input, SegmentDefinition } from '@app/api-interfaces';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { merge, Observable, of } from 'rxjs';
+import { from, merge, Observable, of, Subscriber } from 'rxjs';
 import { catchError, map, switchMap, tap } from 'rxjs/operators';
 
-import { SegmentDataService } from '../../services/backend/segment-data.service';
+import { SegmentDefinitionDataService } from '../../services/backend/segment-definition-data.service';
+import { StorageService } from '../../services/storage.service';
 import { SegmentRegistrationStream as SegmentRegistrationViewModel } from '../models/segment-registration-view.model';
-import { SegmentStoreService } from '../services/segment-store.service';
 
 @Component({
   selector: 'app-segment-registrator',
   templateUrl: './segment-registrator.component.html',
   styleUrls: ['./segment-registrator.component.scss']
 })
-export class SegmentRegistratorComponent implements OnInit {
+export class SegmentRegistratorComponent implements OnInit, OnDestroy {
+
+  private readonly subscriber = new Subscriber();
 
   selectedSegment?: SegmentDefinition;
   stream$?: Observable<SegmentRegistrationViewModel>;
   supportValueEstimation = true;
 
+  @ViewChild('modal', { static: true }) modal?: ElementRef;
+
   constructor(
     private formBuilder: FormBuilder,
     private modalService: NgbModal,
-    private segmentStoreService: SegmentStoreService,
-    private segmentDataService: SegmentDataService,
+    private segmentDefinitionDataService: SegmentDefinitionDataService,
+    private storageService: StorageService,
   ) { }
 
   ngOnInit(): void {
-    this.stream$ = this.segmentDataService.getSegmentDefinitions().pipe(
+    this.stream$ = this.segmentDefinitionDataService.getSegmentDefinitions().pipe(
       map(segments => ({
         form: this.formBuilder.group({
           name: 'Test',
-          type: undefined,
-          value: 5000,
-          vulnerability: 0,
+          type: [undefined, [Validators.required]],
+          value: [5000, [Validators.required]],
+          risk: [undefined, [Validators.required]],
+          vulnerability: [undefined, [Validators.required]],
         }),
         typeOptions: this.getSegmentTypes(segments),
         segments
       })
       ),
       switchMap(stream => merge(of(stream), this.handleFormChanges(stream))),
-      // tap(console.log)
     )
+  }
+
+  ngOnDestroy(): void {
+    this.subscriber.unsubscribe();
   }
 
   isSegmentTypeSelected(form: FormGroup): boolean {
     return !!form.get('type')?.value
   }
 
-  openSegmentDialog(dialog: TemplateRef<any>): void {
-    this.modalService.open(dialog, { ariaLabelledBy: 'segment-registrator', size: 'lg' }).result.then((form: FormGroup) => {
-      this.segmentStoreService.storeSegment({
-        name: form.controls.name.value,
-        value: form.controls.value.value,
-        vulnerability: form.controls.vulnerability.value
-      });
-    }, (reason) => {
-      // console.log(reason)
-    });
+  openSegmentDialog(): void {
+    this.subscriber.add(from(this.modalService.open(this.modal, { ariaLabelledBy: 'segment-registrator', }).result).pipe(
+      switchMap((stream: SegmentRegistrationViewModel) => this.storageService.getBusinessProfile().pipe(map(profile => ({ companyId: profile?.id, stream })))),
+      switchMap(({ stream, companyId }) => this.storageService.storeSegment(
+        {
+          companyId: companyId as string,
+          name: stream.form.controls.name.value,
+          type: stream.form.controls.type.value,
+          value: stream.form.controls.value.value,
+          risk: stream.form.controls.risk.value,
+          vulnerability: stream.form.controls.vulnerability.value
+        }
+      )),
+      catchError(() => of(undefined))
+    ).subscribe());
   }
 
   calculateValue(stream: SegmentRegistrationViewModel): void {
-    this.segmentDataService.estimateValue(
+    this.segmentDefinitionDataService.estimateValue(
       this.selectedSegment,
       this.selectedSegment?.valueEstimation.inputs.map(input => ({ key: input.key, value: +stream.form.get(input.key)?.value }))
     ).pipe(
@@ -75,6 +88,10 @@ export class SegmentRegistratorComponent implements OnInit {
 
   toggleEstimationValue(): void {
     this.supportValueEstimation = !this.supportValueEstimation;
+  }
+
+  doesNextElementExists(inputs: Input[], index: number): boolean {
+    return !!inputs[index + 1];
   }
 
   private getSegmentTypes(segments: SegmentDefinition[]): { id: string, description: string }[] {

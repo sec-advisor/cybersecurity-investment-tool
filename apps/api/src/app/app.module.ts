@@ -5,12 +5,14 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { BusinessProfileModule } from './business-profile/business-profile.module';
 import { SegmentModule } from './segment/segment.module';
+import { SegmentDefinitionModule } from './segment-definition/segment-definition.module';
 
 @Module({
   imports: [
     SegmentModule,
     MongooseModule.forRoot('mongodb+srv://investor:uYqBIlR3aT1dYpNo@cluster0.4ehbr.mongodb.net/investment-calculator?retryWrites=true&w=majority'),
-    BusinessProfileModule
+    BusinessProfileModule,
+    SegmentDefinitionModule
   ],
   controllers: [AppController],
   providers: [AppService],

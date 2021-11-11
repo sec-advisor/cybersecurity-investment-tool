@@ -3,6 +3,12 @@
 /* Importing Bootstrap SCSS file. */
 @import '~bootstrap/scss/bootstrap';
 
+/* Importing Bootstrap SCSS file. */
+@import '~bootstrap/scss/bootstrap';
+
+/* Importing Datepicker SCSS file. */
+@import '~ngx-bootstrap/datepicker/bs-datepicker';
+
 .small-text {
   font-size: 14px;
 }
@@ -17,6 +23,17 @@
   align-items: center;
 }
 
+.medium-icon {
+  font-size: 20px;
+}
+
 .very-big-icon {
   font-size: 220px;
+}
+
+.icon-button {
+  height: 1 em;
+  padding: 0.25 em 0.25 em;
+  background: transparent;
+  border: 0;
 }

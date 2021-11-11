@@ -1,7 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
+import { LayoutsModule } from '../layouts/layouts.module';
+import { ActionBoardComponent } from './action-board/action-board.component';
 import { SegmentOverviewComponent } from './segment-overview/segment-overview.component';
 import { SegmentPresenterComponent } from './segment-presenter.component';
 import { SegmentRegistratorComponent } from './segment-registrator/segment-registrator.component';
@@ -10,8 +13,15 @@ import { SegmentRegistratorComponent } from './segment-registrator/segment-regis
   imports: [
     CommonModule,
     ReactiveFormsModule,
+    NgbModule,
+    LayoutsModule,
   ],
-  declarations: [SegmentPresenterComponent, SegmentRegistratorComponent, SegmentOverviewComponent],
+  declarations: [
+    SegmentPresenterComponent,
+    SegmentRegistratorComponent,
+    SegmentOverviewComponent,
+    ActionBoardComponent
+  ],
   exports: [SegmentPresenterComponent]
 })
 export class SegmentPresenterModule { }

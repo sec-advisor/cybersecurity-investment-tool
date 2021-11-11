@@ -1,7 +1,9 @@
 import { Injectable, OnDestroy } from '@angular/core';
-import { Router } from '@angular/router';
-import { Subscriber } from 'rxjs';
+import { NavigationEnd, Router } from '@angular/router';
+import { filter, Observable, Subscriber, tap } from 'rxjs';
 
+import { StorageKey } from '../models/storage-key.enum';
+import { LocalStorageService } from './local-storage.service';
 import { StorageService } from './storage.service';
 
 @Injectable({
@@ -18,13 +20,16 @@ export class RoutingService implements OnDestroy {
     { name: 'Recommendation', icon: 'bi-shield', path: '/recommendation', active: false, disabled: true },
   ]
 
-  constructor(private router: Router, private storageService: StorageService) {
-    this.subscriber.add(this.storageService.getBusinessProfile().pipe(
-    ).subscribe(profile => {
-      if (profile) {
-        this.pages.forEach(page => page.disabled = false);
-      }
-    }))
+  constructor(private router: Router, private storageService: StorageService, private l: LocalStorageService) {
+    // TODO CH: Load profile at beginning from other place
+    this.subscriber.add(this.storageService.getBusinessProfile().subscribe());
+
+    const profileId = this.l.getItem(StorageKey.BusinessProfileId);
+    if (profileId) {
+      this.pages.forEach(page => page.disabled = false);
+    }
+
+    this.subscriber.add(this.handleRouterChanges().subscribe());
   }
 
   ngOnDestroy(): void {
@@ -43,5 +48,21 @@ export class RoutingService implements OnDestroy {
     } else {
       throw new Error('Error in Routing Service');
     }
+  }
+
+  // TODO CH: Refactor almost same code
+  handleRouterChanges(): Observable<any> {
+    return this.router.events.pipe(
+      filter(event => event instanceof NavigationEnd),
+      tap(event => {
+        const newPage = this.pages.find(page => page.path === (event as NavigationEnd).url);
+        if (newPage) {
+          if (!newPage.disabled) {
+            this.pages.forEach(item => item.active = false);
+            newPage.active = true;
+          }
+        }
+      })
+    )
   }
 }
