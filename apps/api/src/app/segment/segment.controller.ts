@@ -53,7 +53,6 @@ export class SegmentController {
 
   @Post('investment-calculation')
   calculateInvestment(@Body() segments: Segment[]): Observable<Segment[]> {
-    console.log('investment-calculation')
     return this.breachProbabilityService.getFunction().pipe(
       switchMap(equation => this.investmentCalculatorService.calculateInvestments(segments, equation)),
       switchMap(segments => this.segmentService.updateSegments(segments)),
@@ -64,7 +63,6 @@ export class SegmentController {
 
   @Post('investment-calculation-without-segmentation')
   calculateInvestmentWithoutSegmentation(@Body() segments: Segment[]): Observable<Partial<Segment>> {
-    console.log('investment-calculation-without-segmentation')
     return this.breachProbabilityService.getFunction().pipe(
       switchMap(equation => this.investmentCalculatorService.calculateInvestmentsWithoutSegmentation(segments, equation)),
       catchError(() => of({} as Partial<Segment>).pipe(
