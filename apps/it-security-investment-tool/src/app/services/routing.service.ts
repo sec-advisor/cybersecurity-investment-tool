@@ -66,7 +66,4 @@ export class RoutingService implements OnDestroy {
     )
   }
 
-  private enableAll(): void {
-
-  }
 }
