@@ -25,5 +25,5 @@ jobs:
     - name: Build
       run: |
         yarn
-        gulp
         nx lint
+        nx build
