@@ -25,5 +25,5 @@ jobs:
     - name: Build
       run: |
         yarn
-        nx lint
-        nx build
+        yarn nx lint
+        yarn nx build
