@@ -5,6 +5,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { from, merge, Observable, of, Subscriber } from 'rxjs';
 import { catchError, map, switchMap, tap } from 'rxjs/operators';
 
+import { ToastNotificationService } from '../../layouts/toast-notification/services/toast-notification.service';
 import { SegmentDefinitionDataService } from '../../services/backend/segment-definition-data.service';
 import { StorageService } from '../../services/storage.service';
 import { SegmentRegistrationStream as SegmentRegistrationViewModel } from '../models/segment-registration-view.model';
@@ -30,6 +31,7 @@ export class SegmentRegistratorComponent implements OnInit, OnDestroy {
     private modalService: NgbModal,
     private segmentDefinitionDataService: SegmentDefinitionDataService,
     private storageService: StorageService,
+    private toastNotificationService: ToastNotificationService,
   ) { }
 
   ngOnInit(): void {
@@ -86,6 +88,7 @@ export class SegmentRegistratorComponent implements OnInit, OnDestroy {
       map(s => this.isEditMode ? ({ ...s, id: segment?.id, companyId: segment?.companyId }) : s),
       switchMap(segment => this.isEditMode ? this.storageService.updateSegment(segment) : this.storageService.storeSegment(segment)),
       tap(() => this.resetForm()),
+      tap(() => this.toastNotificationService.showSuccess(`Sucessfully ${this.isEditMode ? 'updated' : 'created'} segment`)),
       catchError(() => of(undefined))
     ).subscribe());
   }

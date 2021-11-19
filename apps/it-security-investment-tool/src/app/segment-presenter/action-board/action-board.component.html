@@ -2,7 +2,7 @@
   <div
     class="d-flex align-items-center justify-content-center flex-shrink-0 p-3 link-dark text-decoration-none border-bottom action-header">
 
-    <ng-container *ngIf="(isLoading$ | async) === false; else loading">
+    <ng-container *ngIf="((segmentPresenterActionService.getLoadingStatus() | async) === false); else loading">
       <i class="bi bi-gear-fill medium-icon margin-right"></i>
     </ng-container>
 
@@ -20,8 +20,10 @@
       <a class="list-group-item list-group-item-action py-3 lh-tight pointer-cursor action-button" type="button"
         aria-current="true" [class.disabled]="button.disabled" (click)="execute(button)">
         <div class="d-flex w-100 align-items-center justify-content-between">
-          <span class="mb-1 action-text">{{ button.text }}</span>
-          <i class="bi action-icon ms-2" [ngClass]="button.icon"></i>
+          <span class="mb-1 action-text">{{ button.text | async }}</span>
+          <ng-container *ngIf="button.icon | async as icon">
+            <i class="bi action-icon ms-2" [ngClass]="icon"></i>
+          </ng-container>
         </div>
       </a>
     </ng-container>

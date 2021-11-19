@@ -39,10 +39,14 @@ export class SegmentService {
           model.value = segment.value,
           model.risk = segment.risk,
           model.vulnerability = segment.vulnerability,
-          model.suggestedInvestment = segment.suggestedInvestment
+          model.calculatedVulnerability = segment.calculatedVulnerability,
+          model.optimalInvestment = segment.optimalInvestment,
+          model.expectedLossBeforeInvestment = segment.expectedLossBeforeInvestment,
+          model.expectedLossWithInvestment = segment.expectedLossWithInvestment,
+          model.totalCybersecurityCosts = segment.totalCybersecurityCosts
       }),
       switchMap(model => from(model.save())),
-      map(s => this.mapToSegment(s, s.companyId)),
+      map(segment => this.mapToSegment(segment, segment.companyId)),
     )));
   }
 
@@ -56,8 +60,11 @@ export class SegmentService {
       value: model.value,
       risk: model.risk,
       vulnerability: model.vulnerability,
-      suggestedInvestment: model.suggestedInvestment
+      calculatedVulnerability: model.calculatedVulnerability,
+      optimalInvestment: model.optimalInvestment,
+      expectedLossBeforeInvestment: model.expectedLossBeforeInvestment,
+      expectedLossWithInvestment: model.expectedLossWithInvestment,
+      totalCybersecurityCosts: model.totalCybersecurityCosts
     }
   }
-
 }

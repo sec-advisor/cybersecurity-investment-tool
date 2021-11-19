@@ -39,6 +39,13 @@ export class SegmentDataService {
     );
   }
 
+  calculateInvestmentWithoutSegmentation(segments: Segment[]): Observable<Partial<Segment>> {
+    return this.http.post<Partial<Segment>>(`api/segments/investment-calculation-without-segmentation`, segments).pipe(
+      catchError((err) => of({} as Partial<Segment>).pipe(
+        tap(() => console.error(err.error.message))))
+    );
+  }
+
   updateSegment(segment: Segment): Observable<Segment> {
     return this.http.patch<Segment>('api/segments/segment', segment).pipe(
       catchError(err => of({} as Segment).pipe(

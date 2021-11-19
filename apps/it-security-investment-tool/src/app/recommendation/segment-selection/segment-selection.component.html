@@ -11,7 +11,7 @@
           aria-current="true" (click)="segmentClick(segments, segment)">
           <div class="d-flex w-100 align-items-center justify-content-between">
             <strong class="mb-1">{{ segment.name }}</strong>
-            <small>{{ segment.suggestedInvestment | number }}$</small>
+            <small>{{ segment.optimalInvestment | number }}$</small>
           </div>
           <div class="col-10 mb-1 small">{{ segment.typeDescription }}</div>
         </a>

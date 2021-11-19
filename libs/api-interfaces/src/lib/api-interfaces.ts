@@ -27,7 +27,11 @@ export interface Segment {
   value: number;
   risk: number;
   vulnerability: number;
-  suggestedInvestment?: number;
+  calculatedVulnerability?: number;
+  optimalInvestment?: number;
+  expectedLossBeforeInvestment?: number;
+  expectedLossWithInvestment?: number;
+  totalCybersecurityCosts?: number;
 }
 
 export interface ValueEstimation {
@@ -41,4 +45,9 @@ export interface BusinessProfile {
   revenue: number;
   numberOfEmployees: number;
   region: string;
+}
+
+export interface OptimalInvestmentEquation {
+  breachProbabilityFunction: string;
+  optimalInvestmentEquation: string;
 }

@@ -2,13 +2,18 @@ import { Segment } from '@app/api-interfaces';
 import { Body, Controller, Delete, Get, HttpException, HttpStatus, Param, Patch, Post } from '@nestjs/common';
 import { catchError, map, Observable, of, switchMap, tap } from 'rxjs';
 
+import { OptimalInvestmentEquationService } from '../breach-probability/services/optimal-investment-equation.service';
 import { InvestmentCalculatorService } from './services/investment-calculator.service';
 import { SegmentService } from './services/segment.service';
 
 @Controller('segments')
 export class SegmentController {
 
-  constructor(private readonly segmentService: SegmentService, private investmentCalculatorService: InvestmentCalculatorService) { }
+  constructor(
+    private readonly breachProbabilityService: OptimalInvestmentEquationService,
+    private readonly investmentCalculatorService: InvestmentCalculatorService,
+    private readonly segmentService: SegmentService
+  ) { }
 
   @Post('segment')
   storeSegment(@Body() segment: Segment): Observable<string> {
@@ -48,16 +53,30 @@ export class SegmentController {
 
   @Post('investment-calculation')
   calculateInvestment(@Body() segments: Segment[]): Observable<Segment[]> {
-    return this.investmentCalculatorService.calculateInvestments(segments).pipe(
-      switchMap(segments => this.segmentService.updateSegments(segments))
+    console.log('investment-calculation')
+    return this.breachProbabilityService.getFunction().pipe(
+      switchMap(equation => this.investmentCalculatorService.calculateInvestments(segments, equation)),
+      switchMap(segments => this.segmentService.updateSegments(segments)),
+      catchError(() => of({} as Segment[]).pipe(
+        tap(() => { throw new HttpException('Calculattion of optimal investment failed!', HttpStatus.INTERNAL_SERVER_ERROR) })))
+    );
+  }
+
+  @Post('investment-calculation-without-segmentation')
+  calculateInvestmentWithoutSegmentation(@Body() segments: Segment[]): Observable<Partial<Segment>> {
+    console.log('investment-calculation-without-segmentation')
+    return this.breachProbabilityService.getFunction().pipe(
+      switchMap(equation => this.investmentCalculatorService.calculateInvestmentsWithoutSegmentation(segments, equation)),
+      catchError(() => of({} as Partial<Segment>).pipe(
+        tap(() => { throw new HttpException('Calculattion of optimal investment without segmentation failed!', HttpStatus.INTERNAL_SERVER_ERROR) })))
     );
   }
 
   @Patch('segment')
   updateSegment(@Body() segment: Segment): Observable<Segment> {
+    console.log('update')
     try {
-      return this.investmentCalculatorService.calculateInvestments([segment]).pipe(
-        switchMap(segments => this.segmentService.updateSegments(segments)),
+      return this.segmentService.updateSegments([segment]).pipe(
         map(segments => segments?.[0]),
         catchError(() => of({} as Segment).pipe(
           tap(() => { throw new HttpException('Update segment failed!', HttpStatus.INTERNAL_SERVER_ERROR) })))

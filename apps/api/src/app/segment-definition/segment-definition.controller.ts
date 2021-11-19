@@ -1,7 +1,7 @@
+import { SegmentDefinition, ValueEstimation } from '@app/api-interfaces';
 import { Body, Controller, Get, HttpException, HttpStatus, Post } from '@nestjs/common';
 import { catchError, Observable, of, tap } from 'rxjs';
 
-import { SegmentDefinition, ValueEstimation } from '../../../../../libs/api-interfaces/src';
 import { SegmentDefinitionService } from './services/segment-definition.service';
 
 @Controller('segment-definitions')
@@ -11,7 +11,6 @@ export class SegmentDefinitionController {
 
   @Get('definitions')
   getSegmentDefinitions(): Observable<SegmentDefinition[]> {
-    console.log('hit')
     try {
       return this.segmentDefinitionService.getSegmentDefinitions().pipe(
         catchError(() => of({} as SegmentDefinition[]).pipe(tap(() => {

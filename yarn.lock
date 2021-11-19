@@ -261,6 +261,15 @@
   resolved "https://devops.bt.siemens.com:443/artifactory/api/npm/npm-all/@angular/language-service/-/language-service-12.2.12.tgz#4885a40e33ae73c2dfabe596b3899768a5f27aaa"
   integrity sha1-SIWkDjOuc8Lfq+WWs4mXaKXyeqo=
 
+"@angular/localize@^13.0.2":
+  version "13.0.2"
+  resolved "https://devops.bt.siemens.com:443/artifactory/api/npm/npm-all/@angular/localize/-/localize-13.0.2.tgz#9a6c062fba1bcbe532e9e8228b7657b80ee7c9fe"
+  integrity sha1-mmwGL7oby+Uy6egii3ZXuA7nyf4=
+  dependencies:
+    "@babel/core" "7.8.6"
+    glob "7.2.0"
+    yargs "^17.2.1"
+
 "@angular/platform-browser-dynamic@^12.2.0":
   version "12.2.12"
   resolved "https://devops.bt.siemens.com:443/artifactory/api/npm/npm-all/@angular/platform-browser-dynamic/-/platform-browser-dynamic-12.2.12.tgz#38eb5c8aedc8d2ba661d9e76f1d8feab4fb5fba7"
@@ -327,6 +336,27 @@
     semver "^6.3.0"
     source-map "^0.5.0"
 
+"@babel/core@7.8.6":
+  version "7.8.6"
+  resolved "https://devops.bt.siemens.com:443/artifactory/api/npm/npm-all/@babel/core/-/core-7.8.6.tgz#27d7df9258a45c2e686b6f18b6c659e563aa4636"
+  integrity sha1-J9ffklikXC5oa28YtsZZ5WOqRjY=
+  dependencies:
+    "@babel/code-frame" "^7.8.3"
+    "@babel/generator" "^7.8.6"
+    "@babel/helpers" "^7.8.4"
+    "@babel/parser" "^7.8.6"
+    "@babel/template" "^7.8.6"
+    "@babel/traverse" "^7.8.6"
+    "@babel/types" "^7.8.6"
+    convert-source-map "^1.7.0"
+    debug "^4.1.0"
+    gensync "^1.0.0-beta.1"
+    json5 "^2.1.0"
+    lodash "^4.17.13"
+    resolve "^1.3.2"
+    semver "^5.4.1"
+    source-map "^0.5.0"
+
 "@babel/core@^7.1.0", "@babel/core@^7.12.3", "@babel/core@^7.7.2", "@babel/core@^7.7.5", "@babel/core@^7.8.6":
   version "7.16.0"
   resolved "https://devops.bt.siemens.com:443/artifactory/api/npm/npm-all/@babel/core/-/core-7.16.0.tgz#c4ff44046f5fe310525cc9eb4ef5147f0c5374d4"
@@ -357,7 +387,7 @@
     jsesc "^2.5.1"
     source-map "^0.5.0"
 
-"@babel/generator@^7.14.8", "@babel/generator@^7.16.0", "@babel/generator@^7.7.2":
+"@babel/generator@^7.14.8", "@babel/generator@^7.16.0", "@babel/generator@^7.7.2", "@babel/generator@^7.8.6":
   version "7.16.0"
   resolved "https://devops.bt.siemens.com:443/artifactory/api/npm/npm-all/@babel/generator/-/generator-7.16.0.tgz#d40f3d1d5075e62d3500bccb67f3daa8a95265b2"
   integrity sha1-1A89HVB15i01ALzLZ/PaqKlSZbI=
@@ -571,6 +601,15 @@
     "@babel/traverse" "^7.16.0"
     "@babel/types" "^7.16.0"
 
+"@babel/helpers@^7.8.4":
+  version "7.16.3"
+  resolved "https://devops.bt.siemens.com:443/artifactory/api/npm/npm-all/@babel/helpers/-/helpers-7.16.3.tgz#27fc64f40b996e7074dc73128c3e5c3e7f55c43c"
+  integrity sha1-J/xk9AuZbnB03HMSjD5cPn9VxDw=
+  dependencies:
+    "@babel/template" "^7.16.0"
+    "@babel/traverse" "^7.16.3"
+    "@babel/types" "^7.16.0"
+
 "@babel/highlight@^7.10.4", "@babel/highlight@^7.16.0":
   version "7.16.0"
   resolved "https://devops.bt.siemens.com:443/artifactory/api/npm/npm-all/@babel/highlight/-/highlight-7.16.0.tgz#6ceb32b2ca4b8f5f361fb7fd821e3fddf4a1725a"
@@ -584,6 +623,11 @@
   version "7.16.2"
   resolved "https://devops.bt.siemens.com:443/artifactory/api/npm/npm-all/@babel/parser/-/parser-7.16.2.tgz#3723cd5c8d8773eef96ce57ea1d9b7faaccd12ac"
   integrity sha1-NyPNXI2Hc+75bOV+odm3+qzNEqw=
+
+"@babel/parser@^7.16.3", "@babel/parser@^7.8.6":
+  version "7.16.4"
+  resolved "https://devops.bt.siemens.com:443/artifactory/api/npm/npm-all/@babel/parser/-/parser-7.16.4.tgz#d5f92f57cf2c74ffe9b37981c0e72fee7311372e"
+  integrity sha1-1fkvV88sdP/ps3mBwOcv7nMRNy4=
 
 "@babel/plugin-bugfix-v8-spread-parameters-in-optional-chaining@^7.14.5":
   version "7.16.0"
@@ -1240,7 +1284,7 @@
     "@babel/parser" "^7.14.5"
     "@babel/types" "^7.14.5"
 
-"@babel/template@^7.14.5", "@babel/template@^7.16.0", "@babel/template@^7.3.3":
+"@babel/template@^7.14.5", "@babel/template@^7.16.0", "@babel/template@^7.3.3", "@babel/template@^7.8.6":
   version "7.16.0"
   resolved "https://devops.bt.siemens.com:443/artifactory/api/npm/npm-all/@babel/template/-/template-7.16.0.tgz#d16a35ebf4cd74e202083356fab21dd89363ddd6"
   integrity sha1-0Wo16/TNdOICCDNW+rId2JNj3dY=
@@ -1260,6 +1304,21 @@
     "@babel/helper-hoist-variables" "^7.16.0"
     "@babel/helper-split-export-declaration" "^7.16.0"
     "@babel/parser" "^7.16.0"
+    "@babel/types" "^7.16.0"
+    debug "^4.1.0"
+    globals "^11.1.0"
+
+"@babel/traverse@^7.16.3", "@babel/traverse@^7.8.6":
+  version "7.16.3"
+  resolved "https://devops.bt.siemens.com:443/artifactory/api/npm/npm-all/@babel/traverse/-/traverse-7.16.3.tgz#f63e8a938cc1b780f66d9ed3c54f532ca2d14787"
+  integrity sha1-9j6Kk4zBt4D2bZ7TxU9TLKLRR4c=
+  dependencies:
+    "@babel/code-frame" "^7.16.0"
+    "@babel/generator" "^7.16.0"
+    "@babel/helper-function-name" "^7.16.0"
+    "@babel/helper-hoist-variables" "^7.16.0"
+    "@babel/helper-split-export-declaration" "^7.16.0"
+    "@babel/parser" "^7.16.3"
     "@babel/types" "^7.16.0"
     debug "^4.1.0"
     globals "^11.1.0"
@@ -5308,7 +5367,7 @@ gauge@~2.7.3:
     strip-ansi "^3.0.1"
     wide-align "^1.1.0"
 
-gensync@^1.0.0-beta.2:
+gensync@^1.0.0-beta.1, gensync@^1.0.0-beta.2:
   version "1.0.0-beta.2"
   resolved "https://devops.bt.siemens.com:443/artifactory/api/npm/npm-all/gensync/-/gensync-1.0.0-beta.2.tgz#32a6ee76c3d7f52d46b2b1ae5d93fea8580a25e0"
   integrity sha1-MqbudsPX9S1GsrGuXZP+qFgKJeA=
@@ -5429,7 +5488,7 @@ glob@7.1.7:
     once "^1.3.0"
     path-is-absolute "^1.0.0"
 
-glob@^7.0.3, glob@^7.1.1, glob@^7.1.2, glob@^7.1.3, glob@^7.1.4, glob@^7.1.6:
+glob@7.2.0, glob@^7.0.3, glob@^7.1.1, glob@^7.1.2, glob@^7.1.3, glob@^7.1.4, glob@^7.1.6:
   version "7.2.0"
   resolved "https://devops.bt.siemens.com:443/artifactory/api/npm/npm-all/glob/-/glob-7.2.0.tgz#d15535af7732e02e948f4c41628bd910293f6023"
   integrity sha1-0VU1r3cy4C6Uj0xBYovZECk/YCM=
@@ -6942,7 +7001,7 @@ json3@^3.3.3:
   resolved "https://devops.bt.siemens.com:443/artifactory/api/npm/npm-all/json3/-/json3-3.3.3.tgz#7fc10e375fc5ae42c4705a5cc0aa6f62be305b81"
   integrity sha1-f8EON1/FrkLEcFpcwKpvYr4wW4E=
 
-json5@2.x, json5@^2.1.2:
+json5@2.x, json5@^2.1.0, json5@^2.1.2:
   version "2.2.0"
   resolved "https://devops.bt.siemens.com:443/artifactory/api/npm/npm-all/json5/-/json5-2.2.0.tgz#2dfefe720c6ba525d9ebd909950f0515316c89a3"
   integrity sha1-Lf7+cgxrpSXZ69kJlQ8FFTFsiaM=
@@ -7218,7 +7277,7 @@ lodash.uniq@^4.5.0:
   resolved "https://devops.bt.siemens.com:443/artifactory/api/npm/npm-all/lodash.uniq/-/lodash.uniq-4.5.0.tgz#d0225373aeb652adc1bc82e4945339a842754773"
   integrity sha1-0CJTc662Uq3BvILklFM5qEJ1R3M=
 
-lodash@4.x, lodash@^4.17.11, lodash@^4.17.14, lodash@^4.17.20, lodash@^4.17.21, lodash@^4.7.0:
+lodash@4.x, lodash@^4.17.11, lodash@^4.17.13, lodash@^4.17.14, lodash@^4.17.20, lodash@^4.17.21, lodash@^4.7.0:
   version "4.17.21"
   resolved "https://devops.bt.siemens.com:443/artifactory/api/npm/npm-all/lodash/-/lodash-4.17.21.tgz#679591c564c3bffaae8454cf0b3df370c3d6911c"
   integrity sha1-Z5WRxWTDv/quhFTPCz3zcMPWkRw=
@@ -7713,6 +7772,11 @@ neo-async@^2.6.2:
   version "2.6.2"
   resolved "https://devops.bt.siemens.com:443/artifactory/api/npm/npm-all/neo-async/-/neo-async-2.6.2.tgz#b4aafb93e3aeb2d8174ca53cf163ab7d7308305f"
   integrity sha1-tKr7k+OustgXTKU88WOrfXMIMF8=
+
+nerdamer@^1.1.13:
+  version "1.1.13"
+  resolved "https://devops.bt.siemens.com:443/artifactory/api/npm/npm-all/nerdamer/-/nerdamer-1.1.13.tgz#221059ddd6232c34a459a0b00c5bb697c155d964"
+  integrity sha1-IhBZ3dYjLDSkWaCwDFu2l8FV2WQ=
 
 ngx-bootstrap@^7.1.0:
   version "7.1.0"
@@ -9489,7 +9553,7 @@ resolve.exports@^1.1.0:
   resolved "https://devops.bt.siemens.com:443/artifactory/api/npm/npm-all/resolve.exports/-/resolve.exports-1.1.0.tgz#5ce842b94b05146c0e03076985d1d0e7e48c90c9"
   integrity sha1-XOhCuUsFFGwOAwdphdHQ5+SMkMk=
 
-resolve@1.20.0, resolve@^1.1.7, resolve@^1.10.0, resolve@^1.14.2, resolve@^1.20.0:
+resolve@1.20.0, resolve@^1.1.7, resolve@^1.10.0, resolve@^1.14.2, resolve@^1.20.0, resolve@^1.3.2:
   version "1.20.0"
   resolved "https://devops.bt.siemens.com:443/artifactory/api/npm/npm-all/resolve/-/resolve-1.20.0.tgz#629a013fb3f70755d6f0b7935cc1c2c5378b1975"
   integrity sha1-YpoBP7P3B1XW8LeTXMHCxTeLGXU=
@@ -9676,7 +9740,7 @@ selfsigned@^1.10.8:
   dependencies:
     node-forge "^0.10.0"
 
-"semver@2 || 3 || 4 || 5", semver@^5.5.0, semver@^5.6.0:
+"semver@2 || 3 || 4 || 5", semver@^5.4.1, semver@^5.5.0, semver@^5.6.0:
   version "5.7.1"
   resolved "https://devops.bt.siemens.com:443/artifactory/api/npm/npm-all/semver/-/semver-5.7.1.tgz#a954f931aeba508d307bbf069eff0c01c96116f7"
   integrity sha1-qVT5Ma66UI0we78Gnv8MAclhFvc=
@@ -11432,7 +11496,7 @@ yargs@^16.2.0:
     y18n "^5.0.5"
     yargs-parser "^20.2.2"
 
-yargs@^17.0.0:
+yargs@^17.0.0, yargs@^17.2.1:
   version "17.2.1"
   resolved "https://devops.bt.siemens.com:443/artifactory/api/npm/npm-all/yargs/-/yargs-17.2.1.tgz#e2c95b9796a0e1f7f3bf4427863b42e0418191ea"
   integrity sha1-4slbl5ag4ffzv0QnhjtC4EGBkeo=

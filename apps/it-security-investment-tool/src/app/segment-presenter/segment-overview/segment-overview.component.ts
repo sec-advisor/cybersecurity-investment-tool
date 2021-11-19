@@ -1,58 +1,48 @@
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Segment } from '@app/api-interfaces';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { catchError, from, map, Observable, of, Subscriber, switchMap } from 'rxjs';
+import { map, Observable, of, switchMap, tap } from 'rxjs';
 
-import { DangerModalComponent } from '../../layouts/danger-modal/danger-modal.component';
+import { SegmentDataService } from '../../services/backend/segment-data.service';
 import { StorageService } from '../../services/storage.service';
-import { SegmentRegistratorComponent } from '../segment-registrator/segment-registrator.component';
+import { SegmentPresenterActionService } from '../services/segment-presenter-action.service';
 
 @Component({
   selector: 'app-segment-overview',
   templateUrl: './segment-overview.component.html',
   styleUrls: ['./segment-overview.component.scss']
 })
-export class SegmentOverviewComponent implements OnInit, OnDestroy {
+export class SegmentOverviewComponent implements OnInit {
 
-  private subscriber = new Subscriber();
+  stream$!: Observable<{ segments: Segment[], totalInvestment: number | undefined, withoutSegmentation: Partial<Segment> | undefined }>;
 
-  stream$!: Observable<{ segments: Segment[], totalInvestment: number | undefined }>;
-
-  @ViewChild(SegmentRegistratorComponent) segmentModal?: SegmentRegistratorComponent;
-
-  constructor(private storageService: StorageService, private moalService: NgbModal) {
+  constructor(
+    private segmentDataService: SegmentDataService,
+    private storageService: StorageService,
+    public segmentPresenterActionService: SegmentPresenterActionService
+  ) {
   }
 
   ngOnInit(): void {
     this.stream$ = this.storageService.getSegments().pipe(
+      tap(() => this.segmentPresenterActionService.startLoading()),
+      switchMap(segments => segments.length > 0 ? this.segmentDataService.calculateInvestment(segments) : of(segments)),
       map(segments => ({
         segments,
-        totalInvestment: segments.every(s => Number.isFinite(s.suggestedInvestment)) ?
+        totalInvestment: segments.length > 0 && segments.every(s => Number.isFinite(s.optimalInvestment)) ?
           this.getTotalInvestment(segments) :
           undefined
-      }))
+      })),
+      switchMap(viewModel => (viewModel.segments.length > 0 ?
+        this.segmentDataService.calculateInvestmentWithoutSegmentation(viewModel.segments) :
+        of(undefined as unknown as Partial<Segment>)
+      ).pipe(
+        map(withoutSegmentation => ({ ...viewModel, withoutSegmentation })),
+        tap(() => this.segmentPresenterActionService.stopLoading())
+      ))
     );
   }
 
-  ngOnDestroy(): void {
-    this.subscriber.unsubscribe();
-  }
-
-  removeSegment(segment: Segment): void {
-    if (segment.id) {
-      this.subscriber.add(from(this.moalService.open(DangerModalComponent).result).pipe(
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        switchMap(() => this.storageService.removeSegment(segment.id!)),
-        catchError(() => of(undefined))
-      ).subscribe())
-    }
-  }
-
-  editSegment(segment: Segment): void {
-    this.segmentModal?.openSegmentDialog(segment);
-  }
-
   private getTotalInvestment(segments: Segment[]): number {
-    return segments.reduce((pre, curr) => pre + (curr?.suggestedInvestment || 0), 0);
+    return segments.reduce((pre, curr) => pre + (curr?.optimalInvestment || 0), 0);
   }
 }

@@ -1,47 +1,16 @@
 <ng-container *ngIf="stream$ | async as stream">
+
   <ng-container *ngIf="stream.segments.length > 0; else default">
-    <div class="container pt-3">
-      <table class="table table-bordered table-hover table-striped">
-        <thead>
-          <tr>
-            <th class="text-center" scope="col">Name</th>
-            <th class="text-center" scope="col">Type</th>
-            <th class="text-center" scope="col">Risk(%)</th>
-            <th class="text-center" scope="col">Vulnerability(%)</th>
-            <th class="text-center" scope="col">Value($)</th>
-            <th class="text-center" scope="col">Suggested Investment($)</th>
-            <th class="text-center" scope="col">Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let segment of stream.segments; index as i">
-            <td scope="row">{{ segment.name }}</td>
-            <td>{{ segment.typeDescription }}</td>
-            <td class="text-end">{{ segment.risk}}</td>
-            <td class="text-end">{{ segment.vulnerability }}</td>
-            <td class="text-end">{{ segment.value | number }}</td>
-            <td class="text-end">{{ segment.suggestedInvestment | number }}</td>
-            <td class="text-center">
-              <button type="button" class="bi bi-pencil-fill text-secondary icon-button me-2" aria-label="Delete"
-                (click)="editSegment(segment)">
-              </button>
-              <button type="button" class="bi bi-trash text-danger icon-button" aria-label="Delete"
-                (click)="removeSegment(segment)">
-              </button>
-            </td>
-          </tr>
-        </tbody>
-        <tfoot *ngIf="stream.totalInvestment">
-          <tr class="border-0">
-            <td class="border-0" colspan="5"></td>
-            <td class="d-flex justify-content-between text-end border-bottom border-dark" colspan="2">
-              <span class="fw-bold">Total($):</span>
-              <span class="fw-bold">{{ stream.totalInvestment | number }}</span>
-            </td>
-          </tr>
-        </tfoot>
-      </table>
-    </div>
+
+    <app-segment-detail-table *ngIf="(segmentPresenterActionService.getView() | async) === 'detail'"
+      [segments]="stream.segments">
+    </app-segment-detail-table>
+
+    <app-segment-overview-table *ngIf="(segmentPresenterActionService.getView() | async) === 'overview'"
+      [data]="stream">
+
+    </app-segment-overview-table>
+
   </ng-container>
 
   <ng-template #default>
@@ -52,5 +21,3 @@
     </div>
   </ng-template>
 </ng-container>
-
-<app-segment-registrator></app-segment-registrator>

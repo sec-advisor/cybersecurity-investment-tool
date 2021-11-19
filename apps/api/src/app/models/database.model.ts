@@ -35,6 +35,17 @@ export const SegmentSchema = new mongoose.Schema(
     value: Number,
     risk: Number,
     vulnerability: Number,
-    suggestedInvestment: Number
+    calculatedVulnerability: Number,
+    optimalInvestment: Number,
+    expectedLossBeforeInvestment: Number,
+    expectedLossWithInvestment: Number,
+    totalCybersecurityCosts: Number
+  }
+)
+
+export const OptimalInvestmentEquationSchema = new mongoose.Schema(
+  {
+    breachProbabilityFunction: String,
+    optimalInvestmentEquation: String
   }
 )
