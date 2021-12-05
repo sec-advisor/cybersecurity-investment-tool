@@ -1,10 +1,26 @@
+@import 'bootstrap/scss/bootstrap.scss';
+
 .segments-overview {
   height: 100%;
   max-width: 380px;
-  border-color: #f8f9fa;
+  border-color: $gray-300;
   border-width: medium;
   border-style: solid;
   width: 300px;
+
+  .header {
+    background-color: $gray-300;
+  }
+
+  .scrollarea {
+    background-color: $gray-200;
+  }
+
+  .segment {
+    &.inactive {
+      background-color: $gray-100;
+    }
+  }
 
   .margin-right {
     margin-right: 15px;

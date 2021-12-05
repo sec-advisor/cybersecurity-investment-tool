@@ -5,7 +5,8 @@ export interface Message {
 export interface SegmentDefinition {
   key: string;
   description: string;
-  valueEstimation: {
+  supportedThreats: { label: string, values: string[] }[];
+  valueEstimation?: {
     inputs: Input[];
     calculation: string;
   }
@@ -50,4 +51,17 @@ export interface BusinessProfile {
 export interface OptimalInvestmentEquation {
   breachProbabilityFunction: string;
   optimalInvestmentEquation: string;
+}
+
+
+export interface RecommendationProfile {
+  region: string[];
+  budget: number;
+  budgetWeight: number;
+  serviceType: string[];
+  attackType: string[];
+  deploymentTime: string;
+  deploymentTimeWeight: number;
+  leasingPeriod: string;
+  leasingPeriodWeight: number;
 }

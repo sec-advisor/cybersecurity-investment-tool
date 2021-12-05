@@ -1,0 +1,40 @@
+<div *ngIf="recommendations$ | async as recommendations" class="content-wrapper">
+  <div class="card text-dark bg-white mb-3">
+    <div class="card-header card-header-wrapper fw-bold text-center">Recommendations</div>
+    <div class="card-body card-inner d-flex">
+      <ng-container *ngIf="recommendations.length > 0; else empty">
+        <ng-container *ngFor="let recommendation of recommendations">
+          <div class="card text-dark bg-light m-2" style="min-width: 20rem;">
+            <div class="card-header bg-light text-center">
+              <img class="image mb-2" [src]="getImage(recommendation.image)">
+              <h5 class="fw-bold">
+                {{ recommendation.providerName }}
+              </h5>
+            </div>
+            <div class="card-body">
+              <p class="card-text">{{ recommendation.description }}</p>
+            </div>
+            <div class="card-footer text-small d-flex justify-content-between align-items-center">
+              <div>
+                Deployment Time:
+                <small class="fw-bold">{{ recommendation.deployment }}</small>
+                <br>
+                Leasing Period:
+                <small class="fw-bold">{{ recommendation.leasingPeriod }}
+                </small>
+              </div>
+              <span class="badge rounded-pill bg-primary">{{ recommendation.price | number }}$</span>
+            </div>
+          </div>
+        </ng-container>
+      </ng-container>
+
+      <ng-template #empty>
+        <div class="w-100 text-center">
+          No recommendations found.
+        </div>
+      </ng-template>
+
+    </div>
+  </div>
+</div>

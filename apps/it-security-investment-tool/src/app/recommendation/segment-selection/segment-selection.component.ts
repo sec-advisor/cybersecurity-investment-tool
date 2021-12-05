@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 
 import { SegmentViewModel } from '../models/recommendation-view.model';
+import { RecommendationService } from '../services/recommendation.service';
 
 @Component({
   selector: 'app-segment-selection',
@@ -11,9 +12,13 @@ export class SegmentSelectionComponent {
 
   @Input() segments?: SegmentViewModel[];
 
-  segmentClick(segments: SegmentViewModel[], selectedSegment: SegmentViewModel): void {
-    segments.forEach(segment => segment.isActive = false);
-    selectedSegment.isActive = true;
+  constructor(
+    private recommendationService: RecommendationService
+  ) { }
+
+  segmentClick(segment: SegmentViewModel): void {
+    this.recommendationService.setSelectedSegment(segment);
+    this.recommendationService.setRecommendations(undefined);
   }
 
 }

@@ -7,6 +7,7 @@ import { OptimalInvestmentEquationModule } from './breach-probability/optimal-in
 import { BusinessProfileModule } from './business-profile/business-profile.module';
 import { SegmentDefinitionModule } from './segment-definition/segment-definition.module';
 import { SegmentModule } from './segment/segment.module';
+import { RecommendationModule } from './recommendation/recommendation.module';
 
 @Module({
   imports: [
@@ -14,7 +15,8 @@ import { SegmentModule } from './segment/segment.module';
     MongooseModule.forRoot('mongodb+srv://investor:uYqBIlR3aT1dYpNo@cluster0.4ehbr.mongodb.net/investment-calculator?retryWrites=true&w=majority'),
     BusinessProfileModule,
     SegmentDefinitionModule,
-    OptimalInvestmentEquationModule
+    OptimalInvestmentEquationModule,
+    RecommendationModule
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -1,0 +1,21 @@
+@import 'bootstrap/scss/bootstrap.scss';
+
+.card-header-wrapper {
+  background-color: $gray-400;
+}
+
+.card-inner {
+  overflow: auto;
+}
+
+.image {
+  height: 40px;
+}
+
+.footer-text {
+  font-weight: 300;
+}
+
+.badge {
+  height: 20px;
+}

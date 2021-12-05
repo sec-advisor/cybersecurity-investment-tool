@@ -21,9 +21,10 @@
               </div>
               <div class="right-form">
                 <label for="employees">Number of Employees:</label>
-                <input id="employees" class="form-control" type="number" min="1" tabindex="2" formControlName="employees">
-                <label for="region">Region:</label>
+                <input id="employees" class="form-control" type="number" min="1" tabindex="2"
+                  formControlName="employees">
 
+                <label for="region">Region:</label>
                 <select id="region-selection" class="form-select" aria-label="Region selection" tabindex="4"
                   formControlName="region">
                   <ng-container *ngFor="let region of regions">
@@ -43,7 +44,8 @@
                 </ng-container>
 
                 <ng-template #editMode>
-                  <button type="button" class="btn btn-primary" tabindex="5" [disabled]="stream.form.invalid || stream.form.pristine"
+                  <button type="button" class="btn btn-primary" tabindex="5"
+                    [disabled]="stream.form.invalid || stream.form.pristine"
                     (click)="update(stream.form, stream.profileId)">
                     Update
                   </button>

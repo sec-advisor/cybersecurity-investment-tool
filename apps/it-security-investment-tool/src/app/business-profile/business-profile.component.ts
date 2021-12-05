@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { BusinessProfile } from '@app/api-interfaces';
 import { map, merge, Observable, of, Subject, switchMap, tap } from 'rxjs';
 
+import { regions } from '../constants/regions.constant';
 import { StorageService } from '../services/storage.service';
 
 @Component({
@@ -12,17 +13,10 @@ import { StorageService } from '../services/storage.service';
 })
 export class BusinessProfileComponent implements OnInit {
 
+  readonly regions = regions;
   readonly reloadProfile$ = new Subject<void>();
   isEditMode = false;
   stream$!: Observable<{ form: FormGroup, profileId: string | undefined }>;
-  readonly regions = [
-    { key: 'westernEuropa', value: 'Western Europe' },
-    { key: 'centralEasternEuropa', value: 'Central and Eastern Europa' },
-    { key: 'asia', value: 'Asia' },
-    { key: 'africa', value: 'Western Europe' },
-    { key: 'middleEast', value: 'Mediterranean & Middle East' },
-    { key: 'western-europa', value: 'Western Europe' },
-  ]
 
   constructor(
     private formBuilder: FormBuilder,
@@ -40,7 +34,7 @@ export class BusinessProfileComponent implements OnInit {
           company: [profile?.companyName, [Validators.required]],
           revenue: [profile?.revenue, [Validators.required, Validators.min(1)]],
           employees: [profile?.numberOfEmployees, [Validators.required, Validators.min(1)]],
-          region: [this.getRegionKey(profile?.region), [Validators.required]],
+          region: [profile?.region, [Validators.required]],
         }),
         profile
       })),
@@ -94,17 +88,12 @@ export class BusinessProfileComponent implements OnInit {
     }
   }
 
-
-  private getRegionKey(region: string | undefined): string | undefined {
-    return region ? this.regions.find(r => r.value = region)?.key : undefined;
-  }
-
   private getProfileFromForm(form: FormGroup): BusinessProfile | undefined {
     const profile = {
       companyName: form.get('company')?.value,
       revenue: form.get('revenue')?.value,
       numberOfEmployees: form.get('employees')?.value,
-      region: this.regions.find(region => region.key === form.get('region')?.value)?.value as string,
+      region: form.get('region')?.value,
     }
     return Object.values(profile).every(value => value !== undefined) ? profile : undefined;
   }

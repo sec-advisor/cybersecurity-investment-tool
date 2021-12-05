@@ -25,7 +25,9 @@ export class SegmentOverviewComponent implements OnInit {
   ngOnInit(): void {
     this.stream$ = this.storageService.getSegments().pipe(
       tap(() => this.segmentPresenterActionService.startLoading()),
-      switchMap(segments => segments.length > 0 ? this.segmentDataService.calculateInvestment(segments) : of(segments)),
+      switchMap(segments => segments.length > 0 && segments.some(segment => !Number.isFinite(segment.optimalInvestment)) ?
+        this.segmentDataService.calculateInvestment(segments).pipe(tap(segments => this.storageService.updateSegments(segments))) :
+        of(segments)),
       map(segments => ({
         segments,
         totalInvestment: segments.length > 0 && segments.every(s => Number.isFinite(s.optimalInvestment)) ?

@@ -26,7 +26,8 @@
         <div class="form-group">
 
           <!-- Toggle valuation support -->
-          <div *ngIf="isSegmentTypeSelected(stream.form)" class=" toggle-wrapper margin-top">
+          <div *ngIf="isSegmentTypeSelected(stream.form) && selectedSegment?.valueEstimation"
+            class=" toggle-wrapper margin-top">
             <label>Enable value estimation:</label>
 
             <div class="radio-buttons">
@@ -44,7 +45,8 @@
           </div>
 
           <!-- Value Estimation -->
-          <fieldset *ngIf="isSegmentTypeSelected(stream.form) && selectedSegment && supportValueEstimation"
+          <fieldset
+            *ngIf="isSegmentTypeSelected(stream.form) && selectedSegment && supportValueEstimation && selectedSegment.valueEstimation"
             class="form-group margin-top">
             <div class="row">
               <legend class="col-form-label col-sm-2 pt-0">Value Estimation:</legend>

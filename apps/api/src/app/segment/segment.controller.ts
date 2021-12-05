@@ -72,7 +72,6 @@ export class SegmentController {
 
   @Patch('segment')
   updateSegment(@Body() segment: Segment): Observable<Segment> {
-    console.log('update')
     try {
       return this.segmentService.updateSegments([segment]).pipe(
         map(segments => segments?.[0]),

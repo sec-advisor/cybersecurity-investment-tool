@@ -4,6 +4,7 @@ import localeDECH from '@angular/common/locales/de-CH';
 import { LOCALE_ID, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { RouteReuseStrategy } from '@angular/router';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -12,6 +13,7 @@ import { BusinessProfileModule } from './business-profile/business-profile.modul
 import { HomeModule } from './home/home.module';
 import { LayoutsModule } from './layouts/layouts.module';
 import { RecommendationModule } from './recommendation/recommendation.module';
+import { CustomReuseStrategy } from './routing';
 import { SegmentPresenterModule } from './segment-presenter/segment-presenter.module';
 
 registerLocaleData(localeDECH);
@@ -31,7 +33,10 @@ registerLocaleData(localeDECH);
     RecommendationModule,
     BrowserAnimationsModule,
   ],
-  providers: [{ provide: LOCALE_ID, useValue: 'de-CH' },],
+  providers: [
+    { provide: LOCALE_ID, useValue: 'de-CH' },
+    { provide: RouteReuseStrategy, useClass: CustomReuseStrategy },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule { }

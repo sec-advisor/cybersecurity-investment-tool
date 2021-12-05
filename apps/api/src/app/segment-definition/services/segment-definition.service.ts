@@ -15,7 +15,8 @@ export class SegmentDefinitionService {
       map(segments => segments.map(segment => ({
         key: segment.key,
         description: segment.description,
-        valueEstimation: segment.valueEstimation
+        valueEstimation: segment.valueEstimation?.inputs?.length > 0 ? segment.valueEstimation : undefined,
+        supportedThreats: segment.supportedThreats
       } as SegmentDefinition)))
     );
   }

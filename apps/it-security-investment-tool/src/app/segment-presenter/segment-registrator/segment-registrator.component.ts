@@ -96,7 +96,7 @@ export class SegmentRegistratorComponent implements OnInit, OnDestroy {
   calculateValue(stream: SegmentRegistrationViewModel): void {
     this.segmentDefinitionDataService.estimateValue(
       this.selectedSegment,
-      this.selectedSegment?.valueEstimation.inputs.map(input => ({ key: input.key, value: +stream.form.get(input.key)?.value }))
+      this.selectedSegment?.valueEstimation?.inputs.map(input => ({ key: input.key, value: +stream.form.get(input.key)?.value }))
     ).pipe(
       // TODO CH: Hanlde error properly
       catchError((err) => of(console.error(err.error.message))),
@@ -134,7 +134,7 @@ export class SegmentRegistratorComponent implements OnInit, OnDestroy {
 
   private addDynamicInputsControls(form: FormGroup, segments: SegmentDefinition[], type: string): void {
     const selectedSegment = segments.find(segment => segment.key === type);
-    selectedSegment?.valueEstimation.inputs.forEach(input => form.addControl(input.key, new FormControl(0)))
+    selectedSegment?.valueEstimation?.inputs.forEach(input => form.addControl(input.key, new FormControl(0)))
     this.selectedSegment = selectedSegment;
   }
 

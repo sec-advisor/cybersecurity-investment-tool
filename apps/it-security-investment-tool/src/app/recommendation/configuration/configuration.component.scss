@@ -1,0 +1,14 @@
+@import 'bootstrap/scss/bootstrap.scss';
+
+.card-header {
+  background-color: $gray-400;
+}
+
+.submit-button {
+  float: right;
+}
+
+.disabled {
+  background-color: white !important;
+  opacity: 0.5 !important;
+}

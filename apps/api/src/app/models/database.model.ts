@@ -6,10 +6,16 @@ const inputType = new mongoose.Schema({
   type: String
 });
 
+const supportedThread = new mongoose.Schema({
+  label: String,
+  values: [String],
+});
+
 export const SegmentDefinitionSchema = new mongoose.Schema(
   {
     key: String,
     description: String,
+    supportedThreats: [supportedThread],
     valueEstimation: {
       inputs: [inputType],
       calculation: String

@@ -14,8 +14,7 @@ export class BusinessProfileDataService {
   constructor(
     private http: HttpClient,
     private storeService: LocalStorageService,
-  ) {
-  }
+  ) { }
 
   storeProfile(profile: BusinessProfile): Observable<string> {
     return this.http.post<string>('api/business-profiles/profiles', profile).pipe(

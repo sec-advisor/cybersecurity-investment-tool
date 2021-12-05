@@ -1,5 +1,15 @@
 :host {
   .content-wrapper {
     height: calc(100% - 56px);
+    max-width: calc(100vw - 330px);
+  }
+
+  .content-inner {
+    overflow-x: hidden;
+    overflow-y: auto;
+
+    .row-wrapper {
+      width: 90%;
+    }
   }
 }
