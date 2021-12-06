@@ -114,27 +114,11 @@ export class ConfigurationComponent implements OnInit, OnChanges {
         tap(console.log),
         // Remove duplications
         map((recommendations: any[]) =>
-          recommendations.reduce((pre, curr) => [...pre, ...[pre.find((p: any) => p.id === curr.id) ? undefined : curr]], [])
+          recommendations.reduce((pre, curr) => [...pre, ...[pre.find((p: any) => p && p.id === curr.id) ? undefined : curr]], [])
             .filter((value: any) => !!value)
         ),
-        tap(console.log),
         tap(recommendations => this.recommendationService.setRecommendations(recommendations))
       ).subscribe()
-
-      // this.recommendationDataService.recommend({
-      //   region: [stream.form.get('region')!.value],
-      //   budget: stream.form.get('investment')!.value,
-      //   budgetWeight: 1,
-      //   serviceType: [stream.form.get('serviceType')!.value],
-      //   attackType,
-      //   deploymentTime: stream.form.get('deploymentTime')!.value,
-      //   deploymentTimeWeight: 1,
-      //   leasingPeriod: stream.form.get('leasingPeriod')!.value,
-      //   leasingPeriodWeight: 1,
-      // }).pipe(
-      //   first(),
-      //   tap(recommendations => this.recommendationService.setRecommendations(recommendations))
-      // ).subscribe();
     } else {
       throw new Error('Could not find matching attack type');
     }
@@ -152,10 +136,15 @@ export class ConfigurationComponent implements OnInit, OnChanges {
   }
 
   private getAttacks(segmentDefinitions: SegmentDefinition[], segment: Segment) {
-    const attackTypes = segmentDefinitions.find(definition => definition.key === segment.type)?.supportedThreats;
-    return {
-      attackTypeLabels: attackTypes?.map(t => t.label),
-      attackTypes
+    let attackTypes = segmentDefinitions.find(definition => definition.key === segment.type)?.supportedThreats;
+    if (attackTypes) {
+      attackTypes = attackTypes.length > 1 ? [{ label: 'All', values: attackTypes.reduce((pre, curr) => [...pre, ...curr.values], [] as string[]) }, ...attackTypes] : attackTypes;
+      return {
+        attackTypeLabels: attackTypes?.map(t => t.label),
+        attackTypes
+      }
+    } else {
+      throw new Error('Find attack types failed');
     }
   }
 }
