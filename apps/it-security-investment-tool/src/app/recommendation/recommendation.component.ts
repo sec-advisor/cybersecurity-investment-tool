@@ -20,9 +20,9 @@ export class RecommendationComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.stream$ = this.storageService.getSegments().pipe(
-      switchMap(segments => this.recommendationService.getSelectedSegment().pipe(
-        map(selectedSegment => ({ segments, selectedSegment: segments.find(segment => segment.id === selectedSegment?.id) })))),
+    this.stream$ = this.storageService.getSegments(true).pipe(
+      switchMap(segments => this.recommendationService.getSelectedSegmentId().pipe(map(selectedSegmentId => ({ segments, selectedSegmentId })))),
+      map(({ segments, selectedSegmentId }) => ({ segments, selectedSegment: segments.find(segment => segment.id === selectedSegmentId) })),
       map(({ segments, selectedSegment }) => ({
         segments: segments.map(segment => ({ ...segment, isActive: segment.id === selectedSegment?.id })),
         selectedSegment

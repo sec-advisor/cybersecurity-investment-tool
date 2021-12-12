@@ -1,14 +1,14 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { BusinessProfile, Segment, SegmentDefinition } from '@app/api-interfaces';
-import { first, forkJoin, map, Observable, Subject, switchMap, tap } from 'rxjs';
+import { BusinessProfile, RecommendationProfile, Segment, SegmentDefinition } from '@app/api-interfaces';
+import { first, forkJoin, map, Observable, Subject, switchMap } from 'rxjs';
 
 import { regions } from '../../constants/regions.constant';
+import { AppSegment } from '../../models/app-segment.model';
 import { RecommendationDataService } from '../../services/backend/recommendation-data.service';
 import { SegmentDefinitionDataService } from '../../services/backend/segment-definition-data.service';
 import { StorageService } from '../../services/storage.service';
 import { ConfigurationViewModel } from '../models/configuration-view.model';
-import { RecommendationService } from '../services/recommendation.service';
 
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 @Component({
@@ -66,11 +66,10 @@ export class ConfigurationComponent implements OnInit, OnChanges {
   readonly regions = regions;
   stream$!: Observable<ConfigurationViewModel>;
 
-  @Input() segment?: Segment;
+  @Input() segment?: AppSegment;
 
   constructor(
     private formGroup: FormBuilder,
-    private recommendationService: RecommendationService,
     private recommendationDataService: RecommendationDataService,
     private segmentDefinitionDataService: SegmentDefinitionDataService,
     private storageService: StorageService
@@ -95,43 +94,52 @@ export class ConfigurationComponent implements OnInit, OnChanges {
   }
 
   submit(stream: ConfigurationViewModel): void {
-    const attackType = stream.attackTypes?.find(attack => attack.label === stream.form.get('attackType')!.value)?.values;
+    const recommendationProfile: RecommendationProfile = {
+      region: [stream.form.get('region')!.value],
+      budget: stream.form.get('investment')!.value,
+      budgetWeight: 1,
+      serviceType: [stream.form.get('serviceType')!.value],
+      attackType: [stream.form.get('attackType')!.value],
+      deploymentTime: stream.form.get('deploymentTime')!.value,
+      deploymentTimeWeight: 1,
+      leasingPeriod: stream.form.get('leasingPeriod')!.value,
+      leasingPeriodWeight: 1,
+    }
 
+    const attackType = stream.attackTypes?.find(attack => attack.label === stream.form.get('attackType')!.value)?.values;
     if (attackType) {
       forkJoin(attackType.map(type => this.recommendationDataService.recommend({
-        region: [stream.form.get('region')!.value],
-        budget: stream.form.get('investment')!.value,
-        budgetWeight: 1,
-        serviceType: [stream.form.get('serviceType')!.value],
-        attackType: [type],
-        deploymentTime: stream.form.get('deploymentTime')!.value,
-        deploymentTimeWeight: 1,
-        leasingPeriod: stream.form.get('leasingPeriod')!.value,
-        leasingPeriodWeight: 1,
+        ...recommendationProfile,
+        attackType: [type]
       }))).pipe(
         first(),
         map(nestedRecommendations => nestedRecommendations.reduce((pre, curr) => [...pre, ...curr], [])),
-        tap(console.log),
         // Remove duplications
         map((recommendations: any[]) =>
           recommendations.reduce((pre, curr) => [...pre, ...[pre.find((p: any) => p && p.id === curr.id) ? undefined : curr]], [])
             .filter((value: any) => !!value)
         ),
-        tap(recommendations => this.recommendationService.setRecommendations(recommendations))
+        switchMap(recommendations => this.storageService.updateSegment({
+          ...this.segment!,
+          recommendations: recommendations.map((recommendation: any) => ({ data: recommendation })),
+          recommendationProfile: recommendationProfile
+        }
+          , false
+        ))
       ).subscribe()
     } else {
       throw new Error('Could not find matching attack type');
     }
   }
 
-  private createForm(profile: BusinessProfile | undefined, segment: Segment, attacks: string[] | undefined): FormGroup {
+  private createForm(profile: BusinessProfile | undefined, segment: AppSegment, attacks: string[] | undefined): FormGroup {
     return this.formGroup.group({
       region: [profile?.region, [Validators.required]],
-      serviceType: [undefined, [Validators.required]],
-      attackType: [attacks?.[0], [Validators.required]],
-      deploymentTime: [undefined, [Validators.required]],
-      leasingPeriod: [undefined, [Validators.required]],
-      investment: [segment.optimalInvestment, [Validators.required]],
+      serviceType: [segment.recommendationProfile?.serviceType?.[0], [Validators.required]],
+      attackType: [segment.recommendationProfile?.attackType?.[0] || attacks?.[0], [Validators.required]],
+      deploymentTime: [segment.recommendationProfile?.deploymentTime, [Validators.required]],
+      leasingPeriod: [segment.recommendationProfile?.leasingPeriod, [Validators.required]],
+      investment: [segment.recommendationProfile?.budget || segment.optimalInvestment, [Validators.required]],
     });
   }
 

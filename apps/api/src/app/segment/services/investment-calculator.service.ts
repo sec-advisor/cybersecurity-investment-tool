@@ -56,7 +56,7 @@ export class InvestmentCalculatorService {
   }
 
   private getCalculatedVulnerability(segment: Segment): number {
-    return (segment.risk / 100) * (segment.vulnerability / 100)
+    return Math.round((segment.risk / 100) * (segment.vulnerability / 100) * 100) / 100;
   }
 
   private getOptimalInvestment(segment: Segment | Partial<Segment>, segments: Segment[], investmentEquation: OptimalInvestmentEquation): number {

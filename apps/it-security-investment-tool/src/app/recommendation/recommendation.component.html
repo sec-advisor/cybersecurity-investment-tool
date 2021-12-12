@@ -16,7 +16,8 @@
       </div>
       <div class="row mt-3">
         <div class="col">
-          <app-recommendation-presenter></app-recommendation-presenter>
+          <app-recommendation-presenter [segment]="stream.selectedSegment">
+          </app-recommendation-presenter>
         </div>
       </div>
     </div>

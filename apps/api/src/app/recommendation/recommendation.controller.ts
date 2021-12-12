@@ -1,4 +1,4 @@
-import { RecommendationProfile } from '@app/api-interfaces';
+import { RecommendationProfile, ROSIDetail } from '@app/api-interfaces';
 import { Body, Controller, Post } from '@nestjs/common';
 import { Observable } from 'rxjs';
 
@@ -12,5 +12,10 @@ export class RecommendationController {
   @Post('/recommend')
   recommend(@Body() recommendationProfile: RecommendationProfile): Observable<any> {
     return this.recommendationService.recommend(recommendationProfile);
+  }
+
+  @Post('/calculate-rosi')
+  calculateROSI(@Body() rosiDetail: ROSIDetail): Observable<ROSIDetail> {
+    return this.recommendationService.calculateROSI(rosiDetail);
   }
 }

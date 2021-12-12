@@ -1,10 +1,10 @@
-import { Segment } from '@app/api-interfaces';
+import { AppSegment } from '../../models/app-segment.model';
 
 export interface RecommendationViewModel {
   segments: SegmentViewModel[];
-  selectedSegment: Segment | undefined;
+  selectedSegment: AppSegment | undefined;
 }
 
-export interface SegmentViewModel extends Segment {
+export interface SegmentViewModel extends AppSegment {
   isActive: boolean;
 }

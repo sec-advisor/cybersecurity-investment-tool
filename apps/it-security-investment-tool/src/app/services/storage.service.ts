@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { BusinessProfile, Segment } from '@app/api-interfaces';
-import { BehaviorSubject, filter, first, Observable, of, switchMap, tap } from 'rxjs';
+import { BehaviorSubject, filter, first, map, Observable, of, switchMap, tap } from 'rxjs';
 
+import { AppSegment } from '../models/app-segment.model';
 import { StorageKey } from '../models/storage-key.enum';
 import { BusinessProfileDataService } from './backend/business-profile-data.service';
 import { SegmentDataService } from './backend/segment-data.service';
@@ -15,7 +16,7 @@ export class StorageService {
   private businessProfileSource$ = new BehaviorSubject<BusinessProfile | undefined>(undefined);
   private isFirstCallProfile = true;
   private isFirstCallSegments = true;
-  private segmentsSource$ = new BehaviorSubject<Segment[]>([]);
+  private segmentsSource$ = new BehaviorSubject<AppSegment[]>([]);
 
   constructor(
     private businessProfileDataService: BusinessProfileDataService,
@@ -53,7 +54,7 @@ export class StorageService {
     );
   }
 
-  getSegments(): Observable<Segment[]> {
+  getSegments(getExtendedModel = false): Observable<AppSegment[] | Segment[]> {
     return (this.isFirstCallSegments ?
       (this.isProfileDefined() ?
         of(this.businessProfileSource$.value) :
@@ -68,14 +69,19 @@ export class StorageService {
       of(this.segmentsSource$.value)
     ).pipe(
       tap(() => this.isFirstCallSegments = false),
-      switchMap(() => this.segmentsSource$)
+      switchMap(() => this.segmentsSource$),
+      map(segments => getExtendedModel ? segments : segments.map(segment => ({ ...segment, recommendations: undefined, recommendationProfile: undefined })))
     );
   }
 
-  updateSegment(segment: Segment): Observable<Segment> {
-    return this.segmentDataServices.updateSegment(segment).pipe(
-      tap(segment => this.segmentsSource$.next(this.segmentsSource$.value.map(s => s.id === segment.id ? segment : s)))
-    );
+  updateSegment(segment: AppSegment, storeRemote = true): Observable<AppSegment> {
+    return storeRemote ?
+      this.segmentDataServices.updateSegment(segment).pipe(
+        tap(segment => this.segmentsSource$.next(this.segmentsSource$.value.map(s => s.id === segment.id ? segment : s)))
+      ) :
+      of(segment).pipe(
+        tap(segment => this.segmentsSource$.next(this.segmentsSource$.value.map(s => s.id === segment.id ? segment : s)))
+      );
   }
 
   removeSegment(segmentId: string): Observable<void> {
@@ -83,7 +89,7 @@ export class StorageService {
     return this.segmentDataServices.removeSegment(segmentId);
   }
 
-  updateSegments(segments: Segment[]): void {
+  updateSegments(segments: AppSegment[]): void {
     this.segmentsSource$.next(segments);
   }
 

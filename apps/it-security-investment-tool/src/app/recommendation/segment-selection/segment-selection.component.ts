@@ -17,8 +17,11 @@ export class SegmentSelectionComponent {
   ) { }
 
   segmentClick(segment: SegmentViewModel): void {
-    this.recommendationService.setSelectedSegment(segment);
-    this.recommendationService.setRecommendations(undefined);
+    if (segment.id) {
+      this.recommendationService.setSelectedSegmentId(segment.id);
+    } else {
+      throw Error('Selcted segment does not have an id!')
+    }
   }
 
 }

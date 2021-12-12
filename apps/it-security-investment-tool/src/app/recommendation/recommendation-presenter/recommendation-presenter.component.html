@@ -1,29 +1,43 @@
-<div *ngIf="recommendations$ | async as recommendations" class="content-wrapper">
+<div *ngIf="segment && segment.recommendations" class="content-wrapper">
   <div class="card text-dark bg-white mb-3">
     <div class="card-header card-header-wrapper fw-bold text-center">Recommendations</div>
     <div class="card-body card-inner d-flex">
-      <ng-container *ngIf="recommendations.length > 0; else empty">
-        <ng-container *ngFor="let recommendation of recommendations">
-          <div class="card text-dark bg-light m-2" style="min-width: 20rem;">
+      <ng-container *ngIf="segment.recommendations.length > 0; else empty">
+        <ng-container *ngFor="let recommendation of segment.recommendations">
+          <div class="card-wrapper card text-dark bg-light m-2">
             <div class="card-header bg-light text-center">
-              <img class="image mb-2" [src]="getImage(recommendation.image)">
+              <img class="image mb-2" [src]="getImage(recommendation.data.image)">
               <h5 class="fw-bold">
-                {{ recommendation.providerName }}
+                {{ recommendation.data.providerName }}
               </h5>
             </div>
             <div class="card-body">
-              <p class="card-text">{{ recommendation.description }}</p>
+              <p class="card-text">{{ recommendation.data.description }}</p>
             </div>
             <div class="card-footer text-small d-flex justify-content-between align-items-center">
               <div>
                 Deployment Time:
-                <small class="fw-bold">{{ recommendation.deployment }}</small>
+                <small class="fw-bold">{{ recommendation.data.deployment }}</small>
                 <br>
                 Leasing Period:
-                <small class="fw-bold">{{ recommendation.leasingPeriod }}
+                <small class="fw-bold">{{ recommendation.data.leasingPeriod }}
                 </small>
               </div>
-              <span class="badge rounded-pill bg-primary">{{ recommendation.price | number }}$</span>
+              <div class="price-wrapper h-100 d-flex flex-column justify-content-between">
+                <div class="d-flex justify-content-end">
+                  <span class="badge rounded-pill bg-primary">{{ recommendation.data.price | number }}$</span>
+                </div>
+                <ng-container *ngIf="recommendation.rosi !== undefined; else calculateRosi">
+                  <span class="badge rounded-pill bg-secondary pointer-cursor" (click)="showModal(recommendation.data)">
+                    {{ recommendation.rosi | number }}$
+                  </span>
+                </ng-container>
+                <ng-template #calculateRosi>
+                  <button class="calculate-rosi btn btn-secondary mt-2" (click)="showModal(recommendation.data)">
+                    Calculate ROSI
+                  </button>
+                </ng-template>
+              </div>
             </div>
           </div>
         </ng-container>
@@ -38,3 +52,5 @@
     </div>
   </div>
 </div>
+
+<app-rosi-modal></app-rosi-modal>

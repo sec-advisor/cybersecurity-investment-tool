@@ -65,3 +65,18 @@ export interface RecommendationProfile {
   leasingPeriod: string;
   leasingPeriodWeight: number;
 }
+
+export interface ROSIDetail {
+  price: number;
+  leasingPeriod: LeadingPeriod;
+  mitigationRate: number;
+  costOfIncident: number;
+  incidenceOccurrence: number;
+  rosi?: number;
+}
+
+export enum LeadingPeriod {
+  Minutes,
+  Days,
+  Months
+}

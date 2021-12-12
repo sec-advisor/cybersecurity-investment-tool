@@ -4,6 +4,10 @@
   background-color: $gray-400;
 }
 
+.card-wrapper {
+  min-width: 380px;
+}
+
 .card-inner {
   overflow: auto;
 }
@@ -18,4 +22,8 @@
 
 .badge {
   height: 20px;
+}
+
+.calculate-rosi {
+  font-size: 14px;
 }
