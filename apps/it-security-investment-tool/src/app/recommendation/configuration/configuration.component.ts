@@ -80,7 +80,8 @@ export class ConfigurationComponent implements OnInit, OnChanges {
       switchMap(profile => this.segmentSource$.pipe(
         switchMap(segment => this.segmentDefinitionDataService.getSegmentDefinitions().pipe(
           map(segmentDefinitions => ({
-            segment, profile: profile!,
+            segment,
+            profile: profile!,
             ...this.getAttacks(segmentDefinitions, segment),
           })),
           map(viewModel => ({ ...viewModel, form: this.createForm(profile, segment, viewModel.attackTypeLabels), }))
