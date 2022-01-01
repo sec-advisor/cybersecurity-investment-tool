@@ -38,7 +38,7 @@ export class SegmentRegistratorComponent implements OnInit, OnDestroy {
     this.subscriber.add(this.segmentDefinitionDataService.getSegmentDefinitions().pipe(
       map(segments => ({
         form: this.formBuilder.group({
-          name: ['Test', [Validators.required]],
+          name: [undefined, [Validators.required]],
           type: [undefined, [Validators.required]],
           value: [undefined, [Validators.required]],
           risk: [undefined, [Validators.required]],
