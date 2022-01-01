@@ -40,7 +40,7 @@ export class SegmentRegistratorComponent implements OnInit, OnDestroy {
         form: this.formBuilder.group({
           name: ['Test', [Validators.required]],
           type: [undefined, [Validators.required]],
-          value: [5000, [Validators.required]],
+          value: [undefined, [Validators.required]],
           risk: [undefined, [Validators.required]],
           vulnerability: [undefined, [Validators.required]],
         }),
