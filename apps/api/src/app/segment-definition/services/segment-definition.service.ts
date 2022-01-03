@@ -23,16 +23,16 @@ export class SegmentDefinitionService {
 
   calculateValue(segment: SegmentDefinition, keyValuePairs: { key: string; value: number; }[]): number {
     try {
-      const splitedCalculationString = segment.valueEstimation.calculation.split(' ');
-      if (splitedCalculationString && keyValuePairs && keyValuePairs.every(pair => Number.isFinite(pair.value))) {
+      const splittedCalculationString = segment.valueEstimation.calculation.split(' ');
+      if (splittedCalculationString && keyValuePairs && keyValuePairs.every(pair => Number.isFinite(pair.value))) {
         keyValuePairs.forEach(pair => {
-          const index = splitedCalculationString?.indexOf(pair.key);
+          const index = splittedCalculationString?.indexOf(pair.key);
           if (index !== undefined && index !== -1) {
-            splitedCalculationString[index] = String(pair.value);
+            splittedCalculationString[index] = String(pair.value);
           }
         })
 
-        const mergedCalculation = splitedCalculationString.reduce((pre, curr) => pre + ` ${curr}`, '')
+        const mergedCalculation = splittedCalculationString.reduce((pre, curr) => pre + ` ${curr}`, '')
         return eval(mergedCalculation);
       } else {
         throw new Error();

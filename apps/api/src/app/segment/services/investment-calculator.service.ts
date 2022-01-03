@@ -71,9 +71,6 @@ export class InvestmentCalculatorService {
     const extremesObject = { first: nerdamer(extremes[0].toString()).evaluate(), second: nerdamer(extremes[1].toString()).evaluate() };
     const result = Number(extremesObject.first) > Number(extremesObject.second) ? extremesObject.first : extremesObject.second;
     return Math.round(+result.text())
-
-    // TODO CH: Remove
-    // return Math.round(Math.sqrt((this.magicNumber * (segment.value / this.getTotalValue(segments)) * segment.calculatedVulnerability * segment.value)) - (segment.value / 1000));
   }
 
   private getTotalValue(segments: Segment[]): number {
@@ -91,10 +88,6 @@ export class InvestmentCalculatorService {
     }, 'numer');
 
     return Math.round(+lossWithInvestment.text());
-
-    // TODO CH: Remove
-    // const newVulnerability = segment.calculatedVulnerability / (1 + (1 / this.magicNumber) * (segment.optimalInvestment / (segment.value / this.getTotalValue(segments))));
-    // return Math.round(newVulnerability * segment.value);
   }
 
   private getTotalCybersecurityCosts(segment: Segment | Partial<Segment>): number {
