@@ -25,11 +25,11 @@
               </div>
               <div class="price-wrapper h-100 d-flex flex-column justify-content-between">
                 <div class="d-flex justify-content-end">
-                  <span class="badge rounded-pill bg-primary">{{ recommendation.data.price | number }}$</span>
+                  <span class="badge rounded-pill bg-primary">$ {{ recommendation.data.price | number }}</span>
                 </div>
                 <ng-container *ngIf="recommendation.rosi !== undefined; else calculateRosi">
                   <span class="badge rounded-pill bg-secondary pointer-cursor" (click)="showModal(recommendation.data)">
-                    {{ recommendation.rosi | number }}$
+                    {{ recommendation.rosi | number }}
                   </span>
                 </ng-container>
                 <ng-template #calculateRosi>
