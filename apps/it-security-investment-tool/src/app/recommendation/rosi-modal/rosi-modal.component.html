@@ -10,7 +10,7 @@
         <div class="row pb-2">
           <div class="col">
             <div class="d-flex mb-1">
-              <label for="mitigation-rate">Mitigation Rate(%):</label>
+              <label for="mitigation-rate">Mitigation Rate (%):</label>
               <i class="bi bi-info-circle text-primary info-tooltip" placement="top"
                 ngbTooltip="Mitigation rate of the solution"></i>
             </div>
@@ -30,9 +30,9 @@
         <div class="row">
           <div class="col">
             <div class="d-flex mb-1">
-              <label for="incidence-occurrence">Annual Rate of Incidence:</label>
+              <label for="incidence-occurrence">Annual Rate of Incidence (Decimal):</label>
               <i class="bi bi-info-circle text-primary info-tooltip" placement="top"
-                ngbTooltip="Estimated annaul rate of a incidence occurrence"></i>
+                ngbTooltip="Estimated annual rate of a incidence occurrence (decimal)"></i>
             </div>
             <input id="incidence-occurrence" class="form-control" type="number" min="1"
               [class.is-invalid]="isControlInvalid(form.get('incidenceOccurrence'))"

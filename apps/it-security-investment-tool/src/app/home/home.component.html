@@ -2,14 +2,21 @@
   <div class="inner-wrapper">
     <div class="upper-wrapper bg-secondary text-white container">
       <app-content-with-icon icon="bi-shield-check">
-        <h1 class="display-4">Cybersecurity Investment Tool</h1>
-        <p class="lead">This tool helps companies invest in cybersecurity.</p>
+        <img src="https://www.concordia-h2020.eu/wp-content/uploads/2021/02/concordia-inverse-logo.png"
+          alt="CONCORDIA Project - Horizon 2020 Program" width="300">
+        &nbsp;&nbsp;
+        <img src="https://www.csg.uzh.ch/dam/jcr:00000000-0016-df68-ffff-ffffa04810a0/logo0.png"
+          alt="Communication Systems Group - University of Zurich" width="150">
+        <br><br>
+        <h1 class="display-4">A Tool for Cybersecurity Planning and Investment</h1>
+        <p class="lead">Based on concepts from Gordon-Loeb model and Return On Security Investments (ROSI) to help
+          companies invest in cybersecurity.</p>
         <hr class="my-4">
 
         <ng-container *ngIf="(stream$ | async) as stream; else loading">
           <ng-container *ngIf="stream.profile">
             <h2>Hi, {{ stream.profile?.companyName }}</h2>
-            <p>Please continue with finding the best cybersecurity solutions for your company.</p>
+            <p>Please use the main menu on the left to interact with the tool.</p>
           </ng-container>
           <ng-container *ngIf="!stream.profile">
             <p>Before you can start, please create a business profile.</p>
@@ -39,12 +46,12 @@
           <div class="text-secondary">
             <i class="bi bi-shield medium-icon"></i>
             <h4>Protection recommendation</h4>
-            <p>Get suitable IT security solutions for your company</p>
+            <p>Get suitable IT security solutions</p>
           </div>
           <div class="text-secondary">
             <i class="bi bi-building medium-icon"></i>
-            <h4>Business profile</h4>
-            <p>Manage your company profile</p>
+            <h4>Optimal Investments</h4>
+            <p>Optimal security investment for your company</p>
           </div>
         </div>
       </section>
