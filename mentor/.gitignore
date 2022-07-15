@@ -2,7 +2,7 @@
 
 # dependencies
 /client/node_modules
-/server/venv
+/venv
 # testing
 /coverage
 
@@ -10,7 +10,6 @@
 /build
 
 # misc
-server/tmp
 .DS_Store
 .idea
 .env.local
@@ -22,6 +21,6 @@ yarn-debug.log*
 yarn-error.log*
 *.pyc
 node_modules
-/server/engine/database/*.db
-/server/tmp/*
+/engine/database/*.db
+/tmp/*
 /server/.env
