@@ -1,0 +1,39 @@
+/* You can add global styles to this file, and also import other style files */
+
+/* Importing Bootstrap SCSS file. */
+@import 'bootstrap/scss/bootstrap';
+
+/* Importing Bootstrap SCSS file. */
+@import 'bootstrap/scss/bootstrap';
+
+/* Importing Datepicker SCSS file. */
+// @import 'ngx-bootstrap/datepicker/bs-datepicker';
+
+.small-text {
+  font-size: 14px;
+}
+
+.pointer-cursor {
+  cursor: pointer;
+}
+
+.center-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.medium-icon {
+  font-size: 20px;
+}
+
+.very-big-icon {
+  font-size: 220px;
+}
+
+.icon-button {
+  height: 1 em;
+  padding: 0.25 em 0.25 em;
+  background: transparent;
+  border: 0;
+}
