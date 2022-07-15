@@ -10,4 +10,6 @@ RUN pip install -r requirements.txt
 
 COPY . .
 
+ENV PORT=8000
+
 CMD [ "python3", "./server.py" ]
