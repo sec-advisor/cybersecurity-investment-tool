@@ -1,5 +1,6 @@
 import { FormGroup } from '@angular/forms';
-import { BusinessProfile, Segment } from '@app/api/api-interfaces';
+
+import { BusinessProfile, Segment } from '../../../../libs/api-interfaces';
 
 export interface ConfigurationViewModel {
   segment: Segment;

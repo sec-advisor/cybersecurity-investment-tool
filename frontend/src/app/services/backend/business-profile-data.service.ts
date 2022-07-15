@@ -1,8 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BusinessProfile } from '@app/api/api-interfaces';
 import { catchError, Observable, of, tap } from 'rxjs';
 
+import { BusinessProfile } from '../../../../libs/api-interfaces';
+import { publicAPIUrl } from '../../constants/public-api-url';
 import { StorageKey } from '../../models/storage-key.enum';
 import { LocalStorageService } from '../local-storage.service';
 
@@ -17,7 +18,7 @@ export class BusinessProfileDataService {
   ) { }
 
   storeProfile(profile: BusinessProfile): Observable<string> {
-    return this.http.post<string>('api/business-profiles/profiles', profile).pipe(
+    return this.http.post<string>(`${publicAPIUrl}/business-profiles/profiles`, profile).pipe(
       tap(profileId => this.storeService.setItem(StorageKey.BusinessProfileId, profileId)),
       catchError(err => of({} as string).pipe(
         tap(() => console.error(err.error.message)))
@@ -26,14 +27,14 @@ export class BusinessProfileDataService {
   }
 
   getProfile(id: string): Observable<BusinessProfile> {
-    return this.http.get<BusinessProfile>(`api/business-profiles/profiles/${id}`).pipe(
+    return this.http.get<BusinessProfile>(`${publicAPIUrl}/business-profiles/profiles/${id}`).pipe(
       catchError((err) => of({} as BusinessProfile).pipe(
         tap(() => console.error(err.error.message))))
     );
   }
 
   updateProfile(profile: BusinessProfile): Observable<BusinessProfile> {
-    return this.http.patch<BusinessProfile>(`api/business-profiles/profiles`, profile);
+    return this.http.patch<BusinessProfile>(`${publicAPIUrl}/business-profiles/profiles`, profile);
   }
 
 }

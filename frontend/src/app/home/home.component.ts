@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { BusinessProfile } from '@app/api/api-interfaces';
 import { Observable } from 'rxjs';
 
+import { BusinessProfile } from '../../../libs/api-interfaces';
 import { RoutingService } from '../services/routing.service';
 import { HomeService } from './services/home.service';
 

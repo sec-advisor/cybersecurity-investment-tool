@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { BusinessProfile, Segment } from '@app/api/api-interfaces';
 import { BehaviorSubject, filter, first, map, Observable, of, switchMap, tap } from 'rxjs';
 
+import { BusinessProfile, Segment } from '../../../libs/api-interfaces';
 import { AppSegment } from '../models/app-segment.model';
 import { StorageKey } from '../models/storage-key.enum';
 import { BusinessProfileDataService } from './backend/business-profile-data.service';

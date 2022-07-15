@@ -235,9 +235,6 @@
   dependencies:
     tslib "^2.3.0"
 
-"@app/api@file:../libs":
-  version "0.0.0"
-
 "@assemblyscript/loader@^0.10.1":
   version "0.10.1"
   resolved "https://registry.yarnpkg.com/@assemblyscript/loader/-/loader-0.10.1.tgz#70e45678f06c72fa2e350e8553ec4a4d72b92e06"

@@ -22,5 +22,6 @@ yarn-error.log*
 *.pyc
 node_modules
 /engine/database/*.db
-/tmp/*
+server/tmp/*
 /server/.env
+server/engine/database/*

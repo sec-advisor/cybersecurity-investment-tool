@@ -1,8 +1,8 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { BusinessProfile, RecommendationProfile, Segment, SegmentDefinition } from '@app/api/api-interfaces';
 import { first, forkJoin, map, Observable, Subject, switchMap } from 'rxjs';
 
+import { BusinessProfile, RecommendationProfile, Segment, SegmentDefinition } from '../../../../libs/api-interfaces';
 import { regions } from '../../constants/regions.constant';
 import { AppSegment } from '../../models/app-segment.model';
 import { RecommendationDataService } from '../../services/backend/recommendation-data.service';

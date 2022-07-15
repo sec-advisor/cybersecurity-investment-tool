@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Segment } from '@app/api/api-interfaces';
 import { map, Observable, of, switchMap, tap } from 'rxjs';
 
+import { Segment } from '../../../../libs/api-interfaces';
 import { SegmentDataService } from '../../services/backend/segment-data.service';
 import { StorageService } from '../../services/storage.service';
 import { SegmentPresenterActionService } from '../services/segment-presenter-action.service';

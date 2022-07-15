@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { BusinessProfile } from '@app/api/api-interfaces';
 import { map, merge, Observable, of, Subject, switchMap, tap } from 'rxjs';
 
+import { BusinessProfile } from '../../../libs/api-interfaces';
 import { regions } from '../constants/regions.constant';
 import { StorageService } from '../services/storage.service';
 
