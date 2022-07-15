@@ -13,5 +13,3 @@ RUN yarn build
 FROM nginx:latest
 
 COPY --from=build /app/dist/hr-frontend /usr/share/nginx/html
-
-EXPOSE 80
