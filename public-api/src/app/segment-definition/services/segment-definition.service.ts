@@ -3,7 +3,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { from, map, Observable } from 'rxjs';
 
-import { SegmentDefinition } from '../../../../../libs/api-interfaces';
+import { SegmentDefinition } from '../../../../libs/api-interfaces';
 
 @Injectable()
 export class SegmentDefinitionService {
