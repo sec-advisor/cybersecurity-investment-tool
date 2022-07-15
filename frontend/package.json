@@ -19,7 +19,7 @@
     "@angular/platform-browser": "~13.0.0",
     "@angular/platform-browser-dynamic": "~13.0.0",
     "@angular/router": "~13.0.0",
-    "@app/api": "file:../libs/api-interfaces/src/lib",
+    "@app/api": "file:../libs",
     "@ng-bootstrap/ng-bootstrap": "^12.1.2",
     "@popperjs/core": "^2.11.5",
     "bootstrap": "^5.1.3",

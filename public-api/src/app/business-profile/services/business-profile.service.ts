@@ -3,7 +3,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { from, map, Observable, switchMap, tap } from 'rxjs';
 
-import { BusinessProfile } from '../../../models/api-interfaces';
+import { BusinessProfile } from '../../../../../libs/api-interfaces';
 
 @Injectable()
 export class BusinessProfileService {

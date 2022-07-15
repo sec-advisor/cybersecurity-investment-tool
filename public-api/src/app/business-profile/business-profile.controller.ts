@@ -1,7 +1,7 @@
 import { Body, Controller, Get, HttpException, HttpStatus, Param, Patch, Post } from '@nestjs/common';
 import { catchError, Observable, of, tap } from 'rxjs';
 
-import { BusinessProfile } from '../../models/api-interfaces';
+import { BusinessProfile } from '../../../../libs/api-interfaces';
 import { BusinessProfileService } from './services/business-profile.service';
 
 @Controller('business-profiles')

@@ -1,7 +1,7 @@
 import { Body, Controller, Delete, Get, HttpException, HttpStatus, Param, Patch, Post } from '@nestjs/common';
 import { catchError, map, Observable, of, switchMap, tap } from 'rxjs';
 
-import { Segment } from '../../models/api-interfaces';
+import { Segment } from '../../../../libs/api-interfaces';
 import { OptimalInvestmentEquationService } from '../breach-probability/services/optimal-investment-equation.service';
 import { InvestmentCalculatorService } from './services/investment-calculator.service';
 import { SegmentService } from './services/segment.service';
