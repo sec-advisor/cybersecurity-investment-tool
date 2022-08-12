@@ -1,15 +1,21 @@
 FROM node:16-alpine
 
+# Copy shared library
+WORKDIR /
+
+COPY libs /usr/src/libs
+
+
 WORKDIR /usr/src/app
 
-COPY package.json .
+COPY  public-api/package.json .
 
-COPY yarn.lock .
+COPY public-api/yarn.lock .
 
 RUN yarn install --frozen-lockfile
 
-COPY . .
+COPY public-api/ .
 
 RUN yarn build
 
-CMD ["yarn", "start:prod"]
+CMD ["yarn", "start:container"]

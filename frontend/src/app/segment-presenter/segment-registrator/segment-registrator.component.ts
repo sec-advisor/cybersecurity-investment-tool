@@ -1,10 +1,10 @@
 import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Input, Segment, SegmentDefinition } from '@app/api-interfaces';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { from, merge, Observable, of, Subscriber } from 'rxjs';
 import { catchError, map, switchMap, tap } from 'rxjs/operators';
 
-import { Input, Segment, SegmentDefinition } from '../../../../libs/api-interfaces';
 import { ToastNotificationService } from '../../layouts/toast-notification/services/toast-notification.service';
 import { SegmentDefinitionDataService } from '../../services/backend/segment-definition-data.service';
 import { StorageService } from '../../services/storage.service';
