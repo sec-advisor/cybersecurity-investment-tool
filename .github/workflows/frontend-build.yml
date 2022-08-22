@@ -1,0 +1,24 @@
+name: Frontend - Build
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Use Node.js 16
+      uses: actions/setup-node@v1
+      with:
+        node-version: 16
+
+    - name: Build rontend
+      run: |
+        cd frontend
+        yarn install --frozen-lockfile
+        yarn build
