@@ -1,8 +1,8 @@
 import { Component, Input, ViewChild } from '@angular/core';
+import { Segment } from '@app/api-interfaces';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { catchError, from, of, Subscriber, switchMap } from 'rxjs';
 
-import { Segment } from '../../../../libs/api-interfaces';
 import { DangerModalComponent } from '../../layouts/danger-modal/danger-modal.component';
 import { StorageService } from '../../services/storage.service';
 import { SegmentRegistratorComponent } from '../segment-registrator/segment-registrator.component';

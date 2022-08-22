@@ -1,9 +1,8 @@
+import { BusinessProfile } from '@app/api-interfaces';
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { from, map, Observable, switchMap, tap } from 'rxjs';
-
-import { BusinessProfile } from '../../../../libs/api-interfaces';
 
 @Injectable()
 export class BusinessProfileService {

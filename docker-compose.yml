@@ -2,7 +2,8 @@ version: "3.9"
 services:
   frontend:
     build:
-      context: ./frontend/
+      context: ./
+      dockerfile: ./frontend/Dockerfile
     restart: always
     ports:
       - 80:80
@@ -11,7 +12,8 @@ services:
 
   publicapi:
     build:
-      context: ./public-api/
+      context: ./
+      dockerfile: ./public-api/Dockerfile
     ports:
       - 3333:3333
     networks:
@@ -24,7 +26,6 @@ services:
       - 8000:8000
     networks:
       - public
-
 
 networks:
   public:

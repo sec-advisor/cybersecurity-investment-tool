@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Segment } from '@app/api-interfaces';
 import { catchError, Observable, of, tap } from 'rxjs';
 
-import { Segment } from '../../../../libs/api-interfaces';
 import { publicAPIUrl } from '../../constants/public-api-url';
 
 @Injectable({

@@ -1,6 +1,5 @@
 import { FormGroup } from '@angular/forms';
-
-import { SegmentDefinition } from '../../../../libs/api-interfaces';
+import { SegmentDefinition } from '@app/api-interfaces';
 
 export interface SegmentRegistrationStream {
   form: FormGroup,

@@ -1,7 +1,7 @@
+import { RecommendationProfile, ROSIDetail } from '@app/api-interfaces';
 import { Body, Controller, Post } from '@nestjs/common';
 import { Observable } from 'rxjs';
 
-import { RecommendationProfile, ROSIDetail } from '../../../libs/api-interfaces';
 import { RecommendationService } from './services/recommendation.service';
 
 @Controller('recommendation')

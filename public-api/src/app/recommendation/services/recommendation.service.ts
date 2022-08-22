@@ -1,7 +1,6 @@
+import { LeadingPeriod, RecommendationProfile, ROSIDetail } from '@app/api-interfaces';
 import { HttpService, Injectable } from '@nestjs/common';
 import { map, Observable, of } from 'rxjs';
-
-import { LeadingPeriod, RecommendationProfile, ROSIDetail } from '../../../../libs/api-interfaces';
 
 @Injectable()
 export class RecommendationService {

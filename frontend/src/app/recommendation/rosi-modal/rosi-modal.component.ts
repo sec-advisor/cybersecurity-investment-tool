@@ -1,9 +1,9 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ROSIDetail } from '@app/api-interfaces';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { catchError, filter, from, Observable, of, switchMap } from 'rxjs';
 
-import { ROSIDetail } from '../../../../libs/api-interfaces';
 import { RecommendationDataService } from '../../services/backend/recommendation-data.service';
 
 @Component({
