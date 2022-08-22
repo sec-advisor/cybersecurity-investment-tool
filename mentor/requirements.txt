@@ -31,14 +31,14 @@ schema==0.7.5
     # via -r requirements.in
 six==1.16.0
     # via flask-cors
-sqlalchemy==1.4.39
+sqlalchemy==1.4.40
     # via
     #   -r requirements.in
     #   flask-sqlalchemy
     #   sqlalchemy-imageattach
 sqlalchemy-imageattach==1.1.0
     # via -r requirements.in
-wand==0.6.7
+wand==0.6.10
     # via sqlalchemy-imageattach
 werkzeug==2.1.2
     # via
