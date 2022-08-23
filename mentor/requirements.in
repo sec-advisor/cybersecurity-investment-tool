@@ -7,3 +7,4 @@ werkzeug~=2.1.2
 Flask_Cors~=3.0.10
 schema~=0.7.5
 black
+flake8
