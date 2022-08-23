@@ -7,6 +7,34 @@ on:
     branches: [ main ]
 
 jobs:
+  format:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Use Node.js 16
+      uses: actions/setup-node@v1
+      with:
+        node-version: 16
+    - name: Check formatting frontend
+      run: |
+        cd frontend
+        yarn install --frozen-lockfile
+        yarn prettier -c src/
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Use Node.js 16
+      uses: actions/setup-node@v1
+      with:
+        node-version: 16
+    - name: Lint frontend
+      run: |
+        cd frontend
+        yarn install --frozen-lockfile
+        yarn eslint src/
   build:
     runs-on: ubuntu-latest
     steps:
