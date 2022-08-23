@@ -22,3 +22,7 @@ jobs:
         cd frontend
         yarn install --frozen-lockfile
         yarn build
+    - name: Test PublicAPI
+      run: |
+        cd frontend
+        yarn test
