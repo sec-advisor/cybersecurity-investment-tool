@@ -18,6 +18,7 @@ jobs:
     - name: Check formatting of PublicAPI
       run: |
         cd public-api
+        yarn install --frozen-lockfile
         yarn prettier -c src/ test/
   lint:
     runs-on: ubuntu-latest
@@ -30,6 +31,7 @@ jobs:
     - name: Check formatting of PublicAPI
       run: |
         cd public-api
+        yarn install --frozen-lockfile
         yarn eslint src/ test/
   test:
     runs-on: ubuntu-latest
@@ -42,6 +44,7 @@ jobs:
     - name: Test PublicAPI
       run: |
         cd public-api
+        yarn install --frozen-lockfile
         yarn test
   build:
     runs-on: ubuntu-latest
