@@ -49,7 +49,7 @@ schema==0.7.5
     # via -r requirements.in
 six==1.16.0
     # via flask-cors
-sqlalchemy==1.4.39
+sqlalchemy==1.4.40
     # via
     #   -r requirements.in
     #   flask-sqlalchemy
@@ -60,7 +60,7 @@ tomli==2.0.1
     # via black
 typing-extensions==4.3.0
     # via black
-wand==0.6.7
+wand==0.6.10
     # via sqlalchemy-imageattach
 werkzeug==2.1.2
     # via
