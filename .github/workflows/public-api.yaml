@@ -7,6 +7,19 @@ on:
     branches: [ main ]
 
 jobs:
+  format:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Use Node.js 16
+      uses: actions/setup-node@v1
+      with:
+        node-version: 16
+    - name: Check formatting of PublicAPI
+      run: |
+        cd public-api
+        yarn prettier -c src/ test/
   test:
     runs-on: ubuntu-latest
     steps:
