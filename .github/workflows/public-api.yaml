@@ -1,4 +1,4 @@
-name: Frontend - Build
+name: PublicAPI
 
 on:
   push:
@@ -7,6 +7,19 @@ on:
     branches: [ main ]
 
 jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Use Node.js 16
+      uses: actions/setup-node@v1
+      with:
+        node-version: 16
+    - name: Test PublicAPI
+      run: |
+        cd public-api
+        yarn test
   build:
     runs-on: ubuntu-latest
     steps:
@@ -17,8 +30,8 @@ jobs:
       with:
         node-version: 16
 
-    - name: Build frontend
+    - name: Build PublicAPI
       run: |
-        cd frontend
+        cd public-api
         yarn install --frozen-lockfile
         yarn build
