@@ -6,7 +6,14 @@ jobs:
   info:
     runs-on: self-hosted
     steps:
-    - name: Check formatting frontend
+    - name: Get some info
       run: |
         whoami
         pwd
+  docker:
+    runs-on: self-hosted
+    steps:
+    - name: Docker info
+      run: |
+        docker run hello-world
+        docker version --format '{{.Server.APIVersion}}'
