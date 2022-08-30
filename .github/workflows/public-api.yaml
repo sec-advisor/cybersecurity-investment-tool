@@ -9,12 +9,9 @@ on:
 jobs:
   format:
     runs-on: self-hosted
+    container: node:16
     steps:
     - uses: actions/checkout@v3
-    - name: Use Node.js 16
-      uses: actions/setup-node@v3
-      with:
-        node-version: 16
     - name: Check formatting of PublicAPI
       run: |
         cd public-api
@@ -22,12 +19,9 @@ jobs:
         yarn prettier -c src/ test/
   lint:
     runs-on: self-hosted
+    container: node:16
     steps:
     - uses: actions/checkout@v3
-    - name: Use Node.js 16
-      uses: actions/setup-node@v3
-      with:
-        node-version: 16
     - name: Check formatting of PublicAPI
       run: |
         cd public-api
@@ -35,12 +29,9 @@ jobs:
         yarn eslint src/ test/
   test:
     runs-on: self-hosted
+    container: node:16
     steps:
     - uses: actions/checkout@v3
-    - name: Use Node.js 16
-      uses: actions/setup-node@v3
-      with:
-        node-version: 16
     - name: Test PublicAPI
       run: |
         cd public-api
@@ -48,14 +39,9 @@ jobs:
         yarn test
   build:
     runs-on: self-hosted
+    container: node:16
     steps:
     - uses: actions/checkout@v3
-
-    - name: Use Node.js 16
-      uses: actions/setup-node@v3
-      with:
-        node-version: 16
-
     - name: Build PublicAPI
       run: |
         cd public-api
