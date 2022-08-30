@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BusinessProfile } from '@app/api-interfaces';
 import { catchError, Observable, of, tap } from 'rxjs';
 
+import { BusinessProfile } from '../../../../libs/api-interfaces';
 import { publicAPIUrl } from '../../constants/public-api-url';
 import { StorageKey } from '../../models/storage-key.enum';
 import { LocalStorageService } from '../local-storage.service';

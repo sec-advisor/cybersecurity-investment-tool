@@ -16,11 +16,6 @@
     "noImplicitAny": false,
     "strictBindCallApply": false,
     "forceConsistentCasingInFileNames": false,
-    "noFallthroughCasesInSwitch": false,
-    "paths": {
-      "@app/*": [
-        "../libs/api-interfaces/*"
-      ]
-    }
+    "noFallthroughCasesInSwitch": false
   }
 }
