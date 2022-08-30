@@ -1,20 +1,14 @@
 FROM node:16-alpine as build
 
-# Copy shared library
-WORKDIR /
-
-COPY libs /libs
-
-
 WORKDIR /app
 
-COPY frontend/package.json .
+COPY package.json .
 
-COPY frontend/yarn.lock .
+COPY yarn.lock .
 
 RUN yarn install --frozen-lockfile
 
-COPY frontend/ .
+COPY . .
 
 RUN yarn build
 

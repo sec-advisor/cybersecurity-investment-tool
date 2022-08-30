@@ -21,12 +21,7 @@
     "lib": [
       "es2020",
       "dom"
-    ],
-    "paths": {
-      "@app/*": [
-        "../libs/api-interfaces/*"
-      ]
-    }
+    ]
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,

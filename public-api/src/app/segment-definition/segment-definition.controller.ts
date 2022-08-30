@@ -1,7 +1,7 @@
-import { SegmentDefinition, ValueEstimation } from '@app/api-interfaces';
 import { Body, Controller, Get, HttpException, HttpStatus, Post } from '@nestjs/common';
 import { catchError, Observable, of, tap } from 'rxjs';
 
+import { SegmentDefinition, ValueEstimation } from '../../../libs/api-interfaces';
 import { SegmentDefinitionService } from './services/segment-definition.service';
 
 @Controller('segment-definitions')

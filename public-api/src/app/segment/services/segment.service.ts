@@ -1,8 +1,9 @@
-import { Segment } from '@app/api-interfaces';
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { forkJoin, from, map, Observable, switchMap, tap } from 'rxjs';
+
+import { Segment } from '../../../../libs/api-interfaces';
 
 @Injectable()
 export class SegmentService {
