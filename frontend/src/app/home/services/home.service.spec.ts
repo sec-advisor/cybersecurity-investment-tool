@@ -7,7 +7,7 @@ import { HomeService } from './home.service';
 describe('Service: Home', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [HomeService]
+      providers: [HomeService],
     });
   });
 

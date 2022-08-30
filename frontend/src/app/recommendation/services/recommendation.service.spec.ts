@@ -6,11 +6,14 @@ import { RecommendationService } from './recommendation.service';
 describe('Service: Recommendation', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [RecommendationService]
+      providers: [RecommendationService],
     });
   });
 
-  it('should ...', inject([RecommendationService], (service: RecommendationService) => {
-    expect(service).toBeTruthy();
-  }));
+  it('should ...', inject(
+    [RecommendationService],
+    (service: RecommendationService) => {
+      expect(service).toBeTruthy();
+    }
+  ));
 });

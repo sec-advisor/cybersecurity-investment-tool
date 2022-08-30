@@ -12,20 +12,15 @@ import { SegmentPresenterComponent } from './segment-presenter.component';
 import { SegmentRegistratorComponent } from './segment-registrator/segment-registrator.component';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    NgbModule,
-    LayoutsModule,
-  ],
+  imports: [CommonModule, ReactiveFormsModule, NgbModule, LayoutsModule],
   declarations: [
     SegmentPresenterComponent,
     SegmentRegistratorComponent,
     SegmentOverviewComponent,
     ActionBoardComponent,
     SegmentDetailTableComponent,
-    SegmentOverviewTableComponent
+    SegmentOverviewTableComponent,
   ],
-  exports: [SegmentPresenterComponent]
+  exports: [SegmentPresenterComponent],
 })
-export class SegmentPresenterModule { }
+export class SegmentPresenterModule {}

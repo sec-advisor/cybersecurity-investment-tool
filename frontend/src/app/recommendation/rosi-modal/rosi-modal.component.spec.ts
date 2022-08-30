@@ -9,9 +9,8 @@ describe('RosiModalComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [RosiModalComponent]
-    })
-      .compileComponents();
+      declarations: [RosiModalComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

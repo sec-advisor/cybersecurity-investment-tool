@@ -12,13 +12,15 @@ import { RecommendationModule } from './recommendation/recommendation.module';
 @Module({
   imports: [
     SegmentModule,
-    MongooseModule.forRoot('mongodb+srv://investor:uYqBIlR3aT1dYpNo@cluster0.4ehbr.mongodb.net/investment-calculator?retryWrites=true&w=majority'),
+    MongooseModule.forRoot(
+      'mongodb+srv://investor:uYqBIlR3aT1dYpNo@cluster0.4ehbr.mongodb.net/investment-calculator?retryWrites=true&w=majority',
+    ),
     BusinessProfileModule,
     SegmentDefinitionModule,
     OptimalInvestmentEquationModule,
-    RecommendationModule
+    RecommendationModule,
   ],
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule { }
+export class AppModule {}

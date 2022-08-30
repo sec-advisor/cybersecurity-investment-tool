@@ -1,40 +1,61 @@
 <div *ngIf="stream$ | async as stream" class="content-wrapper bg-white">
-
   <div class="card text-dark bg-white mb-3">
     <div class="card-header fw-bold text-center">{{ stream.segment.name }}</div>
     <div class="card-body p-1">
       <form [formGroup]="stream.form">
-
         <div class="row m-1">
           <div class="col">
             <label for="region" class="form-label">Region:</label>
-            <select id="region" class="form-select" aria-label="Region"
-              [class.disabled]="stream.form.get('region')?.disabled" formControlName="region">
+            <select
+              id="region"
+              class="form-select"
+              aria-label="Region"
+              [class.disabled]="stream.form.get('region')?.disabled"
+              formControlName="region"
+            >
               <ng-container *ngFor="let region of regions">
                 <option [value]="region.key">{{ region.value }}</option>
               </ng-container>
             </select>
           </div>
           <div class="col">
-            <label for="deploymentTime" class="form-label">Investment($):</label>
-            <input type="number" class="form-control" id="deploymentTime"
-              [class.disabled]="stream.form.get('investment')?.disabled" aria-describedby="Investment Amount"
-              formControlName="investment">
+            <label for="deploymentTime" class="form-label"
+              >Investment($):</label
+            >
+            <input
+              type="number"
+              class="form-control"
+              id="deploymentTime"
+              [class.disabled]="stream.form.get('investment')?.disabled"
+              aria-describedby="Investment Amount"
+              formControlName="investment"
+            />
           </div>
         </div>
         <div class="row m-1">
           <div class="col">
             <label for="attackType" class="form-label">Attack Type:</label>
-            <select id="attackType" class="form-select" aria-label="Attack Type" formControlName="attackType">
+            <select
+              id="attackType"
+              class="form-select"
+              aria-label="Attack Type"
+              formControlName="attackType"
+            >
               <ng-container *ngFor="let attack of stream.attackTypeLabels">
                 <option [value]="attack">{{ attack }}</option>
               </ng-container>
             </select>
           </div>
           <div class="col">
-            <label for="deploymentTime" class="form-label">Deployment Time:</label>
-            <select id="deploymentTime" class="form-select" aria-label="Deployment Time"
-              formControlName="deploymentTime">
+            <label for="deploymentTime" class="form-label"
+              >Deployment Time:</label
+            >
+            <select
+              id="deploymentTime"
+              class="form-select"
+              aria-label="Deployment Time"
+              formControlName="deploymentTime"
+            >
               <ng-container *ngFor="let type of deploymentTime">
                 <option [value]="type.value">{{ type.label }}</option>
               </ng-container>
@@ -43,8 +64,15 @@
         </div>
         <div class="row m-1">
           <div class="col">
-            <label for="leasingPeriod" class="form-label">Leasing Period:</label>
-            <select id="leasingPeriod" class="form-select" aria-label="Leasing Period" formControlName="leasingPeriod">
+            <label for="leasingPeriod" class="form-label"
+              >Leasing Period:</label
+            >
+            <select
+              id="leasingPeriod"
+              class="form-select"
+              aria-label="Leasing Period"
+              formControlName="leasingPeriod"
+            >
               <ng-container *ngFor="let type of leasingPeriod">
                 <option [value]="type.value">{{ type.label }}</option>
               </ng-container>
@@ -52,7 +80,12 @@
           </div>
           <div class="col">
             <label for="serviceType" class="form-label">Service Type:</label>
-            <select id="serviceType" class="form-select" aria-label="Service Type" formControlName="serviceType">
+            <select
+              id="serviceType"
+              class="form-select"
+              aria-label="Service Type"
+              formControlName="serviceType"
+            >
               <ng-container *ngFor="let type of serviceTypes">
                 <option [value]="type.value">{{ type.label }}</option>
               </ng-container>
@@ -60,11 +93,16 @@
           </div>
         </div>
         <div class="row m-1">
+          <div class="col"></div>
           <div class="col">
-          </div>
-          <div class="col">
-            <button type="submit" class="btn btn-primary submit-button mt-1" [disabled]="stream.form.invalid"
-              (click)="submit(stream)">Submit</button>
+            <button
+              type="submit"
+              class="btn btn-primary submit-button mt-1"
+              [disabled]="stream.form.invalid"
+              (click)="submit(stream)"
+            >
+              Submit
+            </button>
           </div>
         </div>
       </form>

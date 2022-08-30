@@ -8,10 +8,18 @@ describe('OptimalInvestmentEquationService', () => {
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [{ provide: getModelToken('optimal-investment-equations'), useValue: {} }, OptimalInvestmentEquationService],
+      providers: [
+        {
+          provide: getModelToken('optimal-investment-equations'),
+          useValue: {},
+        },
+        OptimalInvestmentEquationService,
+      ],
     }).compile();
 
-    service = module.get<OptimalInvestmentEquationService>(OptimalInvestmentEquationService);
+    service = module.get<OptimalInvestmentEquationService>(
+      OptimalInvestmentEquationService,
+    );
   });
 
   it('should be defined', () => {

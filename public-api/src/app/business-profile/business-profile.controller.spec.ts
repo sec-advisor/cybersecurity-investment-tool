@@ -10,10 +10,15 @@ describe('BusinessProfileController', () => {
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       controllers: [BusinessProfileController],
-      providers: [{ provide: getModelToken('business-profile'), useValue: {} }, BusinessProfileService]
+      providers: [
+        { provide: getModelToken('business-profile'), useValue: {} },
+        BusinessProfileService,
+      ],
     }).compile();
 
-    controller = module.get<BusinessProfileController>(BusinessProfileController);
+    controller = module.get<BusinessProfileController>(
+      BusinessProfileController,
+    );
   });
 
   it('should be defined', () => {

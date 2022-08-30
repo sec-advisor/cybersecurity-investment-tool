@@ -6,8 +6,12 @@ import { SegmentDefinitionController } from './segment-definition.controller';
 import { SegmentDefinitionService } from './services/segment-definition.service';
 
 @Module({
-  imports: [MongooseModule.forFeature([{ name: 'segment-definitions', schema: SegmentDefinitionSchema }])],
+  imports: [
+    MongooseModule.forFeature([
+      { name: 'segment-definitions', schema: SegmentDefinitionSchema },
+    ]),
+  ],
   controllers: [SegmentDefinitionController],
-  providers: [SegmentDefinitionService]
+  providers: [SegmentDefinitionService],
 })
-export class SegmentDefinitionModule { }
+export class SegmentDefinitionModule {}

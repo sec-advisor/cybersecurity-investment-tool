@@ -7,9 +7,11 @@ import { BusinessProfileService } from './services/business-profile.service';
 
 @Module({
   imports: [
-    MongooseModule.forFeature([{ name: 'business-profile', schema: BusinessProfileSchema }])
+    MongooseModule.forFeature([
+      { name: 'business-profile', schema: BusinessProfileSchema },
+    ]),
   ],
   controllers: [BusinessProfileController],
-  providers: [BusinessProfileService]
+  providers: [BusinessProfileService],
 })
-export class BusinessProfileModule { }
+export class BusinessProfileModule {}

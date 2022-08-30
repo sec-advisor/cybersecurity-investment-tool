@@ -6,6 +6,6 @@ import { RecommendationService } from './services/recommendation.service';
 @Module({
   imports: [HttpModule],
   controllers: [RecommendationController],
-  providers: [RecommendationService]
+  providers: [RecommendationService],
 })
-export class RecommendationModule { }
+export class RecommendationModule {}

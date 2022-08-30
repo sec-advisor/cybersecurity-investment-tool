@@ -1,8 +1,15 @@
-<div class="d-flex flex-column align-items-stretch flex-shrink-0 segments-overview action-board">
+<div
+  class="d-flex flex-column align-items-stretch flex-shrink-0 segments-overview action-board"
+>
   <div
-    class="d-flex align-items-center justify-content-center flex-shrink-0 p-3 link-dark text-decoration-none border-bottom action-header">
-
-    <ng-container *ngIf="((segmentPresenterActionService.getLoadingStatus() | async) === false); else loading">
+    class="d-flex align-items-center justify-content-center flex-shrink-0 p-3 link-dark text-decoration-none border-bottom action-header"
+  >
+    <ng-container
+      *ngIf="
+        (segmentPresenterActionService.getLoadingStatus() | async) === false;
+        else loading
+      "
+    >
       <i class="bi bi-gear-fill medium-icon margin-right"></i>
     </ng-container>
 
@@ -15,10 +22,14 @@
     <span class="fs-5 fw-semibold">Actions</span>
   </div>
   <div class="list-group list-group-flush border-bottom scrollarea">
-
     <ng-container *ngFor="let button of buttons">
-      <a class="list-group-item list-group-item-action py-3 lh-tight pointer-cursor action-button" type="button"
-        aria-current="true" [class.disabled]="button.disabled" (click)="execute(button)">
+      <a
+        class="list-group-item list-group-item-action py-3 lh-tight pointer-cursor action-button"
+        type="button"
+        aria-current="true"
+        [class.disabled]="button.disabled"
+        (click)="execute(button)"
+      >
         <div class="d-flex w-100 align-items-center justify-content-between">
           <span class="mb-1 action-text">{{ button.text | async }}</span>
           <ng-container *ngIf="button.icon | async as icon">

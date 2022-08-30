@@ -2,11 +2,12 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class SegmentPresenterActionService {
-
-  private readonly segmentView$ = new BehaviorSubject<'overview' | 'detail'>('overview');
+  private readonly segmentView$ = new BehaviorSubject<'overview' | 'detail'>(
+    'overview'
+  );
   private isLoading$ = new BehaviorSubject(true);
 
   toggleView(): void {
@@ -32,5 +33,4 @@ export class SegmentPresenterActionService {
   getLoadingStatus(): Observable<boolean> {
     return this.isLoading$;
   }
-
 }

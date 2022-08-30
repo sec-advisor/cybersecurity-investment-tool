@@ -9,9 +9,8 @@ describe('SegmentRegistratorComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [SegmentRegistratorComponent]
-    })
-      .compileComponents();
+      declarations: [SegmentRegistratorComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {
