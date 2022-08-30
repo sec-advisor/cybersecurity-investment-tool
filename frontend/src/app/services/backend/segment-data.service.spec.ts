@@ -1,7 +1,8 @@
 /* tslint:disable:no-unused-variable */
+import { inject, TestBed } from '@angular/core/testing';
 
-import { TestBed, async, inject } from '@angular/core/testing';
 import { SegmentDataService } from './segment-data.service';
+
 
 describe('Service: SegmentData', () => {
   beforeEach(() => {
@@ -10,7 +11,7 @@ describe('Service: SegmentData', () => {
     });
   });
 
-  it('should ...', inject([SegmentDataService], (service: SegmentDataService) => {
+  xit('should ...', inject([SegmentDataService], (service: SegmentDataService) => {
     expect(service).toBeTruthy();
   }));
 });

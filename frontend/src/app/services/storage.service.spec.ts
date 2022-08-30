@@ -1,7 +1,8 @@
 /* tslint:disable:no-unused-variable */
+import { inject, TestBed } from '@angular/core/testing';
 
-import { TestBed, async, inject } from '@angular/core/testing';
 import { StorageService } from './storage.service';
+
 
 describe('Service: Storage', () => {
   beforeEach(() => {
@@ -10,7 +11,7 @@ describe('Service: Storage', () => {
     });
   });
 
-  it('should ...', inject([StorageService], (service: StorageService) => {
+  xit('should ...', inject([StorageService], (service: StorageService) => {
     expect(service).toBeTruthy();
   }));
 });

@@ -11,7 +11,7 @@ describe('Service: Recommendation Data', () => {
     });
   });
 
-  it('should ...', inject([RecommendationDataService], (service: RecommendationDataService) => {
+  xit('should ...', inject([RecommendationDataService], (service: RecommendationDataService) => {
     expect(service).toBeTruthy();
   }));
 });

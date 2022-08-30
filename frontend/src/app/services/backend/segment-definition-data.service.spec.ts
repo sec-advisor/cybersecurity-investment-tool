@@ -11,7 +11,7 @@ describe('Service: SegmentDefinitionData', () => {
     });
   });
 
-  it('should ...', inject([SegmentDefinitionDataService], (service: SegmentDefinitionDataService) => {
+  xit('should ...', inject([SegmentDefinitionDataService], (service: SegmentDefinitionDataService) => {
     expect(service).toBeTruthy();
   }));
 });

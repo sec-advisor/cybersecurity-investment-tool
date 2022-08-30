@@ -1,3 +1,4 @@
+import { getModelToken } from '@nestjs/mongoose';
 import { Test, TestingModule } from '@nestjs/testing';
 
 import { OptimalInvestmentEquationService } from './optimal-investment-equation.service';
@@ -7,7 +8,7 @@ describe('OptimalInvestmentEquationService', () => {
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [OptimalInvestmentEquationService],
+      providers: [{ provide: getModelToken('optimal-investment-equations'), useValue: {} }, OptimalInvestmentEquationService],
     }).compile();
 
     service = module.get<OptimalInvestmentEquationService>(OptimalInvestmentEquationService);
