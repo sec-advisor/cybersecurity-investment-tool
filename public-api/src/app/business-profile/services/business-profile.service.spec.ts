@@ -1,4 +1,6 @@
+import { getModelToken } from '@nestjs/mongoose';
 import { Test, TestingModule } from '@nestjs/testing';
+
 import { BusinessProfileService } from './business-profile.service';
 
 describe('BusinessProfileService', () => {
@@ -6,7 +8,7 @@ describe('BusinessProfileService', () => {
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [BusinessProfileService],
+      providers: [{ provide: getModelToken('business-profile'), useValue: {} }, BusinessProfileService],
     }).compile();
 
     service = module.get<BusinessProfileService>(BusinessProfileService);
