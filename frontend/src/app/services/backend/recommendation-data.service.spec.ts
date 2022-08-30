@@ -7,11 +7,14 @@ import { RecommendationDataService } from './recommendation-data.service';
 describe('Service: Recommendation Data', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [RecommendationDataService]
+      providers: [RecommendationDataService],
     });
   });
 
-  xit('should ...', inject([RecommendationDataService], (service: RecommendationDataService) => {
-    expect(service).toBeTruthy();
-  }));
+  xit('should ...', inject(
+    [RecommendationDataService],
+    (service: RecommendationDataService) => {
+      expect(service).toBeTruthy();
+    }
+  ));
 });

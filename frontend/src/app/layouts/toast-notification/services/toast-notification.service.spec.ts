@@ -6,11 +6,14 @@ import { ToastNotificationService } from './toast-notification.service';
 describe('Service: ToastNotification', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [ToastNotificationService]
+      providers: [ToastNotificationService],
     });
   });
 
-  it('should ...', inject([ToastNotificationService], (service: ToastNotificationService) => {
-    expect(service).toBeTruthy();
-  }));
+  it('should ...', inject(
+    [ToastNotificationService],
+    (service: ToastNotificationService) => {
+      expect(service).toBeTruthy();
+    }
+  ));
 });

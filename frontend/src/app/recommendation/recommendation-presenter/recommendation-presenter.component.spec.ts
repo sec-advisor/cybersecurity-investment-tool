@@ -9,9 +9,8 @@ describe('RecommendationPresenterComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [RecommendationPresenterComponent]
-    })
-      .compileComponents();
+      declarations: [RecommendationPresenterComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

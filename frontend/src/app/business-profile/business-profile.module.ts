@@ -6,11 +6,7 @@ import { LayoutsModule } from '../layouts/layouts.module';
 import { BusinessProfileComponent } from './business-profile.component';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    LayoutsModule,
-    ReactiveFormsModule,
-  ],
-  declarations: [BusinessProfileComponent]
+  imports: [CommonModule, LayoutsModule, ReactiveFormsModule],
+  declarations: [BusinessProfileComponent],
 })
-export class BusinessProfileModule { }
+export class BusinessProfileModule {}

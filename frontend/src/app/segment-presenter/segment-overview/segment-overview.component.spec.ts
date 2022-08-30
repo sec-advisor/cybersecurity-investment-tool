@@ -9,9 +9,8 @@ describe('SegmentOverviewComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [SegmentOverviewComponent]
-    })
-      .compileComponents();
+      declarations: [SegmentOverviewComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

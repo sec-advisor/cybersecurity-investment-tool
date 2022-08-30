@@ -7,11 +7,14 @@ import { SegmentDefinitionDataService } from './segment-definition-data.service'
 describe('Service: SegmentDefinitionData', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [SegmentDefinitionDataService]
+      providers: [SegmentDefinitionDataService],
     });
   });
 
-  xit('should ...', inject([SegmentDefinitionDataService], (service: SegmentDefinitionDataService) => {
-    expect(service).toBeTruthy();
-  }));
+  xit('should ...', inject(
+    [SegmentDefinitionDataService],
+    (service: SegmentDefinitionDataService) => {
+      expect(service).toBeTruthy();
+    }
+  ));
 });

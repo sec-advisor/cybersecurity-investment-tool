@@ -9,9 +9,8 @@ describe('DangerModalComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [DangerModalComponent]
-    })
-      .compileComponents();
+      declarations: [DangerModalComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

@@ -7,14 +7,15 @@ import { StorageService } from '../../services/storage.service';
 @Component({
   selector: 'app-side-bar',
   templateUrl: './side-bar.component.html',
-  styleUrls: ['./side-bar.component.scss']
+  styleUrls: ['./side-bar.component.scss'],
 })
 export class SideBarComponent {
-
-  readonly companyName$ = this.storageService.getBusinessProfile().pipe(map(profile => profile?.companyName));
+  readonly companyName$ = this.storageService
+    .getBusinessProfile()
+    .pipe(map((profile) => profile?.companyName));
 
   constructor(
     public storageService: StorageService,
-    public routingService: RoutingService,
-  ) { }
+    public routingService: RoutingService
+  ) {}
 }

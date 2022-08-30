@@ -11,9 +11,8 @@ describe('ContentWithIconComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ContentWithIconComponent ]
-    })
-    .compileComponents();
+      declarations: [ContentWithIconComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

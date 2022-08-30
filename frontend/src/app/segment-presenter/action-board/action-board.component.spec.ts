@@ -9,9 +9,8 @@ describe('ActionBoardComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ActionBoardComponent]
-    })
-      .compileComponents();
+      declarations: [ActionBoardComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

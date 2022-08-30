@@ -11,9 +11,8 @@ describe('SegmentOverviewTableComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SegmentOverviewTableComponent ]
-    })
-    .compileComponents();
+      declarations: [SegmentOverviewTableComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

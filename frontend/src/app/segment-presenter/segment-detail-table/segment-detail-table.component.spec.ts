@@ -9,9 +9,8 @@ describe('SegmentDetailTableComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [SegmentDetailTableComponent]
-    })
-      .compileComponents();
+      declarations: [SegmentDetailTableComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

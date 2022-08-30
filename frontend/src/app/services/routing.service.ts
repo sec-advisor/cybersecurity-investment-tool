@@ -7,27 +7,58 @@ import { LocalStorageService } from './local-storage.service';
 import { StorageService } from './storage.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class RoutingService implements OnDestroy {
-
   private readonly subscriber = new Subscriber();
 
-  readonly pages: { name: string; icon: string; path: string; active: boolean; disabled?: boolean }[] = [
+  readonly pages: {
+    name: string;
+    icon: string;
+    path: string;
+    active: boolean;
+    disabled?: boolean;
+  }[] = [
     { name: 'Home', icon: 'bi-house-door', path: '/home', active: true },
-    { name: 'Business Profile', icon: 'bi-building', path: '/business-profile', active: false },
-    { name: 'Segments', icon: 'bi-pie-chart', path: '/segments', active: false, disabled: true },
-    { name: 'Recommendation', icon: 'bi-shield', path: '/recommendation', active: false, disabled: true },
-  ]
+    {
+      name: 'Business Profile',
+      icon: 'bi-building',
+      path: '/business-profile',
+      active: false,
+    },
+    {
+      name: 'Segments',
+      icon: 'bi-pie-chart',
+      path: '/segments',
+      active: false,
+      disabled: true,
+    },
+    {
+      name: 'Recommendation',
+      icon: 'bi-shield',
+      path: '/recommendation',
+      active: false,
+      disabled: true,
+    },
+  ];
 
-  constructor(private router: Router, private storageService: StorageService, private localStorageService: LocalStorageService) {
-
-    this.subscriber.add(merge(
-      this.storageService.getBusinessProfile().pipe(map(profile => !!profile)),
-      of(this.localStorageService.getItem(StorageKey.BusinessProfileId)).pipe(map(profileId => !!profileId))
-    ).pipe(
-      filter(isProfileDefined => isProfileDefined),
-    ).subscribe(() => this.pages.forEach(page => page.disabled = false)));
+  constructor(
+    private router: Router,
+    private storageService: StorageService,
+    private localStorageService: LocalStorageService
+  ) {
+    this.subscriber.add(
+      merge(
+        this.storageService
+          .getBusinessProfile()
+          .pipe(map((profile) => !!profile)),
+        of(this.localStorageService.getItem(StorageKey.BusinessProfileId)).pipe(
+          map((profileId) => !!profileId)
+        )
+      )
+        .pipe(filter((isProfileDefined) => isProfileDefined))
+        .subscribe(() => this.pages.forEach((page) => (page.disabled = false)))
+    );
 
     this.subscriber.add(this.handleRouterChanges().subscribe());
   }
@@ -37,11 +68,11 @@ export class RoutingService implements OnDestroy {
   }
 
   browseTo(path: string): void {
-    const newPage = this.pages.find(page => page.path === path);
+    const newPage = this.pages.find((page) => page.path === path);
 
     if (newPage) {
       if (!newPage.disabled) {
-        this.pages.forEach(item => item.active = false);
+        this.pages.forEach((item) => (item.active = false));
         newPage.active = true;
         this.router.navigate([newPage.path]);
       }
@@ -53,17 +84,18 @@ export class RoutingService implements OnDestroy {
   // TODO CH: Refactor almost same code
   handleRouterChanges(): Observable<any> {
     return this.router.events.pipe(
-      filter(event => event instanceof NavigationEnd),
-      tap(event => {
-        const newPage = this.pages.find(page => page.path === (event as NavigationEnd).url);
+      filter((event) => event instanceof NavigationEnd),
+      tap((event) => {
+        const newPage = this.pages.find(
+          (page) => page.path === (event as NavigationEnd).url
+        );
         if (newPage) {
           if (!newPage.disabled) {
-            this.pages.forEach(item => item.active = false);
+            this.pages.forEach((item) => (item.active = false));
             newPage.active = true;
           }
         }
       })
-    )
+    );
   }
-
 }

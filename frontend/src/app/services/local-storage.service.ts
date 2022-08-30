@@ -3,10 +3,9 @@ import { Injectable } from '@angular/core';
 import { StorageKey } from '../models/storage-key.enum';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class LocalStorageService {
-
   setItem(key: StorageKey, value: any): void {
     localStorage.setItem(key, value);
   }
@@ -14,5 +13,4 @@ export class LocalStorageService {
   getItem(key: StorageKey): any | undefined {
     return localStorage.getItem(key);
   }
-
 }

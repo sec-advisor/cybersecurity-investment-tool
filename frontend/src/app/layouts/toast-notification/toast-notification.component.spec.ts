@@ -11,9 +11,8 @@ describe('ToastNotificationComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ToastNotificationComponent ]
-    })
-    .compileComponents();
+      declarations: [ToastNotificationComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

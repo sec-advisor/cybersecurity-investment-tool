@@ -6,11 +6,14 @@ import { SegmentPresenterActionService } from './segment-presenter-action.servic
 describe('Service: SegmentPresenterAction', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [SegmentPresenterActionService]
+      providers: [SegmentPresenterActionService],
     });
   });
 
-  it('should ...', inject([SegmentPresenterActionService], (service: SegmentPresenterActionService) => {
-    expect(service).toBeTruthy();
-  }));
+  it('should ...', inject(
+    [SegmentPresenterActionService],
+    (service: SegmentPresenterActionService) => {
+      expect(service).toBeTruthy();
+    }
+  ));
 });
