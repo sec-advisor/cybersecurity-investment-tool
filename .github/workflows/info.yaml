@@ -1,0 +1,12 @@
+name: Github Actions Runner
+
+on: push
+
+jobs:
+  info:
+    runs-on: self-hosted
+    steps:
+    - name: Check formatting frontend
+      run: |
+        whoami
+        pwd
