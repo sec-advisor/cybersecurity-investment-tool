@@ -11,7 +11,10 @@ describe('RecommendationController', () => {
     const module: TestingModule = await Test.createTestingModule({
       imports: [HttpModule],
       controllers: [RecommendationController],
-      providers: [{ provide: HttpService, useValue: {} }, RecommendationService]
+      providers: [
+        { provide: HttpService, useValue: {} },
+        RecommendationService,
+      ],
     }).compile();
 
     controller = module.get<RecommendationController>(RecommendationController);

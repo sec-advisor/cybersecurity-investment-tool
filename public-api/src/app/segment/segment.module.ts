@@ -10,9 +10,9 @@ import { SegmentService } from './services/segment.service';
 @Module({
   imports: [
     MongooseModule.forFeature([{ name: 'segments', schema: SegmentSchema }]),
-    OptimalInvestmentEquationModule
+    OptimalInvestmentEquationModule,
   ],
   controllers: [SegmentController],
-  providers: [SegmentService, InvestmentCalculatorService]
+  providers: [SegmentService, InvestmentCalculatorService],
 })
-export class SegmentModule { }
+export class SegmentModule {}

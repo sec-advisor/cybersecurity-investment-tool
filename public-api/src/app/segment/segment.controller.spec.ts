@@ -14,11 +14,14 @@ describe('SegmentController', () => {
       controllers: [SegmentController],
       providers: [
         { provide: getModelToken('segments'), useValue: {} },
-        { provide: getModelToken('optimal-investment-equations'), useValue: {} },
+        {
+          provide: getModelToken('optimal-investment-equations'),
+          useValue: {},
+        },
         InvestmentCalculatorService,
         SegmentService,
-        OptimalInvestmentEquationService
-      ]
+        OptimalInvestmentEquationService,
+      ],
     }).compile();
 
     controller = module.get<SegmentController>(SegmentController);

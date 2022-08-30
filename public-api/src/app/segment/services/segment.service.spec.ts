@@ -8,7 +8,10 @@ describe('SegmentService', () => {
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [{ provide: getModelToken('segments'), useValue: {} }, SegmentService],
+      providers: [
+        { provide: getModelToken('segments'), useValue: {} },
+        SegmentService,
+      ],
     }).compile();
 
     service = module.get<SegmentService>(SegmentService);

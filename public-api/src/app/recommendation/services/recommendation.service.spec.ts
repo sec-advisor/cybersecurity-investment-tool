@@ -9,7 +9,10 @@ describe('RecommendationService', () => {
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       imports: [HttpModule],
-      providers: [{ provide: HttpService, useValue: {} }, RecommendationService],
+      providers: [
+        { provide: HttpService, useValue: {} },
+        RecommendationService,
+      ],
     }).compile();
 
     service = module.get<RecommendationService>(RecommendationService);
