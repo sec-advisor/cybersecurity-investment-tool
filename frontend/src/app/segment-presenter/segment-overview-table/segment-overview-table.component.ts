@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
-import { Segment } from '@app/api-interfaces';
+
+import { Segment } from '../../../../libs/api-interfaces';
 
 @Component({
   selector: 'app-segment-overview-table',

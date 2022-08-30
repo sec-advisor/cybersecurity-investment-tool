@@ -1,9 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { SegmentDefinition, ValueEstimation } from '@app/api-interfaces';
 import { catchError, Observable, of, throwError } from 'rxjs';
 import { tap } from 'rxjs/operators';
 
+import { SegmentDefinition, ValueEstimation } from '../../../../libs/api-interfaces';
 import { publicAPIUrl } from '../../constants/public-api-url';
 
 @Injectable({
