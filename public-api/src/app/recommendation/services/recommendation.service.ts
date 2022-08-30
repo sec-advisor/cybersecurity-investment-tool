@@ -9,9 +9,7 @@ export class RecommendationService {
   constructor(private httpService: HttpService) { }
 
   recommend(body: RecommendationProfile): Observable<any> {
-    // const url = 'http://mentor:8000';
-    // TODO CH: Why is the upper line now working??
-    const url = 'http://localhost:8000';
+    const url = 'http://mentor:8000';
     return this.httpService.post(`${url}/v1/recommend`, body).pipe(map(response => response.data.recommendedServices));
   }
 
