@@ -8,6 +8,8 @@ import { BusinessProfileModule } from './business-profile/business-profile.modul
 import { SegmentDefinitionModule } from './segment-definition/segment-definition.module';
 import { SegmentModule } from './segment/segment.module';
 import { RecommendationModule } from './recommendation/recommendation.module';
+import { UsersModule } from './users/users.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -19,6 +21,8 @@ import { RecommendationModule } from './recommendation/recommendation.module';
     SegmentDefinitionModule,
     OptimalInvestmentEquationModule,
     RecommendationModule,
+    UsersModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],

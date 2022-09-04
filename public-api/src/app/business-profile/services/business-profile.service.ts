@@ -20,6 +20,12 @@ export class BusinessProfileService {
     );
   }
 
+  getProfileByUser(userId: string): Observable<string> {
+    return from(this.profileModel.find({ userId })).pipe(
+      map((profile) => profile[0]?._id),
+    );
+  }
+
   getProfile(id: string): Observable<BusinessProfile> {
     return from(this.profileModel.findById(id)).pipe(
       map((profile) => this.mapToBusinessProfile(profile)),
@@ -43,6 +49,7 @@ export class BusinessProfileService {
   private mapToBusinessProfile(profile): BusinessProfile {
     return {
       id: profile._id,
+      userId: undefined,
       companyName: profile.companyName,
       revenue: profile.revenue,
       numberOfEmployees: profile.numberOfEmployees,

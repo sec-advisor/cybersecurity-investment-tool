@@ -1,14 +1,5 @@
 import { Injectable } from '@angular/core';
-import {
-  BehaviorSubject,
-  filter,
-  first,
-  map,
-  Observable,
-  of,
-  switchMap,
-  tap,
-} from 'rxjs';
+import { BehaviorSubject, filter, first, map, Observable, of, switchMap, tap } from 'rxjs';
 
 import { BusinessProfile, Segment } from '../../../libs/api-interfaces';
 import { AppSegment } from '../models/app-segment.model';
@@ -26,13 +17,14 @@ export class StorageService {
   >(undefined);
   private isFirstCallProfile = true;
   private isFirstCallSegments = true;
+  private isLoggedIn$ = new BehaviorSubject<boolean>(false);
   private segmentsSource$ = new BehaviorSubject<AppSegment[]>([]);
 
   constructor(
     private businessProfileDataService: BusinessProfileDataService,
     private localStorageService: LocalStorageService,
     private segmentDataServices: SegmentDataService
-  ) {}
+  ) { }
 
   storeBusinessProfile(profile: BusinessProfile): Observable<string> {
     return this.businessProfileDataService
@@ -44,8 +36,8 @@ export class StorageService {
     return (
       this.isFirstCallProfile
         ? this.getProfileRemotely().pipe(
-            tap((profile) => this.businessProfileSource$.next(profile))
-          )
+          tap((profile) => this.businessProfileSource$.next(profile))
+        )
         : of(this.businessProfileSource$.value)
     ).pipe(
       tap(() => (this.isFirstCallProfile = false)),
@@ -81,20 +73,20 @@ export class StorageService {
     return (
       this.isFirstCallSegments
         ? (this.isProfileDefined()
-            ? of(this.businessProfileSource$.value)
-            : this.businessProfileSource$.pipe(
-                filter((profile) => !!profile),
-                first()
-              )
-          ).pipe(
-            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-            switchMap((profile) =>
-              this.segmentDataServices.getSegments(
-                (profile as BusinessProfile).id!
-              )
-            ),
-            tap((segments) => this.segmentsSource$.next(segments))
+          ? of(this.businessProfileSource$.value)
+          : this.businessProfileSource$.pipe(
+            filter((profile) => !!profile),
+            first()
           )
+        ).pipe(
+          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+          switchMap((profile) =>
+            this.segmentDataServices.getSegments(
+              (profile as BusinessProfile).id!
+            )
+          ),
+          tap((segments) => this.segmentsSource$.next(segments))
+        )
         : of(this.segmentsSource$.value)
     ).pipe(
       tap(() => (this.isFirstCallSegments = false)),
@@ -103,10 +95,10 @@ export class StorageService {
         getExtendedModel
           ? segments
           : segments.map((segment) => ({
-              ...segment,
-              recommendations: undefined,
-              recommendationProfile: undefined,
-            }))
+            ...segment,
+            recommendations: undefined,
+            recommendationProfile: undefined,
+          }))
       )
     );
   }
@@ -117,17 +109,8 @@ export class StorageService {
   ): Observable<AppSegment> {
     return storeRemote
       ? this.segmentDataServices
-          .updateSegment(segment)
-          .pipe(
-            tap((segment) =>
-              this.segmentsSource$.next(
-                this.segmentsSource$.value.map((s) =>
-                  s.id === segment.id ? segment : s
-                )
-              )
-            )
-          )
-      : of(segment).pipe(
+        .updateSegment(segment)
+        .pipe(
           tap((segment) =>
             this.segmentsSource$.next(
               this.segmentsSource$.value.map((s) =>
@@ -135,7 +118,16 @@ export class StorageService {
               )
             )
           )
-        );
+        )
+      : of(segment).pipe(
+        tap((segment) =>
+          this.segmentsSource$.next(
+            this.segmentsSource$.value.map((s) =>
+              s.id === segment.id ? segment : s
+            )
+          )
+        )
+      );
   }
 
   removeSegment(segmentId: string): Observable<void> {
@@ -147,6 +139,19 @@ export class StorageService {
 
   updateSegments(segments: AppSegment[]): void {
     this.segmentsSource$.next(segments);
+  }
+
+  setLoggingState(isLoggedIn: boolean): void {
+    this.isLoggedIn$.next(isLoggedIn);
+  }
+
+  getLoggingState(): Observable<boolean> {
+    return this.isLoggedIn$;
+  }
+
+  reset(): void {
+    this.isFirstCallProfile = true;
+    this.isFirstCallSegments = true;
   }
 
   private isProfileDefined(): boolean {

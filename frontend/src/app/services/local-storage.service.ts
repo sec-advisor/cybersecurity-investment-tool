@@ -13,4 +13,8 @@ export class LocalStorageService {
   getItem(key: StorageKey): any | undefined {
     return localStorage.getItem(key);
   }
+
+  removeItem(key: StorageKey): void {
+    return localStorage.removeItem(key);
+  }
 }
