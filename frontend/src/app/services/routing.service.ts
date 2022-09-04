@@ -58,6 +58,7 @@ export class RoutingService implements OnDestroy {
     private storageService: StorageService,
     private localStorageService: LocalStorageService,
   ) {
+    this.browseTo('/home');
     this.subscriber.add(this.handlePageEnabling());
     this.subscriber.add(this.handleRouterChanges().subscribe());
   }
