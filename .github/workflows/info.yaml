@@ -19,5 +19,6 @@ jobs:
         docker version --format '{{.Server.APIVersion}}'
   git-checkout:
     runs-on: self-hosted
+    container: node:16-alpine
     steps:
     - uses: actions/checkout@v3
