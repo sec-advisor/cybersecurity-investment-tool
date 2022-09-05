@@ -13,9 +13,21 @@ jobs:
   yarn:
     runs-on: self-hosted
     steps:
-    - name: Check if yarn is installed
+    - name: Yarn version
       run: |
         yarn --version
+  node:
+    runs-on: self-hosted
+    steps:
+    - name: Node version
+      run: |
+        node --version
+  python:
+    runs-on: self-hosted
+    steps:
+    - name: Python version
+      run: |
+        python --version
   docker:
     runs-on: self-hosted
     steps:
