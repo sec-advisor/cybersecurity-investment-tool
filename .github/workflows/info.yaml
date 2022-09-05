@@ -23,4 +23,4 @@ jobs:
     - name: Whoami
       run: |
         whoami
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v2
