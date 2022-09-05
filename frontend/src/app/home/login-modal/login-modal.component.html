@@ -1,0 +1,80 @@
+<ng-template #modal let-modal>
+  <ng-container>
+    <div class="modal-header modal-dialog-centered justify-content-center">
+      <h4 class="modal-title" id="segment-registrator">
+        Welcome
+      </h4>
+    </div>
+
+    <div class="modal-body">
+      <ul class="nav nav-pills nav-justified mb-3" id="ex1" role="tablist">
+        <li class="nav-item" role="presentation">
+          <a [class.active]="isTabActive('Login')" class="nav-link pointer-cursor" id="tab-login" role="tab"
+            aria-controls="pills-login" (click)="switchTap('Login')">Login</a>
+        </li>
+        <li class="nav-item" role="presentation">
+          <a [class.active]="isTabActive('Register')" class="nav-link pointer-cursor" id="tab-register" role="tab"
+            aria-controls="pills-register" (click)="switchTap('Register')">Sign Up</a>
+        </li>
+      </ul>
+
+      <!-- Login -->
+      <ng-container *ngIf="isTabActive('Login'); else register">
+        <form [formGroup]="loginForm">
+          <!-- Email input -->
+          <div class="form-outline mb-2">
+            <label class="form-label" for="loginName">Username</label>
+            <input type="email" id="loginName" class="form-control" formControlName="username" />
+          </div>
+
+          <!-- Password input -->
+          <div class="form-outline mb-2">
+            <label class="form-label" for="loginPassword">Password</label>
+            <input type="password" id="loginPassword" class="form-control" formControlName="password" />
+          </div>
+        </form>
+
+        <p *ngIf="loginError" class="text-danger font-italic">{{ loginError }}</p>
+      </ng-container>
+
+      <!-- Signup -->
+      <ng-template #register>
+        <form [formGroup]="registerForm">
+          <!-- Email input -->
+          <div class="form-outline mb-2">
+            <label class="form-label" for="loginName">Username</label>
+            <input type="email" id="loginName" class="form-control" formControlName="username" />
+          </div>
+
+          <!-- Password input -->
+          <div class="form-outline mb-2">
+            <label class="form-label" for="loginPassword">Password</label>
+            <input type="password" id="loginPassword" class="form-control" formControlName="password" />
+          </div>
+
+          <!-- Password input -->
+          <div class="form-outline mb-2">
+            <label class="form-label" for="loginPassword">Password</label>
+            <input type="password" id="loginPasswordConfirm" class="form-control" formControlName="passwordConfirm" />
+          </div>
+        </form>
+
+        <p *ngIf="registerError" class="text-danger font-italic">{{ registerError }}</p>
+      </ng-template>
+
+    </div>
+    <div class="modal-footer">
+      <ng-container *ngIf="isTabActive('Login'); else signUpFooter">
+        <button type="button" class="btn btn-primary" [disabled]="loginForm.invalid" (click)="login(modal)">
+          Login
+        </button>
+      </ng-container>
+
+      <ng-template #signUpFooter>
+        <button type="button" class="btn btn-primary" [disabled]="registerForm.invalid" (click)="signUp(modal)">
+          Sign Up
+        </button>
+      </ng-template>
+    </div>
+  </ng-container>
+</ng-template>

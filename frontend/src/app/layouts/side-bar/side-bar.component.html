@@ -1,21 +1,13 @@
-<div
-  class="navbar d-flex flex-column flex-shrink-0 p-3 text-white bg-dark"
-  style="width: 330px"
->
-  <a
-    class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none"
-  >
+<div class="navbar d-flex flex-column flex-shrink-0 p-3 text-white bg-dark" style="width: 330px">
+  <a class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
     <i class="bi bi-shield-check header-icon"></i>
     <span class="fs-4">SECAdvisor</span>
   </a>
   <hr />
   <ul class="nav nav-pills flex-column mb-auto">
     <ng-container *ngFor="let page of routingService.pages">
-      <li
-        [class.pointer-cursor]="!page.disabled"
-        [class.disabled]="page.disabled"
-        (click)="routingService.browseTo(page.path)"
-      >
+      <li [class.pointer-cursor]="!page.disabled" [class.disabled]="page.disabled"
+        (click)="routingService.browseTo(page.path)">
         <a class="nav-link text-white" [class.active]="page.active">
           <i class="sidebar-icons bi medium-icon" [ngClass]="page.icon"></i>
           {{ page.name }}
@@ -23,6 +15,12 @@
       </li>
     </ng-container>
   </ul>
+
+  <!-- Logout button -->
+  <ng-container *ngIf="isLoggedIn$ | async" as isLoggedIn>
+    <button type="button" class="btn btn-danger w-100" (click)="logout()">Logout</button>
+  </ng-container>
+
   <ng-container *ngIf="companyName$ | async as companyName">
     <hr />
     <div class="sidebar-footer">

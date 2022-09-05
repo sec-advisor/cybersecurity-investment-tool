@@ -8,10 +8,12 @@ import {
   Param,
   Patch,
   Post,
+  UseGuards,
 } from '@nestjs/common';
 import { catchError, map, Observable, of, switchMap, tap } from 'rxjs';
 
 import { Segment } from '../../../libs/api-interfaces';
+import { AuthenticatedGuard } from '../auth/authenticated.guard';
 import { OptimalInvestmentEquationService } from '../breach-probability/services/optimal-investment-equation.service';
 import { InvestmentCalculatorService } from './services/investment-calculator.service';
 import { SegmentService } from './services/segment.service';
@@ -24,6 +26,7 @@ export class SegmentController {
     private readonly segmentService: SegmentService,
   ) {}
 
+  @UseGuards(AuthenticatedGuard)
   @Post('segment')
   storeSegment(@Body() segment: Segment): Observable<string> {
     try {
@@ -47,6 +50,7 @@ export class SegmentController {
     }
   }
 
+  @UseGuards(AuthenticatedGuard)
   @Get('segments/:companyId')
   getSegment(
     @Param('companyId') companyId: string,
@@ -72,6 +76,7 @@ export class SegmentController {
     }
   }
 
+  @UseGuards(AuthenticatedGuard)
   @Delete('segment/:id')
   deleteSegment(@Param('id') id: string): Observable<void> {
     try {
@@ -95,6 +100,7 @@ export class SegmentController {
     }
   }
 
+  @UseGuards(AuthenticatedGuard)
   @Post('investment-calculation')
   calculateInvestment(@Body() segments: Segment[]): Observable<Segment[]> {
     return this.breachProbabilityService.getFunction().pipe(
@@ -118,6 +124,7 @@ export class SegmentController {
     );
   }
 
+  @UseGuards(AuthenticatedGuard)
   @Post('investment-calculation-without-segmentation')
   calculateInvestmentWithoutSegmentation(
     @Body() segments: Segment[],
@@ -142,6 +149,7 @@ export class SegmentController {
     );
   }
 
+  @UseGuards(AuthenticatedGuard)
   @Patch('segment')
   updateSegment(@Body() segment: Segment): Observable<Segment> {
     try {

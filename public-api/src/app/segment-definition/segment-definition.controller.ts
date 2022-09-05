@@ -5,6 +5,7 @@ import {
   HttpException,
   HttpStatus,
   Post,
+  UseGuards,
 } from '@nestjs/common';
 import { catchError, Observable, of, tap } from 'rxjs';
 
@@ -12,6 +13,7 @@ import {
   SegmentDefinition,
   ValueEstimation,
 } from '../../../libs/api-interfaces';
+import { AuthenticatedGuard } from '../auth/authenticated.guard';
 import { SegmentDefinitionService } from './services/segment-definition.service';
 
 @Controller('segment-definitions')
@@ -20,6 +22,7 @@ export class SegmentDefinitionController {
     private readonly segmentDefinitionService: SegmentDefinitionService,
   ) {}
 
+  @UseGuards(AuthenticatedGuard)
   @Get('definitions')
   getSegmentDefinitions(): Observable<SegmentDefinition[]> {
     try {
@@ -43,6 +46,7 @@ export class SegmentDefinitionController {
     }
   }
 
+  @UseGuards(AuthenticatedGuard)
   @Post('value-estimation')
   calculateValue(@Body() data: ValueEstimation): number {
     try {

@@ -22,6 +22,7 @@ export const SegmentDefinitionSchema = new mongoose.Schema({
 });
 
 export const BusinessProfileSchema = new mongoose.Schema({
+  userId: String,
   companyName: String,
   revenue: Number,
   numberOfEmployees: Number,
@@ -47,3 +48,24 @@ export const OptimalInvestmentEquationSchema = new mongoose.Schema({
   breachProbabilityFunction: String,
   optimalInvestmentEquation: String,
 });
+
+export const UserSchema = new mongoose.Schema(
+  {
+    username: {
+      type: String,
+      required: true,
+      unique: true,
+    },
+    password: {
+      type: String,
+      required: true,
+    },
+  },
+  { timestamps: true },
+);
+
+export interface User extends mongoose.Document {
+  _id: string;
+  username: string;
+  password: string;
+}

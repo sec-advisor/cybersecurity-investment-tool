@@ -42,6 +42,7 @@ export interface ValueEstimation {
 
 export interface BusinessProfile {
   id?: string;
+  userId?: string;
   companyName: string;
   revenue: number;
   numberOfEmployees: number;
@@ -78,4 +79,10 @@ export enum LeadingPeriod {
   Minutes,
   Days,
   Months,
+}
+
+export interface User {
+  userId: string;
+  userName: string;
+  password?: string;
 }
