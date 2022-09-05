@@ -10,6 +10,12 @@ jobs:
       run: |
         whoami
         pwd
+  yarn:
+    runs-on: self-hosted
+    steps:
+    - name: Check if yarn is installed
+      run: |
+        yarn --version
   docker:
     runs-on: self-hosted
     steps:
