@@ -20,7 +20,4 @@ jobs:
   git-checkout:
     runs-on: self-hosted
     steps:
-    - name: Whoami
-      run: |
-        whoami
     - uses: actions/checkout@v3
