@@ -9,24 +9,34 @@ on:
 jobs:
   format:
     runs-on: self-hosted
-    container: python:3.9-alpine
     steps:
     - uses: actions/checkout@v3
-    - name: Format Mentor
+    - name: Create and enter venv
       run: |
         cd mentor
+        python -m venv venv
+        source venv/bin/activate
+    - name: Format Mentor
+      run: |
         pip install black
         black server.py engine
+    - name: Deactivate venv
+      run: |
+        deactivate
   lint:
     runs-on: self-hosted
-    container: python:3.9-alpine
     steps:
     - uses: actions/checkout@v3
-    - uses: actions/setup-python@v4
-      with:
-        python-version: '3.9' 
+    - name: Create and enter venv
+      run: |
+        cd mentor
+        python -m venv venv
+        source venv/bin/activate
     - name: Lint Mentor
       run: |
         cd mentor
         pip install flake8
         flake8 server.py engine
+    - name: Deactivate venv
+      run: |
+        deactivate

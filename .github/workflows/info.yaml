@@ -16,7 +16,3 @@ jobs:
     - name: Docker info
       run: |
         docker version --format '{{.Server.APIVersion}}'
-  git-checkout:
-    runs-on: self-hosted
-    steps:
-    - uses: actions/checkout@v3

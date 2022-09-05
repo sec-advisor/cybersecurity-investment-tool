@@ -9,7 +9,6 @@ on:
 jobs:
   format:
     runs-on: self-hosted
-    container: node:16
     steps:
     - uses: actions/checkout@v3
     - name: Check formatting frontend
@@ -19,7 +18,6 @@ jobs:
         yarn prettier -c src/
   lint:
     runs-on: self-hosted
-    container: node:16
     steps:
     - uses: actions/checkout@v3
     - name: Lint frontend
@@ -29,7 +27,6 @@ jobs:
         yarn eslint src/
   build:
     runs-on: self-hosted
-    container: node:16
     steps:
     - uses: actions/checkout@v3
     - name: Build frontend
