@@ -15,7 +15,6 @@ jobs:
     steps:
     - name: Docker info
       run: |
-        docker run hello-world
         docker version --format '{{.Server.APIVersion}}'
   git-checkout:
     runs-on: self-hosted
