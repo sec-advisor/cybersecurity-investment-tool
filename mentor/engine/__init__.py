@@ -10,4 +10,4 @@ CORS(app)
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///database/app.db"
 db = SQLAlchemy(app)
 
-from engine import routes
+from engine import routes  # noqa: F401,E402

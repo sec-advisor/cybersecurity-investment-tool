@@ -2,7 +2,6 @@ from datetime import datetime
 from engine import db
 from engine.helpers.service_helper import ServiceHelper
 from engine.helpers.const.service_characteristics import (
-    TYPE,
     REGIONS,
     DEPLOYMENT_TIME,
     LEASING_PERIOD,
@@ -17,7 +16,9 @@ import base64
 Base = declarative_base()
 
 
-### Service Models ####################################################################################################
+# ############## #
+# Service Models #
+# ############## #
 
 
 class Review(db.Model):
@@ -145,7 +146,9 @@ class ServiceImage(db.Model, Image):
     __tablename__ = "service_image"
 
 
-### Customer Models ####################################################################################################
+# ############### #
+# Customer Models #
+# ############### #
 
 
 class CustomerProfile(db.Model):
