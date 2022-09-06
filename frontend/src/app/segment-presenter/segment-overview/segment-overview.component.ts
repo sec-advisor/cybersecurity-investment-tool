@@ -21,7 +21,7 @@ export class SegmentOverviewComponent implements OnInit {
   constructor(
     private segmentDataService: SegmentDataService,
     private storageService: StorageService,
-    public segmentPresenterActionService: SegmentPresenterActionService
+    public segmentPresenterActionService: SegmentPresenterActionService,
   ) {}
 
   ngOnInit(): void {
@@ -33,9 +33,9 @@ export class SegmentOverviewComponent implements OnInit {
           ? this.segmentDataService
               .calculateInvestment(segments)
               .pipe(
-                tap((segments) => this.storageService.updateSegments(segments))
+                tap((segments) => this.storageService.updateSegments(segments)),
               )
-          : of(segments)
+          : of(segments),
       ),
       map((segments) => ({
         segments,
@@ -48,21 +48,21 @@ export class SegmentOverviewComponent implements OnInit {
       switchMap((viewModel) =>
         (viewModel.segments.length > 0
           ? this.segmentDataService.calculateInvestmentWithoutSegmentation(
-              viewModel.segments
+              viewModel.segments,
             )
           : of(undefined as unknown as Partial<Segment>)
         ).pipe(
           map((withoutSegmentation) => ({ ...viewModel, withoutSegmentation })),
-          tap(() => this.segmentPresenterActionService.stopLoading())
-        )
-      )
+          tap(() => this.segmentPresenterActionService.stopLoading()),
+        ),
+      ),
     );
   }
 
   private getTotalInvestment(segments: Segment[]): number {
     return segments.reduce(
       (pre, curr) => pre + (curr?.optimalInvestment || 0),
-      0
+      0,
     );
   }
 }

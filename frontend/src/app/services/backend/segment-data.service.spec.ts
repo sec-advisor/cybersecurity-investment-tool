@@ -14,6 +14,6 @@ describe('Service: SegmentData', () => {
     [SegmentDataService],
     (service: SegmentDataService) => {
       expect(service).toBeTruthy();
-    }
+    },
   ));
 });

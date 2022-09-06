@@ -6,7 +6,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 })
 export class RecommendationService {
   private selectedSegmentId$ = new BehaviorSubject<string | undefined>(
-    undefined
+    undefined,
   );
 
   getSelectedSegmentId(): Observable<string | undefined> {

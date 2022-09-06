@@ -2,14 +2,13 @@ import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class LoginService {
-
   private readonly closeSubject$ = new Subject<void>();
   private readonly openSubject$ = new Subject<void>();
 
-  constructor() { }
+  constructor() {}
 
   showModal(): Observable<void> {
     this.openSubject$.next();
@@ -23,5 +22,4 @@ export class LoginService {
   modalWillClose(): void {
     this.closeSubject$.next();
   }
-
 }

@@ -2,7 +2,7 @@
   <ng-container *ngIf="stream">
     <div class="modal-header modal-dialog-centered">
       <h4 class="modal-title" id="segment-registrator">
-        {{ isEditMode ? "Edit Segment" : "Add segment" }}
+        {{ isEditMode ? 'Edit Segment' : 'Add segment' }}
       </h4>
       <button
         type="button"
@@ -264,7 +264,7 @@
         [disabled]="stream.form.invalid || stream.form.pristine"
         (click)="modal.close(stream)"
       >
-        {{ isEditMode ? "Update" : "Save" }}
+        {{ isEditMode ? 'Update' : 'Save' }}
       </button>
     </div>
   </ng-container>

@@ -31,7 +31,7 @@ export class ActionBoardComponent implements OnInit, OnDestroy {
 
   constructor(
     private storageService: StorageService,
-    public segmentPresenterActionService: SegmentPresenterActionService
+    public segmentPresenterActionService: SegmentPresenterActionService,
   ) {}
 
   ngOnInit(): void {
@@ -40,7 +40,7 @@ export class ActionBoardComponent implements OnInit, OnDestroy {
         if (segments.length > 0) {
           this.buttons.forEach((button) => (button.disabled = false));
         }
-      })
+      }),
     );
   }
 
@@ -69,8 +69,8 @@ export class ActionBoardComponent implements OnInit, OnDestroy {
       .getView()
       .pipe(
         map((view) =>
-          view === 'overview' ? 'Show segment details' : 'Show overview table'
-        )
+          view === 'overview' ? 'Show segment details' : 'Show overview table',
+        ),
       );
   }
 
@@ -79,8 +79,10 @@ export class ActionBoardComponent implements OnInit, OnDestroy {
       .getView()
       .pipe(
         map((view) =>
-          view === 'overview' ? 'bi-eye-fill' : 'bi-file-earmark-bar-graph-fill'
-        )
+          view === 'overview'
+            ? 'bi-eye-fill'
+            : 'bi-file-earmark-bar-graph-fill',
+        ),
       );
   }
 }

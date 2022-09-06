@@ -15,6 +15,6 @@ describe('Service: Store', () => {
     [LocalStorageService],
     (service: LocalStorageService) => {
       expect(service).toBeTruthy();
-    }
+    },
   ));
 });

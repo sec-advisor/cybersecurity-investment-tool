@@ -14,6 +14,6 @@ describe('Service: Recommendation', () => {
     [RecommendationService],
     (service: RecommendationService) => {
       expect(service).toBeTruthy();
-    }
+    },
   ));
 });

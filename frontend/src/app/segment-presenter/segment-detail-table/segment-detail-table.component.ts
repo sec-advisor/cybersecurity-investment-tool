@@ -22,7 +22,7 @@ export class SegmentDetailTableComponent {
 
   constructor(
     private moalService: NgbModal,
-    private storageService: StorageService
+    private storageService: StorageService,
   ) {}
 
   editSegment(segment: Segment): void {
@@ -36,9 +36,9 @@ export class SegmentDetailTableComponent {
           .pipe(
             // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
             switchMap(() => this.storageService.removeSegment(segment.id!)),
-            catchError(() => of(undefined))
+            catchError(() => of(undefined)),
           )
-          .subscribe()
+          .subscribe(),
       );
     }
   }

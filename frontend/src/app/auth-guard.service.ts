@@ -9,7 +9,7 @@ import { RoutingService } from './services/routing.service';
 export class AuthGuardService implements CanActivate {
   constructor(
     public localStorageService: LocalStorageService,
-    private routingService: RoutingService
+    private routingService: RoutingService,
   ) {}
 
   canActivate(): boolean {

@@ -20,16 +20,19 @@ export class SideBarComponent {
     private localStorageService: LocalStorageService,
     private userDataService: UserDataService,
     public storageService: StorageService,
-    public routingService: RoutingService
+    public routingService: RoutingService,
   ) {
     this.isLoggedIn$ = this.storageService.getLoggingState();
 
     this.companyName$ = this.isLoggedIn$.pipe(
-      switchMap((isLoggedIn) => isLoggedIn ?
-        this.storageService.getBusinessProfile().pipe(map((profile) => profile?.companyName)) :
-        of(undefined)),
+      switchMap((isLoggedIn) =>
+        isLoggedIn
+          ? this.storageService
+              .getBusinessProfile()
+              .pipe(map((profile) => profile?.companyName))
+          : of(undefined),
+      ),
     );
-
   }
 
   logout(): void {

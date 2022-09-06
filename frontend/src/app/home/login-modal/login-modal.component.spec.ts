@@ -12,9 +12,8 @@ describe('LoginModalComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [HttpClientModule, ReactiveFormsModule],
-      declarations: [LoginModalComponent]
-    })
-      .compileComponents();
+      declarations: [LoginModalComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

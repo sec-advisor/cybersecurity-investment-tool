@@ -1,6 +1,15 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
-import { filter, map, merge, Observable, of, Subscriber, switchMap, tap } from 'rxjs';
+import {
+  filter,
+  map,
+  merge,
+  Observable,
+  of,
+  Subscriber,
+  switchMap,
+  tap,
+} from 'rxjs';
 
 import { StorageKey } from '../models/storage-key.enum';
 import { LocalStorageService } from './local-storage.service';
@@ -21,37 +30,37 @@ export class RoutingService implements OnDestroy {
     active: boolean;
     disabled?: boolean;
   }[] = [
-      {
-        id: Page.Home,
-        name: 'Home',
-        icon: 'bi-house-door',
-        path: '/home',
-        active: true,
-      },
-      {
-        id: Page.BusinessProfile,
-        name: 'Business Profile',
-        icon: 'bi-building',
-        path: '/business-profile',
-        active: false,
-      },
-      {
-        id: Page.Segments,
-        name: 'Segments',
-        icon: 'bi-pie-chart',
-        path: '/segments',
-        active: false,
-        disabled: true,
-      },
-      {
-        id: Page.Recommendation,
-        name: 'Recommendation',
-        icon: 'bi-shield',
-        path: '/recommendation',
-        active: false,
-        disabled: true,
-      },
-    ];
+    {
+      id: Page.Home,
+      name: 'Home',
+      icon: 'bi-house-door',
+      path: '/home',
+      active: true,
+    },
+    {
+      id: Page.BusinessProfile,
+      name: 'Business Profile',
+      icon: 'bi-building',
+      path: '/business-profile',
+      active: false,
+    },
+    {
+      id: Page.Segments,
+      name: 'Segments',
+      icon: 'bi-pie-chart',
+      path: '/segments',
+      active: false,
+      disabled: true,
+    },
+    {
+      id: Page.Recommendation,
+      name: 'Recommendation',
+      icon: 'bi-shield',
+      path: '/recommendation',
+      active: false,
+      disabled: true,
+    },
+  ];
 
   constructor(
     private router: Router,

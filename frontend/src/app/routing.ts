@@ -42,7 +42,7 @@ export class CustomReuseStrategy implements RouteReuseStrategy {
   //Reuse the route if we're going to and from the same route
   shouldReuseRoute(
     future: ActivatedRouteSnapshot,
-    curr: ActivatedRouteSnapshot
+    curr: ActivatedRouteSnapshot,
   ): boolean {
     return future.routeConfig === curr.routeConfig;
   }
