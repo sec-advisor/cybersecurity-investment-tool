@@ -88,9 +88,9 @@ export class StorageService {
                 first(),
               )
           ).pipe(
-            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
             switchMap((profile) =>
               this.segmentDataServices.getSegments(
+                // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
                 (profile as BusinessProfile).id!,
               ),
             ),

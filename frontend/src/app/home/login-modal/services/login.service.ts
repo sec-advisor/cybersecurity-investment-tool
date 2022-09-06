@@ -8,6 +8,7 @@ export class LoginService {
   private readonly closeSubject$ = new Subject<void>();
   private readonly openSubject$ = new Subject<void>();
 
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
   constructor() {}
 
   showModal(): Observable<void> {
