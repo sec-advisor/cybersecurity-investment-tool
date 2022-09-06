@@ -13,4 +13,4 @@ jobs:
     - uses: actions/checkout@v3
     - name: Build frontend
       run: |
-        docker compose build -pull
+        docker compose build --pull
