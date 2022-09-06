@@ -20,7 +20,6 @@ import { ToastNotificationService } from './services/toast-notification.service'
       <ng-template #text>{{ toast.textOrTpl }}</ng-template>
     </ngb-toast>
   `,
-  // eslint-disable-next-line @angular-eslint/no-host-metadata-property
   host: { '[class.ngb-toasts]': 'true' },
 })
 export class ToastNotificationComponent {
