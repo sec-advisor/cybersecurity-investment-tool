@@ -21,8 +21,8 @@ export class HomeComponent implements OnInit {
     private homeService: HomeService,
     private storageService: StorageService,
     private userDataService: UserDataService,
-    public routingService: RoutingService
-  ) { }
+    public routingService: RoutingService,
+  ) {}
 
   ngOnInit(): void {
     this.stream$ = this.getStream();
@@ -31,13 +31,18 @@ export class HomeComponent implements OnInit {
   private getStream(): Observable<{ profile: BusinessProfile | undefined }> {
     return merge(
       this.userDataService.isActive(),
-      this.storageService.getLoggingState().pipe(filter(isLoggedIn => !isLoggedIn))
+      this.storageService
+        .getLoggingState()
+        .pipe(filter((isLoggedIn) => !isLoggedIn)),
     ).pipe(
-      switchMap(isLoggedIn => isLoggedIn ?
-        this.homeService.getProfile() :
-        this.loginService.showModal().pipe(switchMap(() => this.homeService.getProfile()))
+      switchMap((isLoggedIn) =>
+        isLoggedIn
+          ? this.homeService.getProfile()
+          : this.loginService
+              .showModal()
+              .pipe(switchMap(() => this.homeService.getProfile())),
       ),
-      tap(() => this.storageService.setLoggingState(true))
+      tap(() => this.storageService.setLoggingState(true)),
     );
   }
 }

@@ -89,7 +89,7 @@ export class ConfigurationComponent implements OnInit, OnChanges {
     private formGroup: FormBuilder,
     private recommendationDataService: RecommendationDataService,
     private segmentDefinitionDataService: SegmentDefinitionDataService,
-    private storageService: StorageService
+    private storageService: StorageService,
   ) {}
 
   ngOnInit() {
@@ -108,13 +108,13 @@ export class ConfigurationComponent implements OnInit, OnChanges {
                 form: this.createForm(
                   profile,
                   segment,
-                  viewModel.attackTypeLabels
+                  viewModel.attackTypeLabels,
                 ),
-              }))
-            )
-          )
-        )
-      )
+              })),
+            ),
+          ),
+        ),
+      ),
     );
   }
 
@@ -138,7 +138,7 @@ export class ConfigurationComponent implements OnInit, OnChanges {
     };
 
     const attackType = stream.attackTypes?.find(
-      (attack) => attack.label === stream.form.get('attackType')!.value
+      (attack) => attack.label === stream.form.get('attackType')!.value,
     )?.values;
     if (attackType) {
       forkJoin(
@@ -146,13 +146,13 @@ export class ConfigurationComponent implements OnInit, OnChanges {
           this.recommendationDataService.recommend({
             ...recommendationProfile,
             attackType: [type],
-          })
-        )
+          }),
+        ),
       )
         .pipe(
           first(),
           map((nestedRecommendations) =>
-            nestedRecommendations.reduce((pre, curr) => [...pre, ...curr], [])
+            nestedRecommendations.reduce((pre, curr) => [...pre, ...curr], []),
           ),
           // Remove duplications
           map((recommendations: any[]) =>
@@ -166,9 +166,9 @@ export class ConfigurationComponent implements OnInit, OnChanges {
                       : curr,
                   ],
                 ],
-                []
+                [],
               )
-              .filter((value: any) => !!value)
+              .filter((value: any) => !!value),
           ),
           switchMap((recommendations) =>
             this.storageService.updateSegment(
@@ -179,9 +179,9 @@ export class ConfigurationComponent implements OnInit, OnChanges {
                 })),
                 recommendationProfile: recommendationProfile,
               },
-              false
-            )
-          )
+              false,
+            ),
+          ),
         )
         .subscribe();
     } else {
@@ -192,7 +192,7 @@ export class ConfigurationComponent implements OnInit, OnChanges {
   private createForm(
     profile: BusinessProfile | undefined,
     segment: AppSegment,
-    attacks: string[] | undefined
+    attacks: string[] | undefined,
   ): FormGroup {
     return this.formGroup.group({
       region: [profile?.region, [Validators.required]],
@@ -221,10 +221,10 @@ export class ConfigurationComponent implements OnInit, OnChanges {
 
   private getAttacks(
     segmentDefinitions: SegmentDefinition[],
-    segment: Segment
+    segment: Segment,
   ) {
     let attackTypes = segmentDefinitions.find(
-      (definition) => definition.key === segment.type
+      (definition) => definition.key === segment.type,
     )?.supportedThreats;
     if (attackTypes) {
       attackTypes =
@@ -234,7 +234,7 @@ export class ConfigurationComponent implements OnInit, OnChanges {
                 label: 'All',
                 values: attackTypes.reduce(
                   (pre, curr) => [...pre, ...curr.values],
-                  [] as string[]
+                  [] as string[],
                 ),
               },
               ...attackTypes,

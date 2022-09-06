@@ -1,7 +1,15 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { catchError, from, Observable, of, Subscriber, switchMap, tap } from 'rxjs';
+import {
+  catchError,
+  from,
+  Observable,
+  of,
+  Subscriber,
+  switchMap,
+  tap,
+} from 'rxjs';
 
 import { StorageKey } from '../../models/storage-key.enum';
 import { BusinessProfileDataService } from '../../services/backend/business-profile-data.service';
@@ -12,10 +20,9 @@ import { LoginService } from './services/login.service';
 @Component({
   selector: 'app-login-modal',
   templateUrl: './login-modal.component.html',
-  styleUrls: ['./login-modal.component.scss']
+  styleUrls: ['./login-modal.component.scss'],
 })
 export class LoginModalComponent implements OnInit, OnDestroy {
-
   private readonly subscriber = new Subscriber();
   private activeTab: 'Login' | 'Register' = 'Login';
 
@@ -24,7 +31,6 @@ export class LoginModalComponent implements OnInit, OnDestroy {
   loginError?: string;
   registerForm!: FormGroup;
   registerError?: string;
-
 
   @ViewChild('modal', { static: true }) modal?: any;
 
@@ -35,11 +41,16 @@ export class LoginModalComponent implements OnInit, OnDestroy {
     private formBuilder: FormBuilder,
     private modalService: NgbModal,
     private userDataService: UserDataService,
-  ) { }
+  ) {}
 
   ngOnInit() {
     this.createForms();
-    this.subscriber.add(this.loginService.getOpenModalEvent().pipe(switchMap(() => this.showModal())).subscribe())
+    this.subscriber.add(
+      this.loginService
+        .getOpenModalEvent()
+        .pipe(switchMap(() => this.showModal()))
+        .subscribe(),
+    );
   }
 
   ngOnDestroy(): void {
@@ -47,14 +58,13 @@ export class LoginModalComponent implements OnInit, OnDestroy {
   }
 
   showModal(): Observable<any> {
-    return from(this.modalService.open(
-      this.modal,
-      {
+    return from(
+      this.modalService.open(this.modal, {
         backdrop: 'static',
         keyboard: false,
-        centered: true
-      }
-    ).result)
+        centered: true,
+      }).result,
+    );
   }
 
   isTabActive(tab: 'Login' | 'Register'): boolean {
@@ -66,42 +76,67 @@ export class LoginModalComponent implements OnInit, OnDestroy {
   }
 
   login(modal: any): void {
-    const credentials: { username: string, password: string } = { ...this.loginForm.value };
-    this.userDataService.login(credentials.username, credentials.password).pipe(
-      switchMap(() => this.userDataService.isActive()),
-      switchMap(() => this.businessProfileDataService.getProfileId().pipe(
-        tap(profileId => {
-          if (profileId) {
-            this.localStorageService.setItem(StorageKey.BusinessProfileId, profileId);
-          } else {
-            this.localStorageService.removeItem(StorageKey.BusinessProfileId);
-          }
-          modal.close();
-          this.loginService.modalWillClose();
-        }))),
-      catchError(() => of({}).pipe(tap(() => this.loginError = 'Wrong username or password!')))
-    ).subscribe()
+    const credentials: { username: string; password: string } = {
+      ...this.loginForm.value,
+    };
+    this.userDataService
+      .login(credentials.username, credentials.password)
+      .pipe(
+        switchMap(() => this.userDataService.isActive()),
+        switchMap(() =>
+          this.businessProfileDataService.getProfileId().pipe(
+            tap((profileId) => {
+              if (profileId) {
+                this.localStorageService.setItem(
+                  StorageKey.BusinessProfileId,
+                  profileId,
+                );
+              } else {
+                this.localStorageService.removeItem(
+                  StorageKey.BusinessProfileId,
+                );
+              }
+              modal.close();
+              this.loginService.modalWillClose();
+            }),
+          ),
+        ),
+        catchError(() =>
+          of({}).pipe(
+            tap(() => (this.loginError = 'Wrong username or password!')),
+          ),
+        ),
+      )
+      .subscribe();
   }
 
   signUp(modal: any): void {
-    const credentials: { username: string, password: string, passwordConfirm: string } = { ...this.registerForm.value };
+    const credentials: {
+      username: string;
+      password: string;
+      passwordConfirm: string;
+    } = { ...this.registerForm.value };
     if (credentials.password === credentials.passwordConfirm) {
-      this.userDataService.signUp(credentials.username, credentials.password).pipe(
-      ).subscribe(result => {
-        // TODO CH: Improve error handling
-        if (Object.keys(result).length === 0) {
-          this.registerError = 'Username already exists!'
-        } else {
-          this.localStorageService.removeItem(StorageKey.BusinessProfileId);
+      this.userDataService
+        .signUp(credentials.username, credentials.password)
+        .pipe()
+        .subscribe((result) => {
+          // TODO CH: Improve error handling
+          if (Object.keys(result).length === 0) {
+            this.registerError = 'Username already exists!';
+          } else {
+            this.localStorageService.removeItem(StorageKey.BusinessProfileId);
 
-          this.userDataService.login(credentials.username, credentials.password).subscribe();
+            this.userDataService
+              .login(credentials.username, credentials.password)
+              .subscribe();
 
-          modal.close();
-          this.loginService.modalWillClose();
-        }
-      })
+            modal.close();
+            this.loginService.modalWillClose();
+          }
+        });
     } else {
-      this.registerError = 'Passwords do not match!'
+      this.registerError = 'Passwords do not match!';
     }
   }
 
@@ -117,5 +152,4 @@ export class LoginModalComponent implements OnInit, OnDestroy {
       passwordConfirm: [undefined, [Validators.required]],
     });
   }
-
 }

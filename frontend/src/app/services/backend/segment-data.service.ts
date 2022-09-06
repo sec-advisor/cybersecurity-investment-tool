@@ -10,35 +10,41 @@ import { publicAPIUrl } from '../../constants/public-api-url';
   providedIn: 'root',
 })
 export class SegmentDataService {
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   storeSegment(segment: Segment): Observable<string> {
     return this.http
       .post<string>(`${publicAPIUrl}/segments/segment`, segment, httpOptions)
       .pipe(
         catchError((err) =>
-          of({} as string).pipe(tap(() => console.error(err.error.message)))
-        )
+          of({} as string).pipe(tap(() => console.error(err.error.message))),
+        ),
       );
   }
 
   getSegments(companyId: string): Observable<Segment[]> {
     return this.http
-      .get<Segment[]>(`${publicAPIUrl}/segments/segments/${companyId}`, httpOptions)
+      .get<Segment[]>(
+        `${publicAPIUrl}/segments/segments/${companyId}`,
+        httpOptions,
+      )
       .pipe(
         catchError((err) =>
-          of({} as Segment[]).pipe(tap(() => console.error(err.error.message)))
-        )
+          of({} as Segment[]).pipe(tap(() => console.error(err.error.message))),
+        ),
       );
   }
 
   removeSegment(segmentId: string): Observable<void> {
     return this.http
-      .delete<void>(`${publicAPIUrl}/segments/segment/${segmentId}`, httpOptions)
+      .delete<void>(
+        `${publicAPIUrl}/segments/segment/${segmentId}`,
+        httpOptions,
+      )
       .pipe(
         catchError((err) =>
-          of(undefined).pipe(tap(() => console.error(err.error.message)))
-        )
+          of(undefined).pipe(tap(() => console.error(err.error.message))),
+        ),
       );
   }
 
@@ -47,30 +53,30 @@ export class SegmentDataService {
       .post<Segment[]>(
         `${publicAPIUrl}/segments/investment-calculation`,
         segments,
-        httpOptions
+        httpOptions,
       )
       .pipe(
         catchError((err) =>
-          of({} as Segment[]).pipe(tap(() => console.error(err.error.message)))
-        )
+          of({} as Segment[]).pipe(tap(() => console.error(err.error.message))),
+        ),
       );
   }
 
   calculateInvestmentWithoutSegmentation(
-    segments: Segment[]
+    segments: Segment[],
   ): Observable<Partial<Segment>> {
     return this.http
       .post<Partial<Segment>>(
         `${publicAPIUrl}/segments/investment-calculation-without-segmentation`,
         segments,
-        httpOptions
+        httpOptions,
       )
       .pipe(
         catchError((err) =>
           of({} as Partial<Segment>).pipe(
-            tap(() => console.error(err.error.message))
-          )
-        )
+            tap(() => console.error(err.error.message)),
+          ),
+        ),
       );
   }
 
@@ -79,8 +85,8 @@ export class SegmentDataService {
       .patch<Segment>(`${publicAPIUrl}/segments/segment`, segment, httpOptions)
       .pipe(
         catchError((err) =>
-          of({} as Segment).pipe(tap(() => console.error(err.error.message)))
-        )
+          of({} as Segment).pipe(tap(() => console.error(err.error.message))),
+        ),
       );
   }
 }

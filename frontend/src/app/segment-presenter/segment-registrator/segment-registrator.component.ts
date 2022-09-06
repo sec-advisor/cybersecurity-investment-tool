@@ -46,7 +46,7 @@ export class SegmentRegistratorComponent implements OnInit, OnDestroy {
     private modalService: NgbModal,
     private segmentDefinitionDataService: SegmentDefinitionDataService,
     private storageService: StorageService,
-    private toastNotificationService: ToastNotificationService
+    private toastNotificationService: ToastNotificationService,
   ) {}
 
   ngOnInit(): void {
@@ -66,10 +66,10 @@ export class SegmentRegistratorComponent implements OnInit, OnDestroy {
             segments,
           })),
           switchMap((stream) =>
-            merge(of(stream), this.handleFormChanges(stream))
-          )
+            merge(of(stream), this.handleFormChanges(stream)),
+          ),
         )
-        .subscribe((stream) => (this.stream = stream))
+        .subscribe((stream) => (this.stream = stream)),
     );
   }
 
@@ -98,13 +98,13 @@ export class SegmentRegistratorComponent implements OnInit, OnDestroy {
       from(
         this.modalService.open(this.modal, {
           ariaLabelledBy: 'segment-registrator',
-        }).result
+        }).result,
       )
         .pipe(
           switchMap((stream: SegmentRegistrationViewModel) =>
             this.storageService
               .getBusinessProfile()
-              .pipe(map((profile) => ({ companyId: profile?.id, stream })))
+              .pipe(map((profile) => ({ companyId: profile?.id, stream }))),
           ),
           map(({ stream, companyId }) => ({
             companyId: companyId as string,
@@ -112,7 +112,7 @@ export class SegmentRegistratorComponent implements OnInit, OnDestroy {
             type: stream.form.controls['type'].value,
             // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
             typeDescription: stream.typeOptions.find(
-              (type) => type.id === stream.form.controls['type'].value
+              (type) => type.id === stream.form.controls['type'].value,
             )!.description,
             value: stream.form.controls['value'].value,
             risk: stream.form.controls['risk'].value,
@@ -121,22 +121,22 @@ export class SegmentRegistratorComponent implements OnInit, OnDestroy {
           map((s) =>
             this.isEditMode
               ? { ...s, id: segment?.id, companyId: segment?.companyId }
-              : s
+              : s,
           ),
           switchMap((segment) =>
             this.isEditMode
               ? this.storageService.updateSegment(segment)
-              : this.storageService.storeSegment(segment)
+              : this.storageService.storeSegment(segment),
           ),
           tap(() => this.resetForm()),
           tap(() =>
             this.toastNotificationService.showSuccess(
-              `Sucessfully ${this.isEditMode ? 'updated' : 'created'} segment`
-            )
+              `Sucessfully ${this.isEditMode ? 'updated' : 'created'} segment`,
+            ),
           ),
-          catchError(() => of(undefined))
+          catchError(() => of(undefined)),
         )
-        .subscribe()
+        .subscribe(),
     );
   }
 
@@ -147,11 +147,11 @@ export class SegmentRegistratorComponent implements OnInit, OnDestroy {
         this.selectedSegment?.valueEstimation?.inputs.map((input) => ({
           key: input.key,
           value: +stream.form.get(input.key)?.value,
-        }))
+        })),
       )
       .pipe(
         // TODO CH: Hanlde error properly
-        catchError((err) => of(console.error(err.error.message)))
+        catchError((err) => of(console.error(err.error.message))),
       )
       .subscribe((segmentValue) => {
         stream.form.controls['value'].setValue(segmentValue, {
@@ -176,7 +176,7 @@ export class SegmentRegistratorComponent implements OnInit, OnDestroy {
   }
 
   private getSegmentTypes(
-    segments: SegmentDefinition[]
+    segments: SegmentDefinition[],
   ): { id: string; description: string }[] {
     return segments.map((segment) => ({
       id: segment.key,
@@ -185,35 +185,35 @@ export class SegmentRegistratorComponent implements OnInit, OnDestroy {
   }
 
   private handleFormChanges(
-    stream: SegmentRegistrationViewModel
+    stream: SegmentRegistrationViewModel,
   ): Observable<SegmentRegistrationViewModel> {
     return of(stream).pipe(
       switchMap((stream) =>
         stream.form.controls['type'].valueChanges.pipe(
           tap((type) =>
-            this.addDynamicInputsControls(stream.form, stream.segments, type)
-          )
-        )
+            this.addDynamicInputsControls(stream.form, stream.segments, type),
+          ),
+        ),
       ),
-      map(() => stream)
+      map(() => stream),
     );
   }
 
   private addDynamicInputsControls(
     form: FormGroup,
     segments: SegmentDefinition[],
-    type: string
+    type: string,
   ): void {
     const selectedSegment = segments.find((segment) => segment.key === type);
     selectedSegment?.valueEstimation?.inputs.forEach((input) =>
-      form.addControl(input.key, new FormControl(0))
+      form.addControl(input.key, new FormControl(0)),
     );
     this.selectedSegment = selectedSegment;
   }
 
   private resetForm(): void {
     Object.values(this.stream.form.controls).map((control) =>
-      control.setValue(0, { emitValue: false })
+      control.setValue(0, { emitValue: false }),
     );
     this.stream.form.patchValue({
       name: '',

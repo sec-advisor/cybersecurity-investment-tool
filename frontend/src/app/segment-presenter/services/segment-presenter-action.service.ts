@@ -6,7 +6,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 })
 export class SegmentPresenterActionService {
   private readonly segmentView$ = new BehaviorSubject<'overview' | 'detail'>(
-    'overview'
+    'overview',
   );
   private isLoading$ = new BehaviorSubject(true);
 

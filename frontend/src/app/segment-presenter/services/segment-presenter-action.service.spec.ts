@@ -14,6 +14,6 @@ describe('Service: SegmentPresenterAction', () => {
     [SegmentPresenterActionService],
     (service: SegmentPresenterActionService) => {
       expect(service).toBeTruthy();
-    }
+    },
   ));
 });

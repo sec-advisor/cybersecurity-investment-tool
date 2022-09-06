@@ -17,7 +17,7 @@ export class SegmentOverviewTableComponent {
   getCalculatedInvestmentTotal(segments: Segment[]): number {
     return segments.reduce(
       (pre, curr) => pre + (curr.optimalInvestment ?? 0),
-      0
+      0,
     );
   }
 
@@ -25,8 +25,8 @@ export class SegmentOverviewTableComponent {
     return Math.round(
       segments.reduce(
         (pre, curr) => pre + (curr.expectedLossWithInvestment ?? 0),
-        0
-      )
+        0,
+      ),
     );
   }
 
@@ -37,8 +37,8 @@ export class SegmentOverviewTableComponent {
           pre +
           (curr.optimalInvestment ?? 0) +
           (curr.expectedLossWithInvestment ?? 0),
-        0
-      )
+        0,
+      ),
     );
   }
 }

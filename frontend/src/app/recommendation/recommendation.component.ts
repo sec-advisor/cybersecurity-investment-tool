@@ -15,7 +15,7 @@ export class RecommendationComponent implements OnInit {
 
   constructor(
     private recommendationService: RecommendationService,
-    private storageService: StorageService
+    private storageService: StorageService,
   ) {}
 
   ngOnInit() {
@@ -23,12 +23,12 @@ export class RecommendationComponent implements OnInit {
       switchMap((segments) =>
         this.recommendationService
           .getSelectedSegmentId()
-          .pipe(map((selectedSegmentId) => ({ segments, selectedSegmentId })))
+          .pipe(map((selectedSegmentId) => ({ segments, selectedSegmentId }))),
       ),
       map(({ segments, selectedSegmentId }) => ({
         segments,
         selectedSegment: segments.find(
-          (segment) => segment.id === selectedSegmentId
+          (segment) => segment.id === selectedSegmentId,
         ),
       })),
       map(({ segments, selectedSegment }) => ({
@@ -37,7 +37,7 @@ export class RecommendationComponent implements OnInit {
           isActive: segment.id === selectedSegment?.id,
         })),
         selectedSegment,
-      }))
+      })),
     );
   }
 }

@@ -15,6 +15,6 @@ describe('Service: SegmentDefinitionData', () => {
     [SegmentDefinitionDataService],
     (service: SegmentDefinitionDataService) => {
       expect(service).toBeTruthy();
-    }
+    },
   ));
 });

@@ -21,7 +21,7 @@ export class RecommendationPresenterComponent implements OnDestroy {
 
   constructor(
     private sanitizer: DomSanitizer,
-    private storageService: StorageService
+    private storageService: StorageService,
   ) {}
 
   ngOnDestroy(): void {
@@ -40,7 +40,7 @@ export class RecommendationPresenterComponent implements OnDestroy {
           ?.showModal({
             price: recommendationData.price,
             leasingPeriod: this.getLeasingPeriod(
-              recommendationData.leasingPeriod
+              recommendationData.leasingPeriod,
             ),
             mitigationRate: recommendationData.mitigationRate,
             costOfIncident: this.segment.value,
@@ -58,14 +58,14 @@ export class RecommendationPresenterComponent implements OnDestroy {
                         recommendation.data.id === recommendationData.id
                           ? calculatedROSIDetail.rosi
                           : recommendation.rosi,
-                    })
+                    }),
                   ),
                 },
-                false
-              )
-            )
+                false,
+              ),
+            ),
           )
-          .subscribe()
+          .subscribe(),
       );
     }
   }

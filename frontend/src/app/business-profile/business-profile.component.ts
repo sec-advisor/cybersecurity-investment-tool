@@ -19,7 +19,7 @@ export class BusinessProfileComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private storageService: StorageService
+    private storageService: StorageService,
   ) {}
 
   ngOnInit() {
@@ -45,7 +45,7 @@ export class BusinessProfileComponent implements OnInit {
       map((stream) => ({
         form: stream.form,
         profileId: stream.profile?.id,
-      }))
+      })),
     );
   }
 
@@ -83,7 +83,7 @@ export class BusinessProfileComponent implements OnInit {
           tap(() => {
             this.isEditMode = false;
             form.disable();
-          })
+          }),
         )
         .subscribe();
     } else {

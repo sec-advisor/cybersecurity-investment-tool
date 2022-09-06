@@ -26,7 +26,7 @@ export class RosiModalComponent {
   constructor(
     private formBuilder: FormBuilder,
     private modalService: NgbModal,
-    private recommendationDataService: RecommendationDataService
+    private recommendationDataService: RecommendationDataService,
   ) {}
 
   showModal(rosiDetail: Partial<ROSIDetail>): Observable<ROSIDetail> {
@@ -48,10 +48,10 @@ export class RosiModalComponent {
 
     return from(this.modalService.open(this.modal).result).pipe(
       switchMap(() =>
-        this.recommendationDataService.calculateROSI(this.getFormValues())
+        this.recommendationDataService.calculateROSI(this.getFormValues()),
       ),
       catchError(() => of(undefined as unknown as ROSIDetail)),
-      filter((rosiDetail) => !!rosiDetail)
+      filter((rosiDetail) => !!rosiDetail),
     );
   }
 

@@ -14,6 +14,6 @@ describe('Service: BusinessProfileData', () => {
     [BusinessProfileDataService],
     (service: BusinessProfileDataService) => {
       expect(service).toBeTruthy();
-    }
+    },
   ));
 });

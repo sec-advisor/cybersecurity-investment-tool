@@ -13,4 +13,4 @@ import { HomeService } from './services/home.service';
   declarations: [HomeComponent, LoginModalComponent],
   providers: [HomeService, NgbActiveModal],
 })
-export class HomeModule { }
+export class HomeModule {}

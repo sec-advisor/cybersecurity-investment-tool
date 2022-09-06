@@ -1,5 +1,14 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, filter, first, map, Observable, of, switchMap, tap } from 'rxjs';
+import {
+  BehaviorSubject,
+  filter,
+  first,
+  map,
+  Observable,
+  of,
+  switchMap,
+  tap,
+} from 'rxjs';
 
 import { BusinessProfile, Segment } from '../../../libs/api-interfaces';
 import { AppSegment } from '../models/app-segment.model';
@@ -23,8 +32,8 @@ export class StorageService {
   constructor(
     private businessProfileDataService: BusinessProfileDataService,
     private localStorageService: LocalStorageService,
-    private segmentDataServices: SegmentDataService
-  ) { }
+    private segmentDataServices: SegmentDataService,
+  ) {}
 
   storeBusinessProfile(profile: BusinessProfile): Observable<string> {
     return this.businessProfileDataService
@@ -36,12 +45,12 @@ export class StorageService {
     return (
       this.isFirstCallProfile
         ? this.getProfileRemotely().pipe(
-          tap((profile) => this.businessProfileSource$.next(profile))
-        )
+            tap((profile) => this.businessProfileSource$.next(profile)),
+          )
         : of(this.businessProfileSource$.value)
     ).pipe(
       tap(() => (this.isFirstCallProfile = false)),
-      switchMap(() => this.businessProfileSource$)
+      switchMap(() => this.businessProfileSource$),
     );
   }
 
@@ -50,8 +59,8 @@ export class StorageService {
       .updateProfile(profile)
       .pipe(
         tap((updatedProfile) =>
-          this.businessProfileSource$.next(updatedProfile)
-        )
+          this.businessProfileSource$.next(updatedProfile),
+        ),
       );
   }
 
@@ -63,9 +72,9 @@ export class StorageService {
           this.segmentsSource$.next(
             this.segmentsSource$.value
               ? [...this.segmentsSource$.value, { ...segment, id }]
-              : [{ ...segment, id }]
-          )
-        )
+              : [{ ...segment, id }],
+          ),
+        ),
       );
   }
 
@@ -73,20 +82,20 @@ export class StorageService {
     return (
       this.isFirstCallSegments
         ? (this.isProfileDefined()
-          ? of(this.businessProfileSource$.value)
-          : this.businessProfileSource$.pipe(
-            filter((profile) => !!profile),
-            first()
+            ? of(this.businessProfileSource$.value)
+            : this.businessProfileSource$.pipe(
+                filter((profile) => !!profile),
+                first(),
+              )
+          ).pipe(
+            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+            switchMap((profile) =>
+              this.segmentDataServices.getSegments(
+                (profile as BusinessProfile).id!,
+              ),
+            ),
+            tap((segments) => this.segmentsSource$.next(segments)),
           )
-        ).pipe(
-          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-          switchMap((profile) =>
-            this.segmentDataServices.getSegments(
-              (profile as BusinessProfile).id!
-            )
-          ),
-          tap((segments) => this.segmentsSource$.next(segments))
-        )
         : of(this.segmentsSource$.value)
     ).pipe(
       tap(() => (this.isFirstCallSegments = false)),
@@ -95,44 +104,44 @@ export class StorageService {
         getExtendedModel
           ? segments
           : segments.map((segment) => ({
-            ...segment,
-            recommendations: undefined,
-            recommendationProfile: undefined,
-          }))
-      )
+              ...segment,
+              recommendations: undefined,
+              recommendationProfile: undefined,
+            })),
+      ),
     );
   }
 
   updateSegment(
     segment: AppSegment,
-    storeRemote = true
+    storeRemote = true,
   ): Observable<AppSegment> {
     return storeRemote
       ? this.segmentDataServices
-        .updateSegment(segment)
-        .pipe(
+          .updateSegment(segment)
+          .pipe(
+            tap((segment) =>
+              this.segmentsSource$.next(
+                this.segmentsSource$.value.map((s) =>
+                  s.id === segment.id ? segment : s,
+                ),
+              ),
+            ),
+          )
+      : of(segment).pipe(
           tap((segment) =>
             this.segmentsSource$.next(
               this.segmentsSource$.value.map((s) =>
-                s.id === segment.id ? segment : s
-              )
-            )
-          )
-        )
-      : of(segment).pipe(
-        tap((segment) =>
-          this.segmentsSource$.next(
-            this.segmentsSource$.value.map((s) =>
-              s.id === segment.id ? segment : s
-            )
-          )
-        )
-      );
+                s.id === segment.id ? segment : s,
+              ),
+            ),
+          ),
+        );
   }
 
   removeSegment(segmentId: string): Observable<void> {
     this.segmentsSource$.next(
-      this.segmentsSource$.value.filter((segment) => segment.id !== segmentId)
+      this.segmentsSource$.value.filter((segment) => segment.id !== segmentId),
     );
     return this.segmentDataServices.removeSegment(segmentId);
   }
@@ -160,7 +169,7 @@ export class StorageService {
 
   private getProfileRemotely(): Observable<BusinessProfile | undefined> {
     const profileId = this.localStorageService.getItem(
-      StorageKey.BusinessProfileId
+      StorageKey.BusinessProfileId,
     );
     return profileId
       ? this.businessProfileDataService.getProfile(profileId)

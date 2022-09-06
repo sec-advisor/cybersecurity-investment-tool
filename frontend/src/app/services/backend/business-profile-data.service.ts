@@ -14,19 +14,23 @@ import { LocalStorageService } from '../local-storage.service';
 export class BusinessProfileDataService {
   constructor(
     private http: HttpClient,
-    private storeService: LocalStorageService
-  ) { }
+    private storeService: LocalStorageService,
+  ) {}
 
   storeProfile(profile: BusinessProfile): Observable<string> {
     return this.http
-      .post<string>(`${publicAPIUrl}/business-profiles/profiles`, profile, httpOptions)
+      .post<string>(
+        `${publicAPIUrl}/business-profiles/profiles`,
+        profile,
+        httpOptions,
+      )
       .pipe(
         tap((profileId) =>
-          this.storeService.setItem(StorageKey.BusinessProfileId, profileId)
+          this.storeService.setItem(StorageKey.BusinessProfileId, profileId),
         ),
         catchError((err) =>
-          of({} as string).pipe(tap(() => console.error(err.error.message)))
-        )
+          of({} as string).pipe(tap(() => console.error(err.error.message))),
+        ),
       );
   }
 
@@ -35,22 +39,23 @@ export class BusinessProfileDataService {
       .get<string>(`${publicAPIUrl}/business-profiles/user`, httpOptions)
       .pipe(
         catchError((err) =>
-          of(undefined).pipe(
-            tap(() => console.error(err.error.message))
-          )
-        )
+          of(undefined).pipe(tap(() => console.error(err.error.message))),
+        ),
       );
   }
 
   getProfile(id: string): Observable<BusinessProfile> {
     return this.http
-      .get<BusinessProfile>(`${publicAPIUrl}/business-profiles/profiles/${id}`, httpOptions)
+      .get<BusinessProfile>(
+        `${publicAPIUrl}/business-profiles/profiles/${id}`,
+        httpOptions,
+      )
       .pipe(
         catchError((err) =>
           of({} as BusinessProfile).pipe(
-            tap(() => console.error(err.error.message))
-          )
-        )
+            tap(() => console.error(err.error.message)),
+          ),
+        ),
       );
   }
 
@@ -58,7 +63,7 @@ export class BusinessProfileDataService {
     return this.http.patch<BusinessProfile>(
       `${publicAPIUrl}/business-profiles/profiles`,
       profile,
-      httpOptions
+      httpOptions,
     );
   }
 }

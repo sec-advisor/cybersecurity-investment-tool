@@ -4,12 +4,11 @@ import { inject, TestBed } from '@angular/core/testing';
 
 import { UserDataService } from './user-data.service';
 
-
 describe('Service: UserData', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [HttpClientModule],
-      providers: [UserDataService]
+      providers: [UserDataService],
     });
   });
 
