@@ -1,13 +1,10 @@
 version: "3.9"
 services:
-
   mentor:
     build:
       context: ./mentor/
     ports:
       - 8000:8000
-    networks:
-      - public
 
   mongodb:
     image: mongo:5.0.0
@@ -19,16 +16,12 @@ services:
     volumes:
       - ./mongodb/data:/data/db
       - ./mongodb/configdb:/data/configdb
-    networks:
-      - public
     restart: unless-stopped
 
   mongo-seed:
     build: ./mongo-seed
     depends_on:
       - mongodb
-    networks:
-      - public
 
   publicapi:
     build:
@@ -37,8 +30,6 @@ services:
       - 3333:3333
     depends_on:
       - mongo-seed
-    networks:
-      - public
 
   frontend:
     build:
@@ -48,8 +39,3 @@ services:
       - 80:80
     depends_on:
       - publicapi
-    networks:
-      - public
-
-networks:
-  public:
