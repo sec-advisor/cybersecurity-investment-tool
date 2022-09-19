@@ -10,13 +10,21 @@ import { SegmentPresenterComponent } from './segment-presenter/segment-presenter
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent },
-  { path: 'segments', component: SegmentPresenterComponent, canActivate: [AuthGuardService] },
-  { path: 'recommendation', component: RecommendationComponent, canActivate: [AuthGuardService] },
+  {
+    path: 'segments',
+    component: SegmentPresenterComponent,
+    canActivate: [AuthGuardService],
+  },
+  {
+    path: 'recommendation',
+    component: RecommendationComponent,
+    canActivate: [AuthGuardService],
+  },
   { path: 'business-profile', component: BusinessProfileComponent },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

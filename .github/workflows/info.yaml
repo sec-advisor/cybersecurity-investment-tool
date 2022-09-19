@@ -1,0 +1,36 @@
+name: Github Actions Runner
+
+on: push
+
+jobs:
+  info:
+    runs-on: self-hosted
+    steps:
+    - name: Get some info
+      run: |
+        whoami
+        pwd
+  yarn:
+    runs-on: self-hosted
+    steps:
+    - name: Yarn version
+      run: |
+        yarn --version
+  node:
+    runs-on: self-hosted
+    steps:
+    - name: Node version
+      run: |
+        node --version
+  python:
+    runs-on: self-hosted
+    steps:
+    - name: Python version
+      run: |
+        python --version
+  docker:
+    runs-on: self-hosted
+    steps:
+    - name: Docker info
+      run: |
+        docker version --format '{{.Server.APIVersion}}'

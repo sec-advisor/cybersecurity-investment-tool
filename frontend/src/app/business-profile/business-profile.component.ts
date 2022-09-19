@@ -9,54 +9,55 @@ import { StorageService } from '../services/storage.service';
 @Component({
   selector: 'app-business-profile',
   templateUrl: './business-profile.component.html',
-  styleUrls: ['./business-profile.component.scss']
+  styleUrls: ['./business-profile.component.scss'],
 })
 export class BusinessProfileComponent implements OnInit {
-
   readonly regions = regions;
   readonly reloadProfile$ = new Subject<void>();
   isEditMode = false;
-  stream$!: Observable<{ form: FormGroup, profileId: string | undefined }>;
+  stream$!: Observable<{ form: FormGroup; profileId: string | undefined }>;
 
   constructor(
     private formBuilder: FormBuilder,
     private storageService: StorageService,
-  ) { }
+  ) {}
 
   ngOnInit() {
-    this.stream$ = merge(
-      of({}),
-      this.reloadProfile$
-    ).pipe(
+    this.stream$ = merge(of({}), this.reloadProfile$).pipe(
       switchMap(() => this.storageService.getBusinessProfile()),
-      map(profile => ({
+      map((profile) => ({
         form: this.formBuilder.group({
           company: [profile?.companyName, [Validators.required]],
           revenue: [profile?.revenue, [Validators.required, Validators.min(1)]],
-          employees: [profile?.numberOfEmployees, [Validators.required, Validators.min(1)]],
+          employees: [
+            profile?.numberOfEmployees,
+            [Validators.required, Validators.min(1)],
+          ],
           region: [profile?.region, [Validators.required]],
         }),
-        profile
+        profile,
       })),
-      tap(stream => {
+      tap((stream) => {
         if (stream.profile) {
           stream.form.disable();
         }
       }),
-      map(stream => ({
+      map((stream) => ({
         form: stream.form,
-        profileId: stream.profile?.id
-      }))
-    )
+        profileId: stream.profile?.id,
+      })),
+    );
   }
 
   save(form: FormGroup): void {
     const profile = this.getProfileFromForm(form);
     if (profile) {
-      this.storageService.storeBusinessProfile(profile as BusinessProfile).subscribe();
+      this.storageService
+        .storeBusinessProfile(profile as BusinessProfile)
+        .subscribe();
     } else {
       // TODO CH: Handle error
-      console.error('Invalid business profile parameter')
+      console.error('Invalid business profile parameter');
     }
   }
 
@@ -76,15 +77,18 @@ export class BusinessProfileComponent implements OnInit {
     const profile = this.getProfileFromForm(form);
 
     if (profile) {
-      this.storageService.updateBusinessProfile({ ...profile, id: profileId }).pipe(
-        tap(() => {
-          this.isEditMode = false;
-          form.disable();
-        })
-      ).subscribe();
+      this.storageService
+        .updateBusinessProfile({ ...profile, id: profileId })
+        .pipe(
+          tap(() => {
+            this.isEditMode = false;
+            form.disable();
+          }),
+        )
+        .subscribe();
     } else {
       // TODO CH: Handle error
-      console.error('Invalid business profile parameter')
+      console.error('Invalid business profile parameter');
     }
   }
 
@@ -94,7 +98,9 @@ export class BusinessProfileComponent implements OnInit {
       revenue: form.get('revenue')?.value,
       numberOfEmployees: form.get('employees')?.value,
       region: form.get('region')?.value,
-    }
-    return Object.values(profile).every(value => value !== undefined) ? profile : undefined;
+    };
+    return Object.values(profile).every((value) => value !== undefined)
+      ? profile
+      : undefined;
   }
 }

@@ -10,12 +10,20 @@ import { ToastNotificationService } from './toast-notification/services/toast-no
 import { ToastNotificationComponent } from './toast-notification/toast-notification.component';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    NgbModule
+  imports: [CommonModule, NgbModule],
+  declarations: [
+    HeaderComponent,
+    SideBarComponent,
+    ContentWithIconComponent,
+    DangerModalComponent,
+    ToastNotificationComponent,
   ],
-  declarations: [HeaderComponent, SideBarComponent, ContentWithIconComponent, DangerModalComponent, ToastNotificationComponent],
   providers: [ToastNotificationService],
-  exports: [HeaderComponent, SideBarComponent, ContentWithIconComponent, ToastNotificationComponent]
+  exports: [
+    HeaderComponent,
+    SideBarComponent,
+    ContentWithIconComponent,
+    ToastNotificationComponent,
+  ],
 })
-export class LayoutsModule { }
+export class LayoutsModule {}

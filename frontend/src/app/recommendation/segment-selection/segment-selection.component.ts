@@ -6,22 +6,18 @@ import { RecommendationService } from '../services/recommendation.service';
 @Component({
   selector: 'app-segment-selection',
   templateUrl: './segment-selection.component.html',
-  styleUrls: ['./segment-selection.component.scss']
+  styleUrls: ['./segment-selection.component.scss'],
 })
 export class SegmentSelectionComponent {
-
   @Input() segments?: SegmentViewModel[];
 
-  constructor(
-    private recommendationService: RecommendationService
-  ) { }
+  constructor(private recommendationService: RecommendationService) {}
 
   segmentClick(segment: SegmentViewModel): void {
     if (segment.id) {
       this.recommendationService.setSelectedSegmentId(segment.id);
     } else {
-      throw Error('Selcted segment does not have an id!')
+      throw Error('Selcted segment does not have an id!');
     }
   }
-
 }

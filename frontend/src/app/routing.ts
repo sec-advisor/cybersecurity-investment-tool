@@ -1,7 +1,11 @@
-import { ActivatedRouteSnapshot, DetachedRouteHandle, RouteReuseStrategy } from '@angular/router';
+import {
+  ActivatedRouteSnapshot,
+  DetachedRouteHandle,
+  RouteReuseStrategy,
+} from '@angular/router';
 
 export class CustomReuseStrategy implements RouteReuseStrategy {
-  routesToCache: string[] = ["recommendation"];
+  routesToCache: string[] = ['recommendation'];
   storedRouteHandles = new Map<string, DetachedRouteHandle>();
 
   // Decides if the route should be stored
@@ -36,7 +40,10 @@ export class CustomReuseStrategy implements RouteReuseStrategy {
   }
 
   //Reuse the route if we're going to and from the same route
-  shouldReuseRoute(future: ActivatedRouteSnapshot, curr: ActivatedRouteSnapshot): boolean {
+  shouldReuseRoute(
+    future: ActivatedRouteSnapshot,
+    curr: ActivatedRouteSnapshot,
+  ): boolean {
     return future.routeConfig === curr.routeConfig;
   }
 }

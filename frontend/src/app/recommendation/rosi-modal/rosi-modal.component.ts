@@ -1,5 +1,10 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {
+  AbstractControl,
+  FormBuilder,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { catchError, filter, from, Observable, of, switchMap } from 'rxjs';
 
@@ -9,10 +14,9 @@ import { RecommendationDataService } from '../../services/backend/recommendation
 @Component({
   selector: 'app-rosi-modal',
   templateUrl: './rosi-modal.component.html',
-  styleUrls: ['./rosi-modal.component.scss']
+  styleUrls: ['./rosi-modal.component.scss'],
 })
 export class RosiModalComponent {
-
   private rosiDetail?: Partial<ROSIDetail>;
 
   form?: FormGroup;
@@ -22,21 +26,32 @@ export class RosiModalComponent {
   constructor(
     private formBuilder: FormBuilder,
     private modalService: NgbModal,
-    private recommendationDataService: RecommendationDataService
-  ) { }
+    private recommendationDataService: RecommendationDataService,
+  ) {}
 
   showModal(rosiDetail: Partial<ROSIDetail>): Observable<ROSIDetail> {
     this.rosiDetail = rosiDetail;
     this.form = this.formBuilder.group({
-      mitigationRate: [(rosiDetail.mitigationRate || 0) * 100, [Validators.required, Validators.min(1), Validators.max(99)]],
-      costOfIncident: [rosiDetail.costOfIncident, [Validators.required, Validators.min(1)]],
-      incidenceOccurrence: [undefined, [Validators.required, Validators.min(1)]]
+      mitigationRate: [
+        (rosiDetail.mitigationRate || 0) * 100,
+        [Validators.required, Validators.min(1), Validators.max(99)],
+      ],
+      costOfIncident: [
+        rosiDetail.costOfIncident,
+        [Validators.required, Validators.min(1)],
+      ],
+      incidenceOccurrence: [
+        undefined,
+        [Validators.required, Validators.min(1)],
+      ],
     });
 
     return from(this.modalService.open(this.modal).result).pipe(
-      switchMap(() => this.recommendationDataService.calculateROSI(this.getFormValues())),
+      switchMap(() =>
+        this.recommendationDataService.calculateROSI(this.getFormValues()),
+      ),
       catchError(() => of(undefined as unknown as ROSIDetail)),
-      filter(rosiDetail => !!rosiDetail)
+      filter((rosiDetail) => !!rosiDetail),
     );
   }
 
@@ -60,5 +75,4 @@ export class RosiModalComponent {
       throw Error('Values of rosi details are undefined');
     }
   }
-
 }

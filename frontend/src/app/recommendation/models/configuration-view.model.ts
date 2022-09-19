@@ -7,5 +7,5 @@ export interface ConfigurationViewModel {
   form: FormGroup;
   profile: BusinessProfile;
   attackTypeLabels: string[] | undefined;
-  attackTypes: { label: string, values: string[] }[] | undefined;
+  attackTypes: { label: string; values: string[] }[] | undefined;
 }

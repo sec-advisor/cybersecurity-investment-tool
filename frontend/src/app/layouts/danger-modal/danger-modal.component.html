@@ -1,10 +1,24 @@
-  <div class="modal-header">
-    <h4 class="modal-title" id="modal-title">Warning</h4>
-  </div>
-  <div class="modal-body">
-    <p><strong>Are you sure you want to proceed?</strong></p>
-  </div>
-  <div class="modal-footer">
-    <button type="button" class="btn btn-outline-secondary" tabindex="0" (click)="modal.dismiss('cancel click')">Cancel</button>
-    <button type="button" class="btn btn-danger"  tabindex="0" (click)="modal.close('Ok click')">Yes</button>
-  </div>
+<div class="modal-header">
+  <h4 class="modal-title" id="modal-title">Warning</h4>
+</div>
+<div class="modal-body">
+  <p><strong>Are you sure you want to proceed?</strong></p>
+</div>
+<div class="modal-footer">
+  <button
+    type="button"
+    class="btn btn-outline-secondary"
+    tabindex="0"
+    (click)="modal.dismiss('cancel click')"
+  >
+    Cancel
+  </button>
+  <button
+    type="button"
+    class="btn btn-danger"
+    tabindex="0"
+    (click)="modal.close('Ok click')"
+  >
+    Yes
+  </button>
+</div>

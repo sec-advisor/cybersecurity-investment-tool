@@ -2,28 +2,43 @@
   <div class="inner-wrapper">
     <div class="upper-wrapper bg-secondary text-white container">
       <app-content-with-icon icon="bi-shield-check">
-        <img src="https://www.concordia-h2020.eu/wp-content/uploads/2021/02/concordia-inverse-logo.png"
-          alt="CONCORDIA Project - Horizon 2020 Program" width="300">
+        <img
+          src="https://www.concordia-h2020.eu/wp-content/uploads/2021/02/concordia-inverse-logo.png"
+          alt="CONCORDIA Project - Horizon 2020 Program"
+          width="300"
+        />
         &nbsp;&nbsp;
-        <img src="https://www.csg.uzh.ch/dam/jcr:00000000-0016-df68-ffff-ffffa04810a0/logo0.png"
-          alt="Communication Systems Group - University of Zurich" width="150">
-        <br><br>
-        <h1 class="display-4">A Tool for Cybersecurity Planning and Investment</h1>
-        <p class="lead">Based on concepts from Gordon-Loeb model and Return On Security Investments (ROSI) to help
-          companies invest in cybersecurity.</p>
-        <hr class="my-4">
+        <img
+          src="https://www.csg.uzh.ch/dam/jcr:00000000-0016-df68-ffff-ffffa04810a0/logo0.png"
+          alt="Communication Systems Group - University of Zurich"
+          width="150"
+        />
+        <br /><br />
+        <h1 class="display-4">
+          A Tool for Cybersecurity Planning and Investment
+        </h1>
+        <p class="lead">
+          Based on concepts from Gordon-Loeb model and Return On Security
+          Investments (ROSI) to help companies invest in cybersecurity.
+        </p>
+        <hr class="my-4" />
 
-        <ng-container *ngIf="(stream$ | async) as stream; else loading">
+        <ng-container *ngIf="stream$ | async as stream; else loading">
           <ng-container *ngIf="stream.profile">
             <h2>Hi, {{ stream.profile?.companyName }}</h2>
-            <p>Please use the main menu on the left to interact with the tool.</p>
+            <p>
+              Please use the main menu on the left to interact with the tool.
+            </p>
           </ng-container>
           <ng-container *ngIf="!stream.profile">
             <p>Before you can start, please create a business profile.</p>
             <p class="lead">
-              <a class="btn btn-primary btn-lg" role="button"
-                (click)="routingService.browseTo('/business-profile')">Create
-                profile</a>
+              <a
+                class="btn btn-primary btn-lg"
+                role="button"
+                (click)="routingService.browseTo('/business-profile')"
+                >Create profile</a
+              >
             </p>
           </ng-container>
         </ng-container>
@@ -58,3 +73,5 @@
     </div>
   </div>
 </div>
+
+<app-login-modal></app-login-modal>

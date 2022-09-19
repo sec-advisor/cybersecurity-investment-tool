@@ -16,17 +16,23 @@
         <tr *ngFor="let segment of segments; index as i">
           <td scope="row">{{ segment.name }}</td>
           <td>{{ segment.typeDescription }}</td>
-          <td class="text-end">{{ segment.risk}}%</td>
+          <td class="text-end">{{ segment.risk }}%</td>
           <td class="text-end">{{ segment.vulnerability }}%</td>
           <td class="text-end">{{ segment.value | number }}</td>
           <td class="text-end">{{ segment.optimalInvestment | number }}</td>
           <td class="text-center">
-            <button type="button" class="bi bi-pencil-fill text-secondary icon-button me-2" aria-label="Delete"
-              (click)="editSegment(segment)">
-            </button>
-            <button type="button" class="bi bi-trash text-danger icon-button" aria-label="Delete"
-              (click)="removeSegment(segment)">
-            </button>
+            <button
+              type="button"
+              class="bi bi-pencil-fill text-secondary icon-button me-2"
+              aria-label="Delete"
+              (click)="editSegment(segment)"
+            ></button>
+            <button
+              type="button"
+              class="bi bi-trash text-danger icon-button"
+              aria-label="Delete"
+              (click)="removeSegment(segment)"
+            ></button>
           </td>
         </tr>
       </tbody>

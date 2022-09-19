@@ -15,41 +15,86 @@
             <div class="form">
               <div class="left-form">
                 <label for="company-name">Company Name:</label>
-                <input id="company-name" class="form-control" type="text" tabindex="1" formControlName="company">
+                <input
+                  id="company-name"
+                  class="form-control"
+                  type="text"
+                  tabindex="1"
+                  formControlName="company"
+                />
                 <label for="revenue">Revenue($):</label>
-                <input id="revenue" class="form-control" type="number" tabindex="3" min="1" formControlName="revenue">
+                <input
+                  id="revenue"
+                  class="form-control"
+                  type="number"
+                  tabindex="3"
+                  min="1"
+                  formControlName="revenue"
+                />
               </div>
               <div class="right-form">
                 <label for="employees">Number of Employees:</label>
-                <input id="employees" class="form-control" type="number" min="1" tabindex="2"
-                  formControlName="employees">
+                <input
+                  id="employees"
+                  class="form-control"
+                  type="number"
+                  min="1"
+                  tabindex="2"
+                  formControlName="employees"
+                />
 
                 <label for="region">Region:</label>
-                <select id="region-selection" class="form-select" aria-label="Region selection" tabindex="4"
-                  formControlName="region">
+                <select
+                  id="region-selection"
+                  class="form-select"
+                  aria-label="Region selection"
+                  tabindex="4"
+                  formControlName="region"
+                >
                   <ng-container *ngFor="let region of regions">
                     <option [value]="region.key">{{ region.value }}</option>
                   </ng-container>
                 </select>
 
                 <ng-container *ngIf="!isEditMode; else editMode">
-                  <button *ngIf="!stream.form.disabled" type="button" class="btn btn-primary" tabindex="5"
-                    [disabled]="stream.form.invalid" (click)="save(stream.form)">
+                  <button
+                    *ngIf="!stream.form.disabled"
+                    type="button"
+                    class="btn btn-primary"
+                    tabindex="5"
+                    [disabled]="stream.form.invalid"
+                    (click)="save(stream.form)"
+                  >
                     Save
                   </button>
-                  <button *ngIf="stream.form.disabled" type="button" tabindex="5" class="btn btn-primary"
-                    [disabled]="stream.form.invalid" (click)="edit(stream.form)">
+                  <button
+                    *ngIf="stream.form.disabled"
+                    type="button"
+                    tabindex="5"
+                    class="btn btn-primary"
+                    [disabled]="stream.form.invalid"
+                    (click)="edit(stream.form)"
+                  >
                     Edit
                   </button>
                 </ng-container>
 
                 <ng-template #editMode>
-                  <button type="button" class="btn btn-primary" tabindex="5"
+                  <button
+                    type="button"
+                    class="btn btn-primary"
+                    tabindex="5"
                     [disabled]="stream.form.invalid || stream.form.pristine"
-                    (click)="update(stream.form, stream.profileId)">
+                    (click)="update(stream.form, stream.profileId)"
+                  >
                     Update
                   </button>
-                  <button type="button" class="btn btn-light margin-right" tabindex="6" (click)="cancel(stream.form)">
+                  <button
+                    type="button"
+                    class="btn btn-light margin-right"
+                    tabindex="6"
+                    (click)="cancel(stream.form)"
+                  >
                     Cancel
                   </button>
                 </ng-template>

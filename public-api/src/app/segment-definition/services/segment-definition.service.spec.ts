@@ -1,4 +1,6 @@
+import { getModelToken } from '@nestjs/mongoose';
 import { Test, TestingModule } from '@nestjs/testing';
+
 import { SegmentDefinitionService } from './segment-definition.service';
 
 describe('SegmentDefinitionService', () => {
@@ -6,7 +8,10 @@ describe('SegmentDefinitionService', () => {
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [SegmentDefinitionService],
+      providers: [
+        { provide: getModelToken('segment-definitions'), useValue: {} },
+        SegmentDefinitionService,
+      ],
     }).compile();
 
     service = module.get<SegmentDefinitionService>(SegmentDefinitionService);

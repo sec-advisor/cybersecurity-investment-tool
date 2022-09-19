@@ -10,10 +10,9 @@ import { RosiModalComponent } from '../rosi-modal/rosi-modal.component';
 @Component({
   selector: 'app-recommendation-presenter',
   templateUrl: './recommendation-presenter.component.html',
-  styleUrls: ['./recommendation-presenter.component.scss']
+  styleUrls: ['./recommendation-presenter.component.scss'],
 })
 export class RecommendationPresenterComponent implements OnDestroy {
-
   private readonly subscriber = new Subscriber();
 
   @Input() segment?: AppSegment;
@@ -23,7 +22,7 @@ export class RecommendationPresenterComponent implements OnDestroy {
   constructor(
     private sanitizer: DomSanitizer,
     private storageService: StorageService,
-  ) { }
+  ) {}
 
   ngOnDestroy(): void {
     this.subscriber.unsubscribe();
@@ -36,22 +35,38 @@ export class RecommendationPresenterComponent implements OnDestroy {
 
   showModal(recommendationData: any): void {
     if (this.segment) {
-      this.subscriber.add(this.rosiModal?.showModal({
-        price: recommendationData.price,
-        leasingPeriod: this.getLeasingPeriod(recommendationData.leasingPeriod),
-        mitigationRate: recommendationData.mitigationRate,
-        costOfIncident: this.segment.value,
-      } as Partial<ROSIDetail>).pipe(
-        switchMap(calculatedROSIDetail => this.storageService.updateSegment({
-          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-          ...this.segment!,
-          recommendations: this.segment?.recommendations?.map(recommendation => ({
-            ...recommendation,
-            rosi: recommendation.data.id === recommendationData.id ? calculatedROSIDetail.rosi : recommendation.rosi
-          }))
-        },
-          false))
-      ).subscribe());
+      this.subscriber.add(
+        this.rosiModal
+          ?.showModal({
+            price: recommendationData.price,
+            leasingPeriod: this.getLeasingPeriod(
+              recommendationData.leasingPeriod,
+            ),
+            mitigationRate: recommendationData.mitigationRate,
+            costOfIncident: this.segment.value,
+          } as Partial<ROSIDetail>)
+          .pipe(
+            switchMap((calculatedROSIDetail) =>
+              this.storageService.updateSegment(
+                {
+                  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+                  ...this.segment!,
+                  recommendations: this.segment?.recommendations?.map(
+                    (recommendation) => ({
+                      ...recommendation,
+                      rosi:
+                        recommendation.data.id === recommendationData.id
+                          ? calculatedROSIDetail.rosi
+                          : recommendation.rosi,
+                    }),
+                  ),
+                },
+                false,
+              ),
+            ),
+          )
+          .subscribe(),
+      );
     }
   }
 
@@ -59,14 +74,13 @@ export class RecommendationPresenterComponent implements OnDestroy {
     const mappedEnum = [
       { stringValue: 'MINUTES', enum: LeadingPeriod.Minutes },
       { stringValue: 'DAYS', enum: LeadingPeriod.Days },
-      { stringValue: 'MONTHS', enum: LeadingPeriod.Months }
+      { stringValue: 'MONTHS', enum: LeadingPeriod.Months },
     ].find(({ stringValue }) => stringValue === period)?.enum;
 
     if (mappedEnum !== undefined) {
-      return mappedEnum
+      return mappedEnum;
     } else {
       throw Error('Could not map leasing period');
     }
   }
-
 }

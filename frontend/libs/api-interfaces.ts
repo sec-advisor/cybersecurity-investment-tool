@@ -5,17 +5,17 @@ export interface Message {
 export interface SegmentDefinition {
   key: string;
   description: string;
-  supportedThreats: { label: string, values: string[] }[];
+  supportedThreats: { label: string; values: string[] }[];
   valueEstimation?: {
     inputs: Input[];
     calculation: string;
-  }
+  };
 }
 
 export interface Input {
   key: string;
   description: string;
-  type: 'number',
+  type: 'number';
   value?: number;
 }
 
@@ -36,12 +36,13 @@ export interface Segment {
 }
 
 export interface ValueEstimation {
-  segment: SegmentDefinition,
-  keyValuePairs: { key: string; value: number; }[]
+  segment: SegmentDefinition;
+  keyValuePairs: { key: string; value: number }[];
 }
 
 export interface BusinessProfile {
   id?: string;
+  userId?: string;
   companyName: string;
   revenue: number;
   numberOfEmployees: number;
@@ -52,7 +53,6 @@ export interface OptimalInvestmentEquation {
   breachProbabilityFunction: string;
   optimalInvestmentEquation: string;
 }
-
 
 export interface RecommendationProfile {
   region: string[];
@@ -78,5 +78,11 @@ export interface ROSIDetail {
 export enum LeadingPeriod {
   Minutes,
   Days,
-  Months
+  Months,
+}
+
+export interface User {
+  userId: string;
+  userName: string;
+  password?: string;
 }

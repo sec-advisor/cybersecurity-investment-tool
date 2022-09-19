@@ -1,0 +1,165 @@
+[
+  {
+    "_id": {
+      "$oid": "61acc8137e469e6878153da3"
+    },
+    "key": "webServer",
+    "description": "Web Server",
+    "valueEstimation": {
+      "inputs": [
+        {
+          "key": "revenue",
+          "description": "Monthly revenue from website",
+          "type": "number"
+        }
+      ],
+      "calculation": "revenue * 30"
+    },
+    "supportedThreats": [
+      {
+        "label": "DDOS",
+        "values": [
+          "VOLUMETRIC",
+          "PROTOCOL",
+          "APPLICATION LAYER",
+          "SSL",
+          "DNS"
+        ]
+      },
+      {
+        "label": "Volumetric",
+        "values": [
+          "VOLUMETRIC"
+        ]
+      },
+      {
+        "label": "Protocol",
+        "values": [
+          "PROTOCOL"
+        ]
+      },
+      {
+        "label": "Application Layer",
+        "values": [
+          "APPLICATION LAYER"
+        ]
+      },
+      {
+        "label": "SSL",
+        "values": [
+          "SSL"
+        ]
+      },
+      {
+        "label": "DNS",
+        "values": [
+          "DNS"
+        ]
+      }
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "61acddb97e469e687821dd54"
+    },
+    "key": "network",
+    "description": "Network",
+    "supportedThreats": [
+      {
+        "label": "Ransomware",
+        "values": [
+          "RANSOMWARE"
+        ]
+      },
+      {
+        "label": "Virus",
+        "values": [
+          "VIRUS"
+        ]
+      },
+      {
+        "label": "Malware",
+        "values": [
+          "MALWARE"
+        ]
+      },
+      {
+        "label": "Phishing",
+        "values": [
+          "PHISHING"
+        ]
+      },
+      {
+        "label": "Spyware",
+        "values": [
+          "SPYWARE"
+        ]
+      },
+      {
+        "label": "Botnet",
+        "values": [
+          "BOTNET"
+        ]
+      }
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "61ace7037e469e68782744c3"
+    },
+    "key": "database",
+    "description": "Database",
+    "valueEstimation": {
+      "inputs": [
+        {
+          "key": "customer",
+          "description": "Number of Customer",
+          "type": "number"
+        },
+        {
+          "key": "anonymized_customer",
+          "description": "Number of Anonymized Customer Data",
+          "type": "number"
+        },
+        {
+          "key": "employee",
+          "description": "Number of Employee PII",
+          "type": "number"
+        },
+        {
+          "key": "intellectual_property",
+          "description": "Number of Intellectual Property",
+          "type": "number"
+        },
+        {
+          "key": "other_data",
+          "description": "Number of Other corporate data",
+          "type": "number"
+        }
+      ],
+      "calculation": "customer * 157 + anonymized_customer * 153 + employee * 163 + intellectual_property * 151 + other_data * 150"
+    },
+    "supportedThreats": [
+      {
+        "label": "Data Breach",
+        "values": [
+          "DATA BREACH",
+          "MALWARE",
+          "RANSOMWARE"
+        ]
+      },
+      {
+        "label": "Malware",
+        "values": [
+          "MALWARE"
+        ]
+      },
+      {
+        "label": "Ransomware",
+        "values": [
+          "RANSOMWARE"
+        ]
+      }
+    ]
+  }
+]

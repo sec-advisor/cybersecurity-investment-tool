@@ -1,4 +1,6 @@
+import { HttpModule, HttpService } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
+
 import { RecommendationService } from './recommendation.service';
 
 describe('RecommendationService', () => {
@@ -6,7 +8,11 @@ describe('RecommendationService', () => {
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [RecommendationService],
+      imports: [HttpModule],
+      providers: [
+        { provide: HttpService, useValue: {} },
+        RecommendationService,
+      ],
     }).compile();
 
     service = module.get<RecommendationService>(RecommendationService);

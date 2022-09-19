@@ -11,18 +11,13 @@ import { RosiModalComponent } from './rosi-modal/rosi-modal.component';
 import { SegmentSelectionComponent } from './segment-selection/segment-selection.component';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    LayoutsModule,
-    ReactiveFormsModule,
-    NgbModule
-  ],
+  imports: [CommonModule, LayoutsModule, ReactiveFormsModule, NgbModule],
   declarations: [
     RecommendationComponent,
     SegmentSelectionComponent,
     ConfigurationComponent,
     RecommendationPresenterComponent,
-    RosiModalComponent
-  ]
+    RosiModalComponent,
+  ],
 })
-export class RecommendationModule { }
+export class RecommendationModule {}

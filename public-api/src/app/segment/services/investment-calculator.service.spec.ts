@@ -9,7 +9,9 @@ describe('InvestmentCalculatorService', () => {
       providers: [InvestmentCalculatorService],
     }).compile();
 
-    service = module.get<InvestmentCalculatorService>(InvestmentCalculatorService);
+    service = module.get<InvestmentCalculatorService>(
+      InvestmentCalculatorService,
+    );
   });
 
   it('should be defined', () => {

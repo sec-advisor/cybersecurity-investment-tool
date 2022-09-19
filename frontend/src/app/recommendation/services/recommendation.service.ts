@@ -2,11 +2,12 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class RecommendationService {
-
-  private selectedSegmentId$ = new BehaviorSubject<string | undefined>(undefined);
+  private selectedSegmentId$ = new BehaviorSubject<string | undefined>(
+    undefined,
+  );
 
   getSelectedSegmentId(): Observable<string | undefined> {
     return this.selectedSegmentId$;
@@ -15,5 +16,4 @@ export class RecommendationService {
   setSelectedSegmentId(id: string): void {
     this.selectedSegmentId$.next(id);
   }
-
 }

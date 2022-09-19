@@ -1,4 +1,9 @@
-from engine.helpers.const.service_characteristics import TYPE, REGIONS, DEPLOYMENT_TIME, LEASING_PERIOD
+from engine.helpers.const.service_characteristics import (
+    TYPE,
+    REGIONS,
+    DEPLOYMENT_TIME,
+    LEASING_PERIOD,
+)
 
 
 class ServiceHelper:
@@ -14,12 +19,22 @@ class ServiceHelper:
 
     def dict_characteristics(self, service_characteristic):
         """Return a dictionary of a given characteristic with calculated indices"""
-        assert isinstance(service_characteristic, list), "Characteristic should be a list"
-        return {service_characteristic[i]: (i+1) * ((self.customer_budget/2) / len(service_characteristic)) for i in range(0, len(service_characteristic))}
+        assert isinstance(
+            service_characteristic, list
+        ), "Characteristic should be a list"
+        return {
+            service_characteristic[i]: (i + 1)
+            * ((self.customer_budget / 2) / len(service_characteristic))
+            for i in range(0, len(service_characteristic))
+        }
 
     def calculate_index(self, service_characteristic, indiv_characteristic):
-        assert isinstance(service_characteristic, dict), "Characteristic should be a dictionary"
-        assert isinstance(indiv_characteristic, list) or isinstance(indiv_characteristic, str)
+        assert isinstance(
+            service_characteristic, dict
+        ), "Characteristic should be a dictionary"
+        assert isinstance(indiv_characteristic, list) or isinstance(
+            indiv_characteristic, str
+        )
         index = 0
 
         if isinstance(indiv_characteristic, list):
@@ -33,7 +48,7 @@ class ServiceHelper:
 
         return index
 
-    def filter_by_price(self, max_price = None, updated_services = None):
+    def filter_by_price(self, max_price=None, updated_services=None):
         """Return services between a price range"""
         services_found = []
         if updated_services is not None:
@@ -46,7 +61,7 @@ class ServiceHelper:
                     services_found.append(s)
         return services_found
 
-    def filter_by_type(self, types, updated_services = None):
+    def filter_by_type(self, types, updated_services=None):
         """Return services of a given type"""
         assert isinstance(types, list), "Service Type should be a list"
         services_found = []
@@ -59,7 +74,7 @@ class ServiceHelper:
                 services_found.append(s)
         return services_found
 
-    def filter_by_attack_type(self, attack_types, updated_services = None):
+    def filter_by_attack_type(self, attack_types, updated_services=None):
         """Return services that protect against a given attack type"""
         assert isinstance(attack_types, list), "Service Type should be a list"
         services_found = []
@@ -72,7 +87,7 @@ class ServiceHelper:
                 services_found.append(s)
         return services_found
 
-    def filter_by_region(self, regions, updated_services = None):
+    def filter_by_region(self, regions, updated_services=None):
         """Return services of a given region"""
         assert isinstance(regions, list), "regions should be a list"
         services_found = []

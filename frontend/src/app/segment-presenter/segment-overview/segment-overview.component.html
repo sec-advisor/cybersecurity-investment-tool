@@ -1,21 +1,23 @@
 <ng-container *ngIf="stream$ | async as stream">
-
   <ng-container *ngIf="stream.segments.length > 0; else default">
-
-    <app-segment-detail-table *ngIf="(segmentPresenterActionService.getView() | async) === 'detail'"
-      [segments]="stream.segments">
+    <app-segment-detail-table
+      *ngIf="(segmentPresenterActionService.getView() | async) === 'detail'"
+      [segments]="stream.segments"
+    >
     </app-segment-detail-table>
 
-    <app-segment-overview-table *ngIf="(segmentPresenterActionService.getView() | async) === 'overview'"
-      [data]="stream">
-
+    <app-segment-overview-table
+      *ngIf="(segmentPresenterActionService.getView() | async) === 'overview'"
+      [data]="stream"
+    >
     </app-segment-overview-table>
-
   </ng-container>
 
   <ng-template #default>
-    <div class="container d-flex justify-content-center flex-column align-items-center">
-      <i class=" bi very-big-icon bi-pie-chart"></i>
+    <div
+      class="container d-flex justify-content-center flex-column align-items-center"
+    >
+      <i class="bi very-big-icon bi-pie-chart"></i>
       <h3>No data to display</h3>
       <h6>Please create a segment.</h6>
     </div>

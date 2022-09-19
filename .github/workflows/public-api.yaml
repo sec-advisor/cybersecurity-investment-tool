@@ -1,0 +1,45 @@
+name: PublicAPI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  format:
+    runs-on: self-hosted
+    steps:
+    - uses: actions/checkout@v3
+    - name: Check formatting of PublicAPI
+      run: |
+        cd public-api
+        yarn install --frozen-lockfile
+        yarn prettier -c src/ test/
+  lint:
+    runs-on: self-hosted
+    steps:
+    - uses: actions/checkout@v3
+    - name: Check formatting of PublicAPI
+      run: |
+        cd public-api
+        yarn install --frozen-lockfile
+        yarn eslint src/ test/
+  test:
+    runs-on: self-hosted
+    steps:
+    - uses: actions/checkout@v3
+    - name: Test PublicAPI
+      run: |
+        cd public-api
+        yarn install --frozen-lockfile
+        yarn test
+  build:
+    runs-on: self-hosted
+    steps:
+    - uses: actions/checkout@v3
+    - name: Build PublicAPI
+      run: |
+        cd public-api
+        yarn install --frozen-lockfile
+        yarn build
