@@ -22,6 +22,7 @@ services:
     build: ./mongo-seed
     depends_on:
       - mongodb
+      - 80:80
 
   publicapi:
     build:
