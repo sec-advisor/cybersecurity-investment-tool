@@ -14,8 +14,8 @@ services:
     expose:
       - 27017
     volumes:
-      - ./mongodb/data:/data/db
-      - ./mongodb/configdb:/data/configdb
+      - ~/mongodb/data:/data/db
+      - ~/mongodb/configdb:/data/configdb
     restart: unless-stopped
 
   mongo-seed:
