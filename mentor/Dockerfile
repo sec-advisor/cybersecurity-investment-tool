@@ -2,9 +2,10 @@ FROM python:3.9-alpine
 
 WORKDIR /server
 
+RUN apk --no-cache add musl-dev linux-headers g++ imagemagick imagemagick-dev
+
 COPY requirements.txt .
 
-RUN apk --no-cache add musl-dev linux-headers g++ imagemagick imagemagick-dev
 RUN pip install Wand
 RUN export MAGICK_HOME=/usr
 
