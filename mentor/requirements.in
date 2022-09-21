@@ -1,3 +1,5 @@
+--extra-index-url https://alpine-wheels.github.io/index
+
 Flask~=2.1.3
 SQLAlchemy~=1.4.39
 numpy==1.23.1
