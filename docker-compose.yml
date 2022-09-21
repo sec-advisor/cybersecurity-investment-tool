@@ -20,8 +20,6 @@ services:
 
   mongo-seed:
     build: ./mongo-seed
-    ports:
-      - 80:80
     depends_on:
       - mongodb
 
