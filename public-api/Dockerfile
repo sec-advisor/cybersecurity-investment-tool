@@ -5,8 +5,8 @@ RUN apk add --no-cache --update python3 make g++
 WORKDIR /usr/src/app
 
 COPY package.json .
-
 COPY yarn.lock .
+COPY .yarnrc .
 
 RUN yarn install --frozen-lockfile
 
