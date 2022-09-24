@@ -28,16 +28,11 @@ To run the application in dev mode:
 docker compose -f docker-compose.dev.yml up --build
 ```
 
-Navigate to `http://localhost` with your browser. How nice, hot reload for the `public-api` is also working!
+Navigate to `http://localhost` with your browser. Awesome, hot reload for the `public-api` and `frontend` is working!
 
 ### Debugging with VS Code
 
-First run the docker container in dev mode:
-
-``` sh
-# Run dev application
-docker compose -f docker-compose.dev.yml up --build
-```
+First, run the docker container in dev mode as described above.
 
 #### Public Api
 
