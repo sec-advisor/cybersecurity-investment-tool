@@ -1,24 +1,45 @@
-# Cybercecurity Investment Tool
+# SECAdvisor
 ## Preconditions
 
-Install [nodeJs & npm](https://nodejs.org/en/download/)  
-Install [yarn](https://classic.yarnpkg.com/en/docs/install/#windows-stable) 
+Install [Docker](https://www.docker.com/)  
+Install [Docker Compose](https://docs.docker.com/compose/install/) 
 
-## Usage
+## Production
 
-To locally setup this projects, use following steps:
+### Usage
+
+To run the application in production mode:
 
 ``` sh
-
-# Install all dependencies
-yarn
-
-# Start the development web server
-yarn start
-
-# Start the development backend server
-yarn start:api
+# Run application
+docker compose up --build
 ```
 
-Navigate to `http://localhost:4200/` with your browser. The app will 
-automatically recompile and reload if you change any of the source files.
+Navigate to `http://localhost` with your browser.
+
+## Development
+
+### Usage
+
+To run the application in dev mode:
+
+``` sh
+# Run dev application
+docker compose -f docker-compose.dev.yml up --build
+```
+
+Navigate to `http://localhost` with your browser. How nice, hot reload for the `public-api` is also working!
+
+### Debugging with VS Code
+
+First run the docker container in dev mode:
+
+``` sh
+# Run dev application
+docker compose -f docker-compose.dev.yml up --build
+```
+
+#### Public Api
+
+Once the containers are running, attach the debugger and set your breakpoints:
+![Attach debugger](assets/images/attach_debugger_public-api.png)
