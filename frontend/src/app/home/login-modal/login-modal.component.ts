@@ -1,15 +1,7 @@
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import {
-  catchError,
-  from,
-  Observable,
-  of,
-  Subscriber,
-  switchMap,
-  tap,
-} from 'rxjs';
+import { catchError, from, Observable, of, switchMap, tap } from 'rxjs';
 
 import { StorageKey } from '../../models/storage-key.enum';
 import { BusinessProfileDataService } from '../../services/backend/business-profile-data.service';
@@ -22,8 +14,7 @@ import { LoginService } from './services/login.service';
   templateUrl: './login-modal.component.html',
   styleUrls: ['./login-modal.component.scss'],
 })
-export class LoginModalComponent implements OnInit, OnDestroy {
-  private readonly subscriber = new Subscriber();
+export class LoginModalComponent implements OnInit {
   private activeTab: 'Login' | 'Register' = 'Login';
 
   isLoginActive = true;
@@ -41,20 +32,15 @@ export class LoginModalComponent implements OnInit, OnDestroy {
     private formBuilder: FormBuilder,
     private modalService: NgbModal,
     private userDataService: UserDataService,
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.createForms();
-    this.subscriber.add(
-      this.loginService
-        .getOpenModalEvent()
-        .pipe(switchMap(() => this.showModal()))
-        .subscribe(),
-    );
-  }
 
-  ngOnDestroy(): void {
-    this.subscriber.unsubscribe();
+    this.loginService
+      .getOpenModalEvent()
+      .pipe(switchMap(() => this.showModal()))
+      .subscribe();
   }
 
   showModal(): Observable<any> {

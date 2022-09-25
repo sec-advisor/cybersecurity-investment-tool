@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { filter, merge, Observable, switchMap, tap } from 'rxjs';
+import { Observable, switchMap, tap } from 'rxjs';
 
 import { BusinessProfile } from '../../../libs/api-interfaces';
 import { UserDataService } from '../services/backend/user-data.service';
@@ -22,27 +22,22 @@ export class HomeComponent implements OnInit {
     private storageService: StorageService,
     private userDataService: UserDataService,
     public routingService: RoutingService,
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.stream$ = this.getStream();
   }
 
   private getStream(): Observable<{ profile: BusinessProfile | undefined }> {
-    return merge(
-      this.userDataService.isActive(),
-      this.storageService
-        .getLoggingState()
-        .pipe(filter((isLoggedIn) => !isLoggedIn)),
-    ).pipe(
+    return this.storageService.getLoggingState().pipe(
       switchMap((isLoggedIn) =>
         isLoggedIn
           ? this.homeService.getProfile()
-          : this.loginService
-              .showModal()
-              .pipe(switchMap(() => this.homeService.getProfile())),
+          : this.loginService.showModal().pipe(
+            switchMap(() => this.homeService.getProfile()),
+            tap(() => this.storageService.setLoggingState(true))
+          ),
       ),
-      tap(() => this.storageService.setLoggingState(true)),
     );
   }
 }
