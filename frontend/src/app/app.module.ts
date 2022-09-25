@@ -9,12 +9,12 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { BusinessProfileModule } from './business-profile/business-profile.module';
-import { HomeModule } from './home/home.module';
 import { LayoutsModule } from './layouts/layouts.module';
-import { RecommendationModule } from './recommendation/recommendation.module';
+import { BusinessProfileModule } from './pages/business-profile/business-profile.module';
+import { HomeModule } from './pages/home/home.module';
+import { RecommendationModule } from './pages/recommendation/recommendation.module';
+import { SegmentPresenterModule } from './pages/segment-presenter/segment-presenter.module';
 import { CustomReuseStrategy } from './routing';
-import { SegmentPresenterModule } from './segment-presenter/segment-presenter.module';
 import { BackendUrlResolverService } from './services/backend-url-resolver.service';
 
 registerLocaleData(localeDECH);
@@ -47,4 +47,4 @@ registerLocaleData(localeDECH);
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }

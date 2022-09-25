@@ -3,4 +3,5 @@ export enum Page {
   BusinessProfile,
   Segments,
   Recommendation,
+  Settings,
 }
