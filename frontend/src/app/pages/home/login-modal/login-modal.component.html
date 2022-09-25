@@ -17,9 +17,9 @@
 
     <!-- Login -->
     <ng-container *ngIf="isTabActive('Login'); else register">
-      <form [formGroup]="loginForm">
+      <form [formGroup]="loginForm" (keyup.enter)="login()">
         <!-- Email input -->
-        <div class="form-outline mb-2">
+        <div class=" form-outline mb-2">
           <label class="form-label" for="loginName">Username</label>
           <input type="email" id="loginName" class="form-control" formControlName="username" />
         </div>
@@ -38,7 +38,7 @@
 
     <!-- Signup -->
     <ng-template #register>
-      <form [formGroup]="registerForm">
+      <form [formGroup]="registerForm" (keyup.enter)="signUp()">
         <!-- Email input -->
         <div class="form-outline mb-2">
           <label class="form-label" for="loginName">Username</label>
