@@ -24,6 +24,8 @@ services:
       - mongodb
 
   publicapi:
+    environment:
+      - FRONTEND_URL=${HOST_URL}
     build:
       context: ./public-api/
     ports:
@@ -32,6 +34,8 @@ services:
       - mongo-seed
 
   frontend:
+    environment:
+      - PUBLIC_API_URL=${HOST_URL}:3333
     build:
       context: ./frontend/
     restart: always

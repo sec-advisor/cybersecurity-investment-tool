@@ -6,13 +6,17 @@ Install [Docker Compose](https://docs.docker.com/compose/install/)
 
 ## Production
 
+### Environment
+
+The docker compose `.env` file needs to be overridden in the production mode. Therefore, create a own environment file on your host machine and replace the `HOST_URL` with the one of your host machine. The path of the adapted environment file needs to be passed as argument when you start the docker containers. The code below shows an example how this can be done.
+
 ### Usage
 
 To run the application in production mode:
 
 ``` sh
-# Run application
-docker compose up --build
+# Replace `../config/.env.prod` with the path of your environment file
+docker compose --env-file ../config/.env.prod up --build
 ```
 
 Navigate to `http://localhost` with your browser.

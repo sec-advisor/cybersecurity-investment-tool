@@ -3,8 +3,8 @@ import { Injectable } from '@angular/core';
 import { catchError, Observable, of, tap } from 'rxjs';
 
 import { User } from '../../../../libs/api-interfaces';
+import { backend } from '../../constants/backend.constants';
 import { httpOptions } from '../../constants/http-options.constants';
-import { publicAPIUrl } from '../../constants/public-api-url';
 
 @Injectable({
   providedIn: 'root',
@@ -15,7 +15,7 @@ export class UserDataService {
   signUp(username: string, password: string): Observable<User> {
     return this.http
       .post<User>(
-        `${publicAPIUrl}/users/signup`,
+        `${backend.url}/users/signup`,
         { username, password },
         httpOptions,
       )
@@ -28,7 +28,7 @@ export class UserDataService {
 
   login(username: string, password: string): Observable<User> {
     return this.http.post<User>(
-      `${publicAPIUrl}/users/login`,
+      `${backend.url}/users/login`,
       { username, password },
       httpOptions,
     );
@@ -36,7 +36,7 @@ export class UserDataService {
 
   logout(): Observable<void> {
     return this.http.post<void>(
-      `${publicAPIUrl}/users/logout`,
+      `${backend.url}/users/logout`,
       undefined,
       httpOptions,
     );
@@ -44,7 +44,7 @@ export class UserDataService {
 
   isActive(): Observable<boolean> {
     return this.http.get<boolean>(
-      `${publicAPIUrl}/users/is-active`,
+      `${backend.url}/users/is-active`,
       httpOptions,
     );
   }

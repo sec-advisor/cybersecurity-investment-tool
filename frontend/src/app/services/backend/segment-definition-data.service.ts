@@ -7,8 +7,8 @@ import {
   SegmentDefinition,
   ValueEstimation,
 } from '../../../../libs/api-interfaces';
+import { backend } from '../../constants/backend.constants';
 import { httpOptions } from '../../constants/http-options.constants';
-import { publicAPIUrl } from '../../constants/public-api-url';
 
 @Injectable({
   providedIn: 'root',
@@ -23,7 +23,7 @@ export class SegmentDefinitionDataService {
       ? of(this.segments)
       : this.http
           .get<SegmentDefinition[]>(
-            `${publicAPIUrl}/segment-definitions/definitions`,
+            `${backend.url}/segment-definitions/definitions`,
             httpOptions,
           )
           .pipe(
@@ -42,7 +42,7 @@ export class SegmentDefinitionDataService {
   ): Observable<number> {
     if (segment && keyValuePairs) {
       return this.http.post<number>(
-        `${publicAPIUrl}/segment-definitions/value-estimation`,
+        `${backend.url}/segment-definitions/value-estimation`,
         { segment, keyValuePairs } as ValueEstimation,
         httpOptions,
       );

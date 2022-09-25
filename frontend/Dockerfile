@@ -16,3 +16,9 @@ FROM nginx:latest
 
 COPY --from=build /app/dist/frontend /usr/share/nginx/html
 COPY /nginx.conf /etc/nginx/conf.d/default.conf
+
+# Replace environment variable
+COPY ./entryPoint.sh /
+RUN chmod +x entryPoint.sh
+ENTRYPOINT ["sh","/entryPoint.sh"]
+CMD ["nginx", "-g", "daemon off;"]

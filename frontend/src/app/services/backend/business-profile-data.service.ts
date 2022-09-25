@@ -3,8 +3,8 @@ import { Injectable } from '@angular/core';
 import { catchError, Observable, of, tap } from 'rxjs';
 
 import { BusinessProfile } from '../../../../libs/api-interfaces';
+import { backend } from '../../constants/backend.constants';
 import { httpOptions } from '../../constants/http-options.constants';
-import { publicAPIUrl } from '../../constants/public-api-url';
 import { StorageKey } from '../../models/storage-key.enum';
 import { LocalStorageService } from '../local-storage.service';
 
@@ -20,7 +20,7 @@ export class BusinessProfileDataService {
   storeProfile(profile: BusinessProfile): Observable<string> {
     return this.http
       .post<string>(
-        `${publicAPIUrl}/business-profiles/profiles`,
+        `${backend.url}/business-profiles/profiles`,
         profile,
         httpOptions,
       )
@@ -36,7 +36,7 @@ export class BusinessProfileDataService {
 
   getProfileId(): Observable<string | undefined> {
     return this.http
-      .get<string>(`${publicAPIUrl}/business-profiles/user`, httpOptions)
+      .get<string>(`${backend.url}/business-profiles/user`, httpOptions)
       .pipe(
         catchError((err) =>
           of(undefined).pipe(tap(() => console.error(err.error.message))),
@@ -47,7 +47,7 @@ export class BusinessProfileDataService {
   getProfile(id: string): Observable<BusinessProfile> {
     return this.http
       .get<BusinessProfile>(
-        `${publicAPIUrl}/business-profiles/profiles/${id}`,
+        `${backend.url}/business-profiles/profiles/${id}`,
         httpOptions,
       )
       .pipe(
@@ -61,7 +61,7 @@ export class BusinessProfileDataService {
 
   updateProfile(profile: BusinessProfile): Observable<BusinessProfile> {
     return this.http.patch<BusinessProfile>(
-      `${publicAPIUrl}/business-profiles/profiles`,
+      `${backend.url}/business-profiles/profiles`,
       profile,
       httpOptions,
     );
