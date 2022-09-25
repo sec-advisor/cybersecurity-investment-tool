@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { catchError, from, Observable, of, switchMap, tap } from 'rxjs';
+import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { catchError, of, switchMap, tap } from 'rxjs';
 
 import { StorageKey } from '../../../models/storage-key.enum';
 import { BusinessProfileDataService } from '../../../services/backend/business-profile-data.service';
@@ -26,31 +26,17 @@ export class LoginModalComponent implements OnInit {
   @ViewChild('modal', { static: true }) modal?: any;
 
   constructor(
+    private activeModal: NgbActiveModal,
     private businessProfileDataService: BusinessProfileDataService,
     private localStorageService: LocalStorageService,
     private loginService: LoginService,
     private formBuilder: FormBuilder,
     private modalService: NgbModal,
     private userDataService: UserDataService,
-  ) { }
+  ) {}
 
   ngOnInit() {
     this.createForms();
-
-    this.loginService
-      .getOpenModalEvent()
-      .pipe(switchMap(() => this.showModal()))
-      .subscribe();
-  }
-
-  showModal(): Observable<any> {
-    return from(
-      this.modalService.open(this.modal, {
-        backdrop: 'static',
-        keyboard: false,
-        centered: true,
-      }).result,
-    );
   }
 
   isTabActive(tab: 'Login' | 'Register'): boolean {
@@ -61,7 +47,7 @@ export class LoginModalComponent implements OnInit {
     this.activeTab = activeTab;
   }
 
-  login(modal: any): void {
+  login(): void {
     const credentials: { username: string; password: string } = {
       ...this.loginForm.value,
     };
@@ -82,8 +68,8 @@ export class LoginModalComponent implements OnInit {
                   StorageKey.BusinessProfileId,
                 );
               }
-              modal.close();
               this.loginService.modalWillClose();
+              this.activeModal.close();
             }),
           ),
         ),
@@ -96,7 +82,7 @@ export class LoginModalComponent implements OnInit {
       .subscribe();
   }
 
-  signUp(modal: any): void {
+  signUp(): void {
     const credentials: {
       username: string;
       password: string;
@@ -117,8 +103,8 @@ export class LoginModalComponent implements OnInit {
               .login(credentials.username, credentials.password)
               .subscribe();
 
-            modal.close();
             this.loginService.modalWillClose();
+            this.modalService.dismissAll();
           }
         });
     } else {

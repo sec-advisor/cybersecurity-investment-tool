@@ -1,5 +1,8 @@
 import { Injectable } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { filter, from, merge, Observable, Subject } from 'rxjs';
+
+import { LoginModalComponent } from '../login-modal.component';
 
 @Injectable({
   providedIn: 'root',
@@ -8,12 +11,13 @@ export class LoginService {
   private readonly closeSubject$ = new Subject<void>();
   private readonly openSubject$ = new Subject<void>();
 
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
-  constructor() {}
+  constructor(private modalService: NgbModal) { }
 
   showModal(): Observable<void> {
-    this.openSubject$.next();
-    return this.closeSubject$;
+    return merge(
+      this.openModal().pipe(filter(() => false)),
+      this.closeSubject$,
+    );
   }
 
   getOpenModalEvent(): Observable<void> {
@@ -22,5 +26,15 @@ export class LoginService {
 
   modalWillClose(): void {
     this.closeSubject$.next();
+  }
+
+  private openModal(): Observable<any> {
+    return from(
+      this.modalService.open(LoginModalComponent, {
+        backdrop: 'static',
+        keyboard: false,
+        centered: true,
+      }).result,
+    );
   }
 }

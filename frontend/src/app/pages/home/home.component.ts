@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Observable, switchMap, tap } from 'rxjs';
 
 import { BusinessProfile } from '../../../../libs/api-interfaces';
-import { UserDataService } from '../../services/backend/user-data.service';
 import { RoutingService } from '../../services/routing.service';
 import { StorageService } from '../../services/storage.service';
 import { LoginService } from './login-modal/services/login.service';
@@ -20,9 +19,8 @@ export class HomeComponent implements OnInit {
     private loginService: LoginService,
     private homeService: HomeService,
     private storageService: StorageService,
-    private userDataService: UserDataService,
     public routingService: RoutingService,
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.stream$ = this.getStream();
@@ -34,9 +32,9 @@ export class HomeComponent implements OnInit {
         isLoggedIn
           ? this.homeService.getProfile()
           : this.loginService.showModal().pipe(
-            switchMap(() => this.homeService.getProfile()),
-            tap(() => this.storageService.setLoggingState(true))
-          ),
+              switchMap(() => this.homeService.getProfile()),
+              tap(() => this.storageService.setLoggingState(true)),
+            ),
       ),
     );
   }

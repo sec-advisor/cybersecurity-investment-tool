@@ -1,6 +1,16 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
-import { filter, first, map, merge, of, Subscriber, Subscription, switchMap, tap } from 'rxjs';
+import {
+  filter,
+  first,
+  map,
+  merge,
+  of,
+  Subscriber,
+  Subscription,
+  switchMap,
+  tap,
+} from 'rxjs';
 
 import { StorageKey } from '../models/storage-key.enum';
 import { UserDataService } from './backend/user-data.service';
@@ -22,49 +32,53 @@ export class RoutingService implements OnDestroy {
     active: boolean;
     disabled?: boolean;
   }[] = [
-      {
-        id: Page.Home,
-        name: 'Home',
-        icon: 'bi-house-door',
-        path: '/home',
-        active: true,
-      },
-      {
-        id: Page.BusinessProfile,
-        name: 'Business Profile',
-        icon: 'bi-building',
-        path: '/business-profile',
-        active: false,
-      },
-      {
-        id: Page.Segments,
-        name: 'Segments',
-        icon: 'bi-pie-chart',
-        path: '/segments',
-        active: false,
-        disabled: true,
-      },
-      {
-        id: Page.Recommendation,
-        name: 'Recommendation',
-        icon: 'bi-shield',
-        path: '/recommendation',
-        active: false,
-        disabled: true,
-      },
-    ];
+    {
+      id: Page.Home,
+      name: 'Home',
+      icon: 'bi-house-door',
+      path: '/home',
+      active: true,
+    },
+    {
+      id: Page.BusinessProfile,
+      name: 'Business Profile',
+      icon: 'bi-building',
+      path: '/business-profile',
+      active: false,
+    },
+    {
+      id: Page.Segments,
+      name: 'Segments',
+      icon: 'bi-pie-chart',
+      path: '/segments',
+      active: false,
+      disabled: true,
+    },
+    {
+      id: Page.Recommendation,
+      name: 'Recommendation',
+      icon: 'bi-shield',
+      path: '/recommendation',
+      active: false,
+      disabled: true,
+    },
+    {
+      id: Page.Settings,
+      name: 'Settings',
+      icon: 'bi-gear',
+      path: '/settings',
+      active: false,
+    },
+  ];
 
   constructor(
     private router: Router,
     private storageService: StorageService,
     private localStorageService: LocalStorageService,
-    private userDataService: UserDataService
+    private userDataService: UserDataService,
   ) {
-    // TODO CH: Solve this issue properly
-
     this.setUserLoggingState();
 
-    // this.browseTo('/home');
     this.subscriber.add(this.handlePageEnabling());
     this.subscriber.add(this.handleRouterChanges());
   }
@@ -90,7 +104,7 @@ export class RoutingService implements OnDestroy {
   reset(): void {
     this.pages.forEach((page) => {
       page.active = false;
-      if (![Page.Home, Page.BusinessProfile].includes(page.id)) {
+      if (![Page.Home, Page.BusinessProfile, Page.Settings].includes(page.id)) {
         page.disabled = true;
       }
     });
@@ -99,20 +113,22 @@ export class RoutingService implements OnDestroy {
 
   // TODO CH: Refactor almost same code
   handleRouterChanges(): Subscription {
-    return this.router.events.pipe(
-      filter((event) => event instanceof NavigationEnd),
-      tap((event) => {
-        const newPage = this.pages.find(
-          (page) => page.path === (event as NavigationEnd).url,
-        );
-        if (newPage) {
-          if (!newPage.disabled) {
-            this.pages.forEach((item) => (item.active = false));
-            newPage.active = true;
+    return this.router.events
+      .pipe(
+        filter((event) => event instanceof NavigationEnd),
+        tap((event) => {
+          const newPage = this.pages.find(
+            (page) => page.path === (event as NavigationEnd).url,
+          );
+          if (newPage) {
+            if (!newPage.disabled) {
+              this.pages.forEach((item) => (item.active = false));
+              newPage.active = true;
+            }
           }
-        }
-      }),
-    ).subscribe();
+        }),
+      )
+      .subscribe();
   }
 
   private handlePageEnabling(): Subscription {
@@ -139,9 +155,14 @@ export class RoutingService implements OnDestroy {
   }
 
   private setUserLoggingState(): void {
-    this.userDataService.isActive().pipe(first()).subscribe(isLoggedIn => {
-      this.storageService.setLoggingState(isLoggedIn);
-    }
-    )
+    this.userDataService
+      .isActive()
+      .pipe(first())
+      .subscribe((isLoggedIn) => {
+        if (!isLoggedIn) {
+          this.browseTo('/home');
+        }
+        this.storageService.setLoggingState(isLoggedIn);
+      });
   }
 }
