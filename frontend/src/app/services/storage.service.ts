@@ -26,7 +26,7 @@ export class StorageService {
   >(undefined);
   private isFirstCallProfile = true;
   private isFirstCallSegments = true;
-  private isLoggedIn$ = new BehaviorSubject<boolean>(false);
+  private isLoggedIn$ = new BehaviorSubject<boolean | undefined>(undefined);
   private segmentsSource$ = new BehaviorSubject<AppSegment[]>([]);
 
   constructor(
@@ -155,7 +155,11 @@ export class StorageService {
   }
 
   getLoggingState(): Observable<boolean> {
-    return this.isLoggedIn$;
+    return this.isLoggedIn$.pipe(
+      filter((isLoggedIn) => isLoggedIn !== undefined),
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      map((isLoggedIn) => isLoggedIn!),
+    );
   }
 
   reset(): void {
