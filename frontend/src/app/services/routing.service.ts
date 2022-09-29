@@ -117,8 +117,8 @@ export class RoutingService implements OnDestroy {
       .pipe(
         filter((event) => event instanceof NavigationEnd),
         tap((event) => {
-          const newPage = this.pages.find(
-            (page) => page.path === (event as NavigationEnd).url,
+          const newPage = this.pages.find((page) =>
+            (event as NavigationEnd).url.startsWith(page.path),
           );
           if (newPage) {
             if (!newPage.disabled) {

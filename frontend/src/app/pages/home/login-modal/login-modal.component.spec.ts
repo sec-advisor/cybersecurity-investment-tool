@@ -2,6 +2,7 @@
 import { HttpClientModule } from '@angular/common/http';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { LoginModalComponent } from './login-modal.component';
 
@@ -13,6 +14,7 @@ describe('LoginModalComponent', () => {
     TestBed.configureTestingModule({
       imports: [HttpClientModule, ReactiveFormsModule],
       declarations: [LoginModalComponent],
+      providers: [NgbActiveModal]
     }).compileComponents();
   }));
 

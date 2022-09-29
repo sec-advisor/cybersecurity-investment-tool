@@ -1,0 +1,52 @@
+<div class="d-flex flex-wrap justify-content-center">
+  <div class="settings">
+    <form [formGroup]="form">
+      <div class="row justify-content-center">
+        <div class="mx-auto">
+          <h2 class="h3 mb-4 page-title">GL - Breach Probability Function</h2>
+          <div class="my-4">
+            <h5 class="mb-0 mt-5">BPF Settings</h5>
+            <p>Customize the BPF to your needs</p>
+
+            <!-- Current BPF -->
+            <hr class="my-4" />
+            <strong class="mb-0">Current BPF</strong>
+            <p>{{ form.get('bpf')?.value }}</p>
+
+            <!-- BPF -->
+            <hr class="my-4" />
+            <strong class="mb-0">BPF Customization</strong>
+            <p>Customize the BPF</p>
+            <ngb-accordion #acc="ngbAccordion" class="no-padding" [closeOthers]="true">
+              <ngb-panel id="bpf-basic" title="Basic">
+                <ng-template ngbPanelContent>
+                  <app-bpf-basic formControlName="bpf"></app-bpf-basic>
+                </ng-template>
+              </ngb-panel>
+              <ngb-panel title="Advanced">
+                <ng-template ngbPanelContent>
+                  <input type="text" class="w-100" formControlName="bpf">
+                </ng-template>
+              </ngb-panel>
+            </ngb-accordion>
+
+            <!-- Test Segments -->
+            <hr class="my-4" />
+            <strong class="mb-0">Test Segments</strong>
+            <p>Segments for testing the BPF.</p>
+            <ngb-accordion #acc="ngbAccordion" class="no-padding">
+              <ngb-panel id="bpf-test-segment" title="Segments">
+                <ng-template ngbPanelContent>
+                  <app-test-segments formControlName="segments"></app-test-segments>
+                </ng-template>
+              </ngb-panel>
+            </ngb-accordion>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <app-bpf-graphic class="m-3" [bpf]="form.get('bpf')?.value" [segments]="form.get('segments')?.value">
+  </app-bpf-graphic>
+</div>

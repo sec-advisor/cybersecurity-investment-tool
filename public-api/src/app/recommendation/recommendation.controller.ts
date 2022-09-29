@@ -1,10 +1,7 @@
+import { RecommendationProfile, ROSIDetail } from '@libs';
 import { Body, Controller, Post, UseGuards } from '@nestjs/common';
 import { Observable } from 'rxjs';
 
-import {
-  RecommendationProfile,
-  ROSIDetail,
-} from '../../../libs/api-interfaces';
 import { AuthenticatedGuard } from '../auth/authenticated.guard';
 import { RecommendationService } from './services/recommendation.service';
 

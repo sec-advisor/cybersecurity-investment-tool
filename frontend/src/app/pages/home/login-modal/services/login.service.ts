@@ -11,7 +11,7 @@ export class LoginService {
   private readonly closeSubject$ = new Subject<void>();
   private readonly openSubject$ = new Subject<void>();
 
-  constructor(private modalService: NgbModal) { }
+  constructor(private modalService: NgbModal) {}
 
   showModal(): Observable<void> {
     return merge(

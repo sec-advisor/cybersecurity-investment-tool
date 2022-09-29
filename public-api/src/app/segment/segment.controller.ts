@@ -1,3 +1,4 @@
+import { Segment } from '@libs';
 import {
   Body,
   Controller,
@@ -12,7 +13,6 @@ import {
 } from '@nestjs/common';
 import { catchError, map, Observable, of, switchMap, tap } from 'rxjs';
 
-import { Segment } from '../../../libs/api-interfaces';
 import { AuthenticatedGuard } from '../auth/authenticated.guard';
 import { OptimalInvestmentEquationService } from '../breach-probability/services/optimal-investment-equation.service';
 import { InvestmentCalculatorService } from './services/investment-calculator.service';

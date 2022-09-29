@@ -1,0 +1,51 @@
+@import 'bootstrap/scss/bootstrap.scss';
+
+.action-sidebar {
+  height: 100%;
+  width: 280px;
+  min-width: 80px;
+  overflow-y: auto;
+  border-color: $gray-300;
+  border-width: medium;
+  border-style: solid;
+  background-color: $gray-200;
+  transition: width 0.4s ease-in-out;
+
+  &.collapsed {
+    width: 50px;
+  }
+
+  .sidebar-header {
+    background-color: $gray-300;
+  }
+
+  .action-button {
+    &.disabled {
+      opacity: 0.5;
+    }
+  }
+
+  .margin-right {
+    margin-right: 15px;
+  }
+
+  .action-text {
+    font-weight: 550;
+  }
+
+  .action-icon {
+    font-size: 20px;
+    line-height: 1;
+  }
+
+  .loading-spinner {
+    margin-right: 15px;
+    width: 20px;
+    height: 20px;
+    margin-top: 3px;
+  }
+
+  .collapse-item {
+    border-top: 1px solid $gray-400;
+  }
+}

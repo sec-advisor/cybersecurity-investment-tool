@@ -1,3 +1,4 @@
+import { User } from '@libs';
 import {
   Body,
   Controller,
@@ -9,7 +10,6 @@ import {
 import * as bcrypt from 'bcrypt';
 import { from, map, Observable, of, switchMap } from 'rxjs';
 
-import { User } from '../../../libs/api-interfaces';
 import { LocalAuthGuard } from '../auth/local.auth.guard';
 import { UserRequest } from '../models/request.type';
 import { UsersService } from './services/users.service';

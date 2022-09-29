@@ -1,8 +1,8 @@
 import { Component, Input, OnDestroy, ViewChild } from '@angular/core';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
+import { LeadingPeriod, ROSIDetail } from '@libs';
 import { Subscriber, switchMap } from 'rxjs';
 
-import { LeadingPeriod, ROSIDetail } from '../../../../../libs/api-interfaces';
 import { AppSegment } from '../../../models/app-segment.model';
 import { StorageService } from '../../../services/storage.service';
 import { RosiModalComponent } from '../rosi-modal/rosi-modal.component';

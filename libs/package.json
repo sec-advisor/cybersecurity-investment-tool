@@ -1,0 +1,27 @@
+{
+  "name": "libs",
+  "version": "1.0.5",
+  "description": "",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "yarn tsc --build",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "deploy:patch": "yarn tsc --build && yarn version --patch --no-git-tag-version && yarn nuget:remove && yarn nuget:create && yarn copy && yarn update",
+    "nuget:remove": "yarn rimraf ../frontend/libs/*.tgz && yarn rimraf ../public-api/libs/*.tgz",
+    "nuget:create": "yarn pack",
+    "copy": "cpy libs-v%npm_package_version%.tgz ../frontend/libs && cpy libs-v%npm_package_version%.tgz ../public-api/libs",
+    "update": "yarn --cwd ../frontend/ add @libs@file:libs/libs-v%npm_package_version%.tgz --offline && yarn --cwd ../public-api/ add @libs@file:libs/libs-v%npm_package_version%.tgz --offline"
+  },
+  "author": "",
+  "license": "ISC",
+  "files": [
+    "/dist"
+  ],
+  "devDependencies": {
+    "cpy-cli": "^4.2.0",
+    "cwd": "^0.10.0",
+    "rimraf": "^3.0.2",
+    "typescript": "^4.8.4"
+  }
+}

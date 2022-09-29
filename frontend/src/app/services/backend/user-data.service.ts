@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { User } from '@libs';
 import { catchError, Observable, of, tap } from 'rxjs';
 
-import { User } from '../../../../libs/api-interfaces';
 import { backend } from '../../constants/backend.constants';
 import { httpOptions } from '../../constants/http-options.constants';
 
