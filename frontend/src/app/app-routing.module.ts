@@ -21,6 +21,10 @@ const routes: Routes = [
     canActivate: [AuthGuardService],
   },
   { path: 'business-profile', component: BusinessProfileComponent },
+  {
+    path: 'settings',
+    loadChildren: () => import('./pages/settings/settings.module').then(mod => mod.SettingsModule)
+  }
 ];
 
 @NgModule({

@@ -1,0 +1,13 @@
+<div class="w-100 h-100 d-flex flex-column">
+  <app-header [text]="'Settings'"></app-header>
+
+  <div class="h-100 d-flex bg-light overflow-hidden">
+    <app-action-sidebar [sections]="sidebarSections"></app-action-sidebar>
+
+    <div class="w-100 d-flex justify-content-center">
+      <div class="w-100 h-100 overflow-auto m-3">
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+  </div>
+</div>

@@ -14,6 +14,7 @@ import { BusinessProfileModule } from './pages/business-profile/business-profile
 import { HomeModule } from './pages/home/home.module';
 import { RecommendationModule } from './pages/recommendation/recommendation.module';
 import { SegmentPresenterModule } from './pages/segment-presenter/segment-presenter.module';
+import { SettingsModule } from './pages/settings/settings.module';
 import { CustomReuseStrategy } from './routing';
 import { BackendUrlResolverService } from './services/backend-url-resolver.service';
 
@@ -33,6 +34,7 @@ registerLocaleData(localeDECH);
     LayoutsModule,
     RecommendationModule,
     BrowserAnimationsModule,
+    SettingsModule
   ],
   providers: [
     {
