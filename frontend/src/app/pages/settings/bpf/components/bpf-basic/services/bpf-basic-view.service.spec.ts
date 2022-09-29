@@ -1,16 +1,22 @@
 /* tslint:disable:no-unused-variable */
+import { inject, TestBed } from '@angular/core/testing';
+import { ReactiveFormsModule } from '@angular/forms';
 
-import { TestBed, async, inject } from '@angular/core/testing';
 import { BpfBasicViewService } from './bpf-basic-view.service';
+
 
 describe('Service: BpfBasicView', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [BpfBasicViewService]
+      imports: [ReactiveFormsModule],
+      providers: [BpfBasicViewService],
     });
   });
 
-  it('should ...', inject([BpfBasicViewService], (service: BpfBasicViewService) => {
-    expect(service).toBeTruthy();
-  }));
+  it('should ...', inject(
+    [BpfBasicViewService],
+    (service: BpfBasicViewService) => {
+      expect(service).toBeTruthy();
+    },
+  ));
 });

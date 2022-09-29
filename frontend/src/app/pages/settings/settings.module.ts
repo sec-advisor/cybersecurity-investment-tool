@@ -11,4 +11,4 @@ import { SettingsComponent } from './settings.component';
   imports: [CommonModule, LayoutsModule, SettingsRoutingModule, BpfModule],
   declarations: [SettingsComponent, ActionSidebarComponent],
 })
-export class SettingsModule { }
+export class SettingsModule {}

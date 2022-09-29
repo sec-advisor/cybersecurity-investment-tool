@@ -14,8 +14,13 @@ import { TestSegmentsComponent } from './components/test-segments/test-segments.
     CommonModule,
     BpfRoutingModule,
     ReactiveFormsModule,
-    NgbAccordionModule
+    NgbAccordionModule,
   ],
-  declarations: [BpfComponent, BpfBasicComponent, TestSegmentsComponent, BpfGraphicComponent]
+  declarations: [
+    BpfComponent,
+    BpfBasicComponent,
+    TestSegmentsComponent,
+    BpfGraphicComponent,
+  ],
 })
-export class BpfModule { }
+export class BpfModule {}

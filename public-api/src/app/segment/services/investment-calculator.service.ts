@@ -1,10 +1,6 @@
+import { OptimalInvestmentEquation, Segment } from '@libs';
 import { Injectable } from '@nestjs/common';
 import { map, Observable, of } from 'rxjs';
-
-import {
-  OptimalInvestmentEquation,
-  Segment,
-} from '../../../../libs/api-interfaces';
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const nerdamer = require('nerdamer/all.min');

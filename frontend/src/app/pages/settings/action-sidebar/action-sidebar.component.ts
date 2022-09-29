@@ -7,19 +7,19 @@ import { SideBarButton, SideBarSection } from './models/side-bar-button.model';
 @Component({
   selector: 'app-action-sidebar',
   templateUrl: './action-sidebar.component.html',
-  styleUrls: ['./action-sidebar.component.scss']
+  styleUrls: ['./action-sidebar.component.scss'],
 })
 export class ActionSidebarComponent implements OnInit {
-
   isCollapsed = false;
 
   @Input() sections?: SideBarSection[];
 
-  constructor(private localStorageService: LocalStorageService) {
-  }
+  constructor(private localStorageService: LocalStorageService) {}
 
   ngOnInit(): void {
-    this.isCollapsed = this.localStorageService.getItem(StorageKey.IsMenuBarCollapsed) === 'true';
+    this.isCollapsed =
+      this.localStorageService.getItem(StorageKey.IsMenuBarCollapsed) ===
+      'true';
   }
 
   execute(button: SideBarButton): void {
@@ -28,7 +28,9 @@ export class ActionSidebarComponent implements OnInit {
 
   collapse(): void {
     this.isCollapsed = !this.isCollapsed;
-    this.localStorageService.setItem(StorageKey.IsMenuBarCollapsed, this.isCollapsed)
+    this.localStorageService.setItem(
+      StorageKey.IsMenuBarCollapsed,
+      this.isCollapsed,
+    );
   }
-
 }

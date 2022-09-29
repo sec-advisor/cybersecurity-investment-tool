@@ -1354,6 +1354,10 @@
     "@jridgewell/resolve-uri" "^3.0.3"
     "@jridgewell/sourcemap-codec" "^1.4.10"
 
+"@libs@file:libs/libs-v1.0.5.tgz":
+  version "1.0.5"
+  resolved "file:libs/libs-v1.0.5.tgz#55800b35cbf48e44133e0bbf57c817a25cce576e"
+
 "@ng-bootstrap/ng-bootstrap@^12.1.2":
   version "12.1.2"
   resolved "https://registry.yarnpkg.com/@ng-bootstrap/ng-bootstrap/-/ng-bootstrap-12.1.2.tgz#19f21313234fe21090ba50a7721046ed5d9928e1"

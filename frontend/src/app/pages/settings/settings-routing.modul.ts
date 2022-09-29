@@ -10,9 +10,10 @@ const routes: Routes = [
     children: [
       {
         path: 'bpf',
-        loadChildren: () => import('./bpf/bpf.module').then(mod => mod.BpfModule)
-      }
-    ]
+        loadChildren: () =>
+          import('./bpf/bpf.module').then((mod) => mod.BpfModule),
+      },
+    ],
   },
 ];
 
@@ -20,4 +21,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class SettingsRoutingModule { }
+export class SettingsRoutingModule {}

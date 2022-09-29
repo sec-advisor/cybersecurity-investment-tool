@@ -5,6 +5,8 @@ WORKDIR /app
 COPY package.json .
 COPY yarn.lock .
 COPY .yarnrc .
+# Copy libs folder which includes the package
+COPY libs libs/
 
 RUN yarn install
 

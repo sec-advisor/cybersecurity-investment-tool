@@ -32,7 +32,7 @@ To run the application in dev mode:
 docker compose -f docker-compose.dev.yml up --build
 
 # Or run the shell script
-./run_debug.sh
+./run-debug.sh
 ```
 
 Navigate to `http://localhost` with your browser. Awesome, hot reload for the `public-api` and `frontend` is working!

@@ -1,6 +1,16 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
-import { filter, first, map, merge, of, Subscriber, Subscription, switchMap, tap } from 'rxjs';
+import {
+  filter,
+  first,
+  map,
+  merge,
+  of,
+  Subscriber,
+  Subscription,
+  switchMap,
+  tap,
+} from 'rxjs';
 
 import { StorageKey } from '../models/storage-key.enum';
 import { UserDataService } from './backend/user-data.service';
@@ -22,44 +32,44 @@ export class RoutingService implements OnDestroy {
     active: boolean;
     disabled?: boolean;
   }[] = [
-      {
-        id: Page.Home,
-        name: 'Home',
-        icon: 'bi-house-door',
-        path: '/home',
-        active: true,
-      },
-      {
-        id: Page.BusinessProfile,
-        name: 'Business Profile',
-        icon: 'bi-building',
-        path: '/business-profile',
-        active: false,
-      },
-      {
-        id: Page.Segments,
-        name: 'Segments',
-        icon: 'bi-pie-chart',
-        path: '/segments',
-        active: false,
-        disabled: true,
-      },
-      {
-        id: Page.Recommendation,
-        name: 'Recommendation',
-        icon: 'bi-shield',
-        path: '/recommendation',
-        active: false,
-        disabled: true,
-      },
-      {
-        id: Page.Settings,
-        name: 'Settings',
-        icon: 'bi-gear',
-        path: '/settings',
-        active: false,
-      },
-    ];
+    {
+      id: Page.Home,
+      name: 'Home',
+      icon: 'bi-house-door',
+      path: '/home',
+      active: true,
+    },
+    {
+      id: Page.BusinessProfile,
+      name: 'Business Profile',
+      icon: 'bi-building',
+      path: '/business-profile',
+      active: false,
+    },
+    {
+      id: Page.Segments,
+      name: 'Segments',
+      icon: 'bi-pie-chart',
+      path: '/segments',
+      active: false,
+      disabled: true,
+    },
+    {
+      id: Page.Recommendation,
+      name: 'Recommendation',
+      icon: 'bi-shield',
+      path: '/recommendation',
+      active: false,
+      disabled: true,
+    },
+    {
+      id: Page.Settings,
+      name: 'Settings',
+      icon: 'bi-gear',
+      path: '/settings',
+      active: false,
+    },
+  ];
 
   constructor(
     private router: Router,
@@ -107,8 +117,8 @@ export class RoutingService implements OnDestroy {
       .pipe(
         filter((event) => event instanceof NavigationEnd),
         tap((event) => {
-          const newPage = this.pages.find(
-            (page) => (event as NavigationEnd).url.startsWith(page.path),
+          const newPage = this.pages.find((page) =>
+            (event as NavigationEnd).url.startsWith(page.path),
           );
           if (newPage) {
             if (!newPage.disabled) {

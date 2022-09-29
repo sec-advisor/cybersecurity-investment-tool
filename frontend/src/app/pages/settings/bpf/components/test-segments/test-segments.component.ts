@@ -8,26 +8,30 @@ import { TestSegment } from '../../models/test-segment.interface';
   selector: 'app-test-segments',
   templateUrl: './test-segments.component.html',
   styleUrls: ['./test-segments.component.scss'],
-  providers: [{
-    provide: NG_VALUE_ACCESSOR,
-    useExisting: forwardRef(() => TestSegmentsComponent),
-    multi: true
-  }]
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => TestSegmentsComponent),
+      multi: true,
+    },
+  ],
 })
 export class TestSegmentsComponent implements OnInit, ControlValueAccessor {
-
-  private valueSubject$ = new BehaviorSubject<TestSegment[] | undefined>(undefined);
+  private valueSubject$ = new BehaviorSubject<TestSegment[] | undefined>(
+    undefined,
+  );
   private onChange?: () => TestSegment[];
 
   viewModel$!: Observable<{ segments: TestSegment[] }>;
-  segments?: TestSegment[]
+  segments?: TestSegment[];
   onTouched?: () => void;
 
   ngOnInit() {
     this.viewModel$ = this.valueSubject$.pipe(
-      filter(segments => !!segments),
+      filter((segments) => !!segments),
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      map(segments => ({ segments: segments! })));
+      map((segments) => ({ segments: segments! })),
+    );
   }
 
   writeValue(segments: TestSegment[]): void {
@@ -41,5 +45,4 @@ export class TestSegmentsComponent implements OnInit, ControlValueAccessor {
   registerOnTouched(fn: () => void): void {
     this.onTouched = fn;
   }
-
 }

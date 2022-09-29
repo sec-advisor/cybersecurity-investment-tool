@@ -9,11 +9,9 @@ import { SideBarSection } from './action-sidebar/models/side-bar-button.model';
   styleUrls: ['./settings.component.scss'],
 })
 export class SettingsComponent implements OnInit {
+  sidebarSections!: SideBarSection[];
 
-  sidebarSections!: SideBarSection[]
-
-  constructor(private router: Router) {
-  }
+  constructor(private router: Router) {}
 
   ngOnInit() {
     this.sidebarSections = this.getSidebarSections();
@@ -24,16 +22,17 @@ export class SettingsComponent implements OnInit {
       {
         heading: { text: 'Gordon-Loeb Model', icon: 'bi-calculator' },
         buttons: [
-          { text: 'Breach Probability Function', icon: 'bi-bar-chart', action: () => this.browseTo('bpf') },
-        ]
-      }
-    ]
+          {
+            text: 'Breach Probability Function',
+            icon: 'bi-bar-chart',
+            action: () => this.browseTo('bpf'),
+          },
+        ],
+      },
+    ];
   }
 
   private browseTo(url: string): void {
     this.router.navigate(['settings', url]);
   }
 }
-
-
-

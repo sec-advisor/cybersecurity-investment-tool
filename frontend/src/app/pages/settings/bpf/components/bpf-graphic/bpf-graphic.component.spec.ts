@@ -11,9 +11,8 @@ describe('BpfGraphicComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ BpfGraphicComponent ]
-    })
-    .compileComponents();
+      declarations: [BpfGraphicComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

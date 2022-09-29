@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
+import { BusinessProfile } from '@libs';
 import { map, Observable } from 'rxjs';
 
-import { BusinessProfile } from '../../../../../libs/api-interfaces';
 import { StorageService } from '../../../services/storage.service';
 
 @Injectable({

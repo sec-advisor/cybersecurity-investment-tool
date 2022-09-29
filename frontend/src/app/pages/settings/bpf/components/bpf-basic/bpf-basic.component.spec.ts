@@ -1,7 +1,6 @@
 /* tslint:disable:no-unused-variable */
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
-import { DebugElement } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms';
 
 import { BpfBasicComponent } from './bpf-basic.component';
 
@@ -11,9 +10,9 @@ describe('BpfBasicComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ BpfBasicComponent ]
-    })
-    .compileComponents();
+      imports: [ReactiveFormsModule],
+      declarations: [BpfBasicComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

@@ -1,8 +1,8 @@
 export interface SideBarSection {
   heading?: {
-    icon: string,
-    text: string,
-  },
+    icon: string;
+    text: string;
+  };
   buttons: SideBarButton[];
 }
 

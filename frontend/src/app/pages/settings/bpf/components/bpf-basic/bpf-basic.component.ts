@@ -14,26 +14,26 @@ import { BpfBasicViewService } from './services/bpf-basic-view.service';
     {
       provide: NG_VALUE_ACCESSOR,
       useExisting: forwardRef(() => BpfBasicComponent),
-      multi: true
-    }]
+      multi: true,
+    },
+  ],
 })
-export class BpfBasicComponent implements OnInit, OnDestroy, ControlValueAccessor {
-
+export class BpfBasicComponent
+  implements OnInit, OnDestroy, ControlValueAccessor
+{
   private readonly subscriber = new Subscriber();
   private onChange?: (value: string) => void;
 
-  viewModel$!: Observable<BpfBasicViewModel>
+  viewModel$!: Observable<BpfBasicViewModel>;
   onTouched?: () => void;
 
-  constructor(
-    private bpfBasicViewService: BpfBasicViewService
-  ) { }
+  constructor(private bpfBasicViewService: BpfBasicViewService) {}
 
   ngOnInit() {
-    this.viewModel$ = this.bpfBasicViewService.getViewModel().pipe(
-      catchError(error => of({ error: error }))
-    );
-    this.subscriber.add(this.updateValue().subscribe())
+    this.viewModel$ = this.bpfBasicViewService
+      .getViewModel()
+      .pipe(catchError((error) => of({ error: error })));
+    this.subscriber.add(this.updateValue().subscribe());
   }
 
   ngOnDestroy(): void {
@@ -54,12 +54,11 @@ export class BpfBasicComponent implements OnInit, OnDestroy, ControlValueAccesso
 
   private updateValue(): Observable<string> {
     return this.bpfBasicViewService.getValue().pipe(
-      tap(newValue => {
+      tap((newValue) => {
         if (this.onChange) {
           this.onChange(newValue);
         }
-      })
+      }),
     );
   }
-
 }

@@ -23,12 +23,15 @@ const routes: Routes = [
   { path: 'business-profile', component: BusinessProfileComponent },
   {
     path: 'settings',
-    loadChildren: () => import('./pages/settings/settings.module').then(mod => mod.SettingsModule)
-  }
+    loadChildren: () =>
+      import('./pages/settings/settings.module').then(
+        (mod) => mod.SettingsModule,
+      ),
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}
