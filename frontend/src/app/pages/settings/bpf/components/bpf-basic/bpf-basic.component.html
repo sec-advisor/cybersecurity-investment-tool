@@ -1,0 +1,27 @@
+<ng-container *ngIf="viewModel$ | async as viewModelHeader">
+
+  <div *ngIf="viewModelHeader.error" class="text-danger font-italic m-3">
+    {{ viewModelHeader.error }}
+  </div>
+
+  <form *ngIf="viewModelHeader.viewModel as viewModel" [formGroup]="viewModel.form">
+    <div class="list-group">
+
+      <div *ngFor="let variable of viewModel.variables" class="list-group-item rounded-0">
+        <div class="row align-items-center">
+          <div class="col">
+            <strong class="mb-2">{{ variable.name }}</strong>
+            <p class="text-muted mb-0">{{ variable.description }}</p>
+          </div>
+          <div class="col-auto">
+            <div class="custom-control custom-switch">
+              <input type="number" class="custom-control-input variable-input" [min]="1"
+                [formControlName]="variable.controlName">
+              <span class="custom-control-label"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</ng-container>

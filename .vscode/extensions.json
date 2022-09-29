@@ -1,9 +1,15 @@
 {
   "recommendations": [
+    "alexiv.vscode-angular2-files",
     "angular.ng-template",
-    "nrwl.angular-console",
-    "esbenp.prettier-vscode",
-    "firsttris.vscode-jest-runner",
-    "dbaeumer.vscode-eslint"
+    "infinity1207.angular2-switcher",
+    "streetsidesoftware.code-spell-checker",
+    "hediet.vscode-drawio",
+    "dbaeumer.vscode-eslint",
+    "yzhang.markdown-all-in-one",
+    "davidanson.vscode-markdownlint",
+    "jebbs.plantuml",
+    "stylelint.vscode-stylelint",
+    "rbbit.typescript-hero"
   ]
 }

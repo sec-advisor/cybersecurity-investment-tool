@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { BusinessProfile } from '@libs';
 import { Observable, switchMap, tap } from 'rxjs';
 
-import { BusinessProfile } from '../../../../libs/api-interfaces';
 import { RoutingService } from '../../services/routing.service';
 import { StorageService } from '../../services/storage.service';
 import { LoginService } from './login-modal/services/login.service';

@@ -1,0 +1,14 @@
+.settings {
+  width: 600px;
+}
+
+.no-padding {
+  ::ng-deep {
+    #bpf-basic,
+    #bpf-test-segment {
+      .accordion-body {
+        padding: 0 !important;
+      }
+    }
+  }
+}

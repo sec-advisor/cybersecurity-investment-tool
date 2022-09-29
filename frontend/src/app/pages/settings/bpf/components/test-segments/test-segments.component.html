@@ -1,0 +1,26 @@
+<div *ngIf="viewModel$ | async as viewModel" (click)="onTouched && onTouched()">
+  <ng-container>
+    <div>
+      <table class="table table-bordered table-hover table-striped m-0">
+        <thead>
+          <tr>
+            <th class="text-center" scope="col">Name</th>
+            <th class="text-center" scope="col">Risk(%)</th>
+            <th class="text-center" scope="col">Vulnerability(%)</th>
+            <th class="text-center" scope="col">Value($)</th>
+            <th class="text-center" scope="col">Optimal Investment($)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let segment of viewModel.segments; index as i">
+            <td scope="row">{{ segment.name }}</td>
+            <td class="text-end">{{ segment.risk }}</td>
+            <td class="text-end">{{ segment.vulnerability }}</td>
+            <td class="text-end">{{ segment.value | number }}</td>
+            <td class="text-end">{{ segment.optimalInvestment | number }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </ng-container>
+</div>
