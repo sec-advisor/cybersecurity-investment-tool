@@ -10,6 +10,7 @@ import { RecommendationModule } from './recommendation/recommendation.module';
 import { SegmentDefinitionModule } from './segment-definition/segment-definition.module';
 import { SegmentModule } from './segment/segment.module';
 import { UsersModule } from './users/users.module';
+import { SettingsModule } from './settings/settings.module';
 
 @Module({
   imports: [
@@ -23,6 +24,7 @@ import { UsersModule } from './users/users.module';
     RecommendationModule,
     UsersModule,
     AuthModule,
+    SettingsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -5,8 +5,7 @@ import {
   OnInit,
   SimpleChanges,
 } from '@angular/core';
-
-import { TestSegment } from '../../models/test-segment.interface';
+import { Segment } from '@libs';
 
 @Component({
   selector: 'app-bpf-graphic',
@@ -15,7 +14,7 @@ import { TestSegment } from '../../models/test-segment.interface';
 })
 export class BpfGraphicComponent implements OnInit, OnChanges {
   @Input() bpf?: string;
-  @Input() segments?: TestSegment[];
+  @Input() segments?: Segment[];
 
   constructor() {}
 
@@ -25,13 +24,13 @@ export class BpfGraphicComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     const bpf = changes['bpf']?.currentValue as string;
-    const segments = changes['segments']?.currentValue as TestSegment[];
+    const segments = changes['segments']?.currentValue as Segment[];
     if (bpf && segments) {
       this.doSomething(bpf, segments);
     }
   }
 
-  doSomething(bpf: string, segments: TestSegment[]): void {
+  doSomething(bpf: string, segments: Segment[]): void {
     console.log(bpf, segments);
   }
 }

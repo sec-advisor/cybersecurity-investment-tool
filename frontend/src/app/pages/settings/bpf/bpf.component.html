@@ -1,4 +1,4 @@
-<div class="d-flex flex-wrap justify-content-center">
+<div *ngIf="form$ | async as form" class="d-flex flex-wrap justify-content-center">
   <div class="settings">
     <form [formGroup]="form">
       <div class="row justify-content-center">
@@ -25,7 +25,7 @@
               </ngb-panel>
               <ngb-panel title="Advanced">
                 <ng-template ngbPanelContent>
-                  <app-bpf-advanced formControlName="bpf"></app-bpf-advanced>
+                  <app-bpf-advanced formControlName="bpf" [errorText]="errorText"></app-bpf-advanced>
                 </ng-template>
               </ngb-panel>
             </ngb-accordion>

@@ -115,7 +115,7 @@ export class SegmentController {
         of({} as Segment[]).pipe(
           tap(() => {
             throw new HttpException(
-              'Calculattion of optimal investment failed!',
+              'Calculation of optimal investment failed!',
               HttpStatus.INTERNAL_SERVER_ERROR,
             );
           }),
@@ -140,7 +140,7 @@ export class SegmentController {
         of({} as Partial<Segment>).pipe(
           tap(() => {
             throw new HttpException(
-              'Calculattion of optimal investment without segmentation failed!',
+              'Calculation of optimal investment without segmentation failed!',
               HttpStatus.INTERNAL_SERVER_ERROR,
             );
           }),
