@@ -14,6 +14,9 @@ import { TestSegment } from '../../models/test-segment.interface';
   styleUrls: ['./bpf-graphic.component.scss'],
 })
 export class BpfGraphicComponent implements OnInit, OnChanges {
+  // TODO CH: Need to be coming from backend
+  readonly equation = 'S*L+1=0';
+
   @Input() bpf?: string;
   @Input() segments?: TestSegment[];
 
