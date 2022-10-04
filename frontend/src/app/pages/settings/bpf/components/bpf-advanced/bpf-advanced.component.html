@@ -1,0 +1,9 @@
+<div>
+  <div *ngIf="form$ | async as form" [formGroup]="form">
+    <input type="text" class="w-100" formControlName="bpf">
+  </div>
+
+  <div *ngIf="error" class="text-danger font-italic mt-2">
+    {{ error }}
+  </div>
+</div>

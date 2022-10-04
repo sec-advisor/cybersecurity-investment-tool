@@ -4,7 +4,6 @@ import { inject, TestBed } from '@angular/core/testing';
 
 import { BackendUrlResolverService } from './backend-url-resolver.service';
 
-
 describe('Service: BackendUrlResolver', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
