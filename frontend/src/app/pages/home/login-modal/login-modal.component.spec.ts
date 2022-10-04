@@ -14,7 +14,7 @@ describe('LoginModalComponent', () => {
     TestBed.configureTestingModule({
       imports: [HttpClientModule, ReactiveFormsModule],
       declarations: [LoginModalComponent],
-      providers: [NgbActiveModal]
+      providers: [NgbActiveModal],
     }).compileComponents();
   }));
 

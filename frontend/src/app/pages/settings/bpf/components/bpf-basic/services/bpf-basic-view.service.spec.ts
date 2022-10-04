@@ -4,7 +4,6 @@ import { ReactiveFormsModule } from '@angular/forms';
 
 import { BpfBasicViewService } from './bpf-basic-view.service';
 
-
 describe('Service: BpfBasicView', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
