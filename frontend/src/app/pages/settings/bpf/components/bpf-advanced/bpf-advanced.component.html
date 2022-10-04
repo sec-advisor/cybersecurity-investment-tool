@@ -3,7 +3,7 @@
     <input type="text" class="w-100" formControlName="bpf">
   </div>
 
-  <div *ngIf="error" class="text-danger font-italic mt-2">
-    {{ error }}
+  <div *ngIf="error || errorText" class="text-danger font-italic mt-2">
+    {{ error || errorText }}
   </div>
 </div>

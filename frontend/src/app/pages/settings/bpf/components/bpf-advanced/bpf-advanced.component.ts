@@ -1,4 +1,4 @@
-import { Component, forwardRef, OnInit } from '@angular/core';
+import { Component, forwardRef, Input, OnInit } from '@angular/core';
 import {
   ControlValueAccessor,
   FormBuilder,
@@ -37,6 +37,8 @@ export class BpfAdvancedComponent implements OnInit, ControlValueAccessor {
   error?: string;
   form$!: Observable<FormGroup>;
   onTouched?: () => void;
+
+  @Input() errorText = '';
 
   constructor(private formBuilder: FormBuilder) {}
 

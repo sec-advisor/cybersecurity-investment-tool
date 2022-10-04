@@ -1,8 +1,7 @@
 import { Component, forwardRef, OnInit } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { Segment } from '@libs';
 import { BehaviorSubject, filter, map, Observable } from 'rxjs';
-
-import { TestSegment } from '../../models/test-segment.interface';
 
 @Component({
   selector: 'app-test-segments',
@@ -17,13 +16,11 @@ import { TestSegment } from '../../models/test-segment.interface';
   ],
 })
 export class TestSegmentsComponent implements OnInit, ControlValueAccessor {
-  private valueSubject$ = new BehaviorSubject<TestSegment[] | undefined>(
-    undefined,
-  );
-  private onChange?: () => TestSegment[];
+  private valueSubject$ = new BehaviorSubject<Segment[] | undefined>(undefined);
+  private onChange?: () => Segment[];
 
-  viewModel$!: Observable<{ segments: TestSegment[] }>;
-  segments?: TestSegment[];
+  viewModel$!: Observable<{ segments: Segment[] }>;
+  segments?: Segment[];
   onTouched?: () => void;
 
   ngOnInit() {
@@ -34,11 +31,11 @@ export class TestSegmentsComponent implements OnInit, ControlValueAccessor {
     );
   }
 
-  writeValue(segments: TestSegment[]): void {
+  writeValue(segments: Segment[]): void {
     this.valueSubject$.next(segments);
   }
 
-  registerOnChange(fn: () => TestSegment[]): void {
+  registerOnChange(fn: () => Segment[]): void {
     this.onChange = fn;
   }
 

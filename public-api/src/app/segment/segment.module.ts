@@ -14,5 +14,6 @@ import { SegmentService } from './services/segment.service';
   ],
   controllers: [SegmentController],
   providers: [SegmentService, InvestmentCalculatorService],
+  exports: [InvestmentCalculatorService],
 })
 export class SegmentModule {}
