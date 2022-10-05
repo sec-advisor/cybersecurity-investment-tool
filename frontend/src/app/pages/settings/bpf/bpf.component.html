@@ -1,5 +1,5 @@
 <div *ngIf="form$ | async as form" class="d-flex flex-wrap justify-content-center">
-  <div class="settings">
+  <div class="settings shadow-lg p-3 mb-5 bg-white rounded">
     <form [formGroup]="form">
       <div class="row justify-content-center">
         <div class="mx-auto">
@@ -47,6 +47,7 @@
     </form>
   </div>
 
-  <app-bpf-graphic class="m-3" [bpf]="form.get('bpf')?.value" [segments]="form.get('segments')?.value">
+  <app-bpf-graphic class="shadow-lg p-3 mb-5 bg-white rounded" [bpf]="form.get('bpf')?.value"
+    [segments]="form.get('segments')?.value">
   </app-bpf-graphic>
 </div>
