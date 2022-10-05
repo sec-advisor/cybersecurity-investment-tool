@@ -36,7 +36,7 @@ export class BpfComponent implements OnInit {
     this.form$ = this.getForm(this.getSegments(), this.bpf);
   }
 
-  testFormula = "$x = {-b \\pm \\sqrt{b^2-4ac} \\over 2a}$";
+  testFormula = "$\\displaystyle\\frac{v}{{{1}+{\\left(\\frac{z}{{{L}\\cdot{0.001}}}\\right)}}}$";
 
   private getForm(segments: Segment[], bpf: string): Observable<FormGroup> {
     return this.settingsDataService
