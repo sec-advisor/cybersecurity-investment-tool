@@ -22,7 +22,7 @@ export class SettingsController {
 
   @UseGuards(AuthenticatedGuard)
   @Post('optimal-investment')
-  calculateInvestment(
+  calculateOptimalInvestment(
     @Body() body: { segments: Segment[]; bpf: string },
   ): Observable<Segment[]> {
     return this.breachProbabilityService.getFunction().pipe(
