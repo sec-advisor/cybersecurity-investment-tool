@@ -60,6 +60,7 @@ export class BpfComponent implements OnInit {
         bpf: formValue.bpf,
         segments: formValue.segments,
       })),
+      tap(() => console.log("Should call window.MathJax.typeset()")),
       switchMap((formValue) =>
         this.settingsDataService
           .calculateOptimalInvestment(formValue.segments, formValue.bpf)
