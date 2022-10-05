@@ -1,18 +1,35 @@
-.settings {
-  width: 600px;
-}
+@import 'bootstrap/scss/bootstrap.scss';
 
-.no-padding {
-  ::ng-deep {
-    #bpf-basic,
-    #bpf-test-segment {
-      .accordion-body {
-        padding: 0 !important;
+:host {
+  .settings {
+    width: 600px;
+  }
+
+  ngb-accordion {
+    --bs-accordion-btn-bg: #{$gray-100};
+    --bs-accordion-active-bg: #{$gray-200};
+    --bs-accordion-active-color: var(--bs-accordion-btn-color);
+    --bs-accordion-btn-focus-box-shadow: transparent;
+
+    ::ng-deep {
+      .accordion-button:not(.collapsed)::after {
+        background-image: var(--bs-accordion-btn-icon);
       }
     }
   }
-}
 
-app-bpf-graphic {
-  height: fit-content;
+  .no-padding {
+    ::ng-deep {
+      #bpf-basic,
+      #bpf-test-segment {
+        .accordion-body {
+          padding: 0 !important;
+        }
+      }
+    }
+  }
+
+  app-bpf-graphic {
+    height: fit-content;
+  }
 }
