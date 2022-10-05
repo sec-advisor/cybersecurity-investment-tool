@@ -18,7 +18,19 @@ import { MathjaxModule } from "mathjax-angular";
     BpfRoutingModule,
     ReactiveFormsModule,
     NgbAccordionModule,
-    MathjaxModule.forRoot()
+    MathjaxModule.forRoot({
+      "config": {
+        "loader": {
+          "load": ['input/asciimath', "output/svg", "[tex]/require", "[tex]/ams"]
+        },
+        "tex": {
+          "inlineMath": [["$", "$"]],
+          "packages": ["base", "require", "ams"]
+        },
+        "svg": { "fontCache": "global" }
+      },
+      "src": "https://cdn.jsdelivr.net/npm/mathjax@3/es5/startup.js"
+    })
   ],
   declarations: [
     BpfComponent,
