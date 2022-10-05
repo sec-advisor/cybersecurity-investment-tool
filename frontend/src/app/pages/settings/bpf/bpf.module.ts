@@ -10,7 +10,7 @@ import { BpfAdvancedComponent } from './components/bpf-advanced/bpf-advanced.com
 import { BpfBasicComponent } from './components/bpf-basic/bpf-basic.component';
 import { BpfGraphicComponent } from './components/bpf-graphic/bpf-graphic.component';
 import { TestSegmentsComponent } from './components/test-segments/test-segments.component';
-import { MathJaxUpdaterDirective } from './directives/math-jax-updater.directive';
+import { CustomMathJaxDirective } from './directives/custom-math-jax.directive';
 
 @NgModule({
   imports: [
@@ -38,7 +38,7 @@ import { MathJaxUpdaterDirective } from './directives/math-jax-updater.directive
     BpfAdvancedComponent,
     TestSegmentsComponent,
     BpfGraphicComponent,
-    MathJaxUpdaterDirective,
+    CustomMathJaxDirective,
   ],
 })
 export class BpfModule {}

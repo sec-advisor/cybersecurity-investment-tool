@@ -23,8 +23,6 @@ import { BpfFormName } from '../models/bpf-form-name.enum';
 export class BpfComponent implements OnInit {
   private readonly bpf = 'v/(1+(z/(L*0.001)))';
 
-  readonly latexFormula =
-    '$\\displaystyle\\frac{v}{{{1}+{\\left(\\frac{z}{{{L}\\cdot{0.001}}}\\right)}}}$'; // Only needed for initial
   errorText = '';
   form$!: Observable<FormGroup>;
 

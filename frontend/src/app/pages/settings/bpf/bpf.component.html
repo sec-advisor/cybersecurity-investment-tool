@@ -11,10 +11,7 @@
             <!-- Current BPF -->
             <hr class="my-4" />
             <strong class="mb-0">Current BPF</strong>
-            <p [mathjax]="latexFormula" hidden></p>
-            <!-- Needed because otherwise it doesn't work -->
-            <!-- appMathJaxUpdater directive is needed otherwise updating is not working -->
-            <div [mathjax]="'`' + form.get('bpf')?.value + '`'" [appMathJaxUpdater]="form.get('bpf')?.value"></div>
+            <div [appCustomMathJax]="'`' + form.get('bpf')?.value + '`'"></div>
 
             <!-- BPF -->
             <hr class="my-4" />
