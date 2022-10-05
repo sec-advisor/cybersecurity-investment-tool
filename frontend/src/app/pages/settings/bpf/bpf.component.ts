@@ -36,6 +36,8 @@ export class BpfComponent implements OnInit {
     this.form$ = this.getForm(this.getSegments(), this.bpf);
   }
 
+  testFormula = "$x = {-b \\pm \\sqrt{b^2-4ac} \\over 2a}$";
+
   private getForm(segments: Segment[], bpf: string): Observable<FormGroup> {
     return this.settingsDataService
       .calculateOptimalInvestment(segments, bpf)
