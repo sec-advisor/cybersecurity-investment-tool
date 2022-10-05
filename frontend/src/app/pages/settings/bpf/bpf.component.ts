@@ -23,8 +23,9 @@ import { BpfFormName } from '../models/bpf-form-name.enum';
 export class BpfComponent implements OnInit {
   private readonly bpf = 'v/(1+(z/(L*0.001)))';
 
+  readonly latexFormula =
+    '$\\displaystyle\\frac{v}{{{1}+{\\left(\\frac{z}{{{L}\\cdot{0.001}}}\\right)}}}$'; // Only needed for initial
   errorText = '';
-
   form$!: Observable<FormGroup>;
 
   constructor(
@@ -35,8 +36,6 @@ export class BpfComponent implements OnInit {
   ngOnInit() {
     this.form$ = this.getForm(this.getSegments(), this.bpf);
   }
-
-  latexFormula = "$\\displaystyle\\frac{v}{{{1}+{\\left(\\frac{z}{{{L}\\cdot{0.001}}}\\right)}}}$"; // Only needed for initial
 
   private getForm(segments: Segment[], bpf: string): Observable<FormGroup> {
     return this.settingsDataService
@@ -60,7 +59,6 @@ export class BpfComponent implements OnInit {
         bpf: formValue.bpf,
         segments: formValue.segments,
       })),
-      tap(() => console.log("Should call window.MathJax.typeset()")),
       switchMap((formValue) =>
         this.settingsDataService
           .calculateOptimalInvestment(formValue.segments, formValue.bpf)
