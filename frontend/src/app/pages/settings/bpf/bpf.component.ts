@@ -36,8 +36,7 @@ export class BpfComponent implements OnInit {
     this.form$ = this.getForm(this.getSegments(), this.bpf);
   }
 
-  testFormula = "This is a LaTeX formula: $\\displaystyle\\frac{v}{{{1}+{\\left(\\frac{z}{{{L}\\cdot{0.001}}}\\right)}}}$";
-  testAsciiFormula = "This is a formula written in AsciiMath: `1 / 2`";
+  latexFormula = "$\\displaystyle\\frac{v}{{{1}+{\\left(\\frac{z}{{{L}\\cdot{0.001}}}\\right)}}}$"; // Only needed for initial
 
   private getForm(segments: Segment[], bpf: string): Observable<FormGroup> {
     return this.settingsDataService
