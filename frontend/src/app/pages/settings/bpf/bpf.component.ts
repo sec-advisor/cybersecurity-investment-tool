@@ -24,7 +24,6 @@ export class BpfComponent implements OnInit {
   private readonly bpf = 'v/(1+(z/(L*0.001)))';
 
   errorText = '';
-
   form$!: Observable<FormGroup>;
 
   constructor(

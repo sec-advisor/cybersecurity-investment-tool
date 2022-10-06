@@ -1598,6 +1598,11 @@
   resolved "https://registry.yarnpkg.com/@types/json-schema/-/json-schema-7.0.11.tgz#d421b6c527a3037f7c84433fd2c4229e016863d3"
   integrity sha512-wOuvG1SN4Us4rez+tylwwwCV1psiNVOkJeM3AUWUNWg/jDQY2+HE/444y5gc+jBmRqASOm2Oeh5c1axHobwRKQ==
 
+"@types/mathjax@^0.0.37":
+  version "0.0.37"
+  resolved "https://registry.yarnpkg.com/@types/mathjax/-/mathjax-0.0.37.tgz#31a0076ced55c2e12da75edb44db45098b6feed6"
+  integrity sha512-y0WSZBtBNQwcYipTU/BhgeFu1EZNlFvUNCmkMXV9kBQZq7/o5z82dNVyH3yy2Xv5zzeNeQoHSL4Xm06+EQiH+g==
+
 "@types/mime@*":
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/@types/mime/-/mime-3.0.1.tgz#5f8f2bca0a5863cb69bc0b0acd88c96cb1d4ae10"
@@ -4661,6 +4666,13 @@ make-fetch-happen@^9.1.0:
     socks-proxy-agent "^6.0.0"
     ssri "^8.0.0"
 
+mathjax-angular@^1.4.2:
+  version "1.4.2"
+  resolved "https://registry.yarnpkg.com/mathjax-angular/-/mathjax-angular-1.4.2.tgz#d17b2d7cee0327a92171b6d4b6383ff35e46c0f1"
+  integrity sha512-51RliFAwaCKCbJLWmp+wId3HsFy14LjRFfG0dZftN3cgGUPtVslvVXsxWy0xiURgRZ5UY6TsuPAehnrIOjAzrw==
+  dependencies:
+    tslib "^2.2.0"
+
 media-typer@0.3.0:
   version "0.3.0"
   resolved "https://registry.yarnpkg.com/media-typer/-/media-typer-0.3.0.tgz#8710d7af0aa626f8fffa1ce00168545263255748"
@@ -6614,7 +6626,7 @@ tslib@^1.8.1, tslib@^1.9.0:
   resolved "https://registry.yarnpkg.com/tslib/-/tslib-1.14.1.tgz#cf2d38bdc34a134bcaf1091c41f6619e2f672d00"
   integrity sha512-Xni35NKzjgMrwevysHTCArtLDpPvye8zV/0E4EyYn43P7/7qvQwPh9BGkHewbMulVntbigmcT7rdX3BNo9wRJg==
 
-tslib@^2.0.0, tslib@^2.1.0, tslib@^2.3.0:
+tslib@^2.0.0, tslib@^2.1.0, tslib@^2.2.0, tslib@^2.3.0:
   version "2.4.0"
   resolved "https://registry.yarnpkg.com/tslib/-/tslib-2.4.0.tgz#7cecaa7f073ce680a05847aa77be941098f36dc3"
   integrity sha512-d6xOpEDfsi2CZVlPQzGeux8XMwLT9hssAsaPYExaQMuYskwb+x1x7J371tWlbBdWHroy99KnVB6qIkUbs5X3UQ==
