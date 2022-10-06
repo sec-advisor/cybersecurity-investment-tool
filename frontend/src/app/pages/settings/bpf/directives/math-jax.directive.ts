@@ -3,10 +3,10 @@ import { MathjaxDirective } from 'mathjax-angular';
 import { MathjaxContent } from 'mathjax-angular/models';
 
 @Directive({
-  selector: '[appCustomMathJax]',
+  selector: '[appMathJax]',
 })
-export class CustomMathJaxDirective extends MathjaxDirective {
-  @Input('appCustomMathJax') value!: MathjaxContent | string;
+export class MathJaxDirective extends MathjaxDirective {
+  @Input('appMathJax') value!: MathjaxContent | string;
 
   override ngOnChanges(changes: SimpleChanges): void {
     // Solves that formula does not update properly
