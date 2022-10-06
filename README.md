@@ -28,10 +28,16 @@ Navigate to `http://localhost` with your browser.
 To run the application in dev mode:
 
 ``` sh
-# Run dev application
+# Install frontend dependencies
+yarn --cwd ./frontend install
+
+# Install public-api dependencies
+yarn --cwd ./public-api install
+ 
+# Run containers
 docker compose -f docker-compose.dev.yml up --build
 
-# Or run the shell script
+# Or run the shell script (is doing the same as the command above)
 ./run-debug.sh
 ```
 
