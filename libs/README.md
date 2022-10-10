@@ -11,5 +11,6 @@ Please run the code below to perform a package update:
 yarn
 
 # Perform update
+# It's recommended to stop all docker containers when doing the update
 yarn deploy:patch
 ```

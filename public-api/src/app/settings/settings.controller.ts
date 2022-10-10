@@ -1,42 +1,52 @@
-import { Segment } from '@libs';
+import { AppSetting } from '@libs';
 import {
   Body,
   Controller,
   HttpException,
   HttpStatus,
   Post,
+  Request,
   UseGuards,
 } from '@nestjs/common';
-import { catchError, Observable, of, switchMap, tap } from 'rxjs';
+import { catchError, Observable, of, tap } from 'rxjs';
 
 import { AuthenticatedGuard } from '../auth/authenticated.guard';
-import { OptimalInvestmentEquationService } from '../breach-probability/services/optimal-investment-equation.service';
-import { InvestmentCalculatorService } from '../segment/services/investment-calculator.service';
+import { UserRequest } from '../models/request.type';
+import { SettingsService } from './services/settings.service';
 
 @Controller('settings')
 export class SettingsController {
-  constructor(
-    private breachProbabilityService: OptimalInvestmentEquationService,
-    private investmentCalculatorService: InvestmentCalculatorService,
-  ) {}
+  constructor(private settingsService: SettingsService) {}
 
   @UseGuards(AuthenticatedGuard)
-  @Post('optimal-investment')
-  calculateOptimalInvestment(
-    @Body() body: { segments: Segment[]; bpf: string },
-  ): Observable<Segment[]> {
-    return this.breachProbabilityService.getFunction().pipe(
-      switchMap((equation) =>
-        this.investmentCalculatorService.calculateInvestments(body.segments, {
-          optimalInvestmentEquation: equation.optimalInvestmentEquation,
-          breachProbabilityFunction: body.bpf,
-        }),
-      ),
+  @Post('save')
+  save(
+    @Request() request: UserRequest,
+    @Body() body: AppSetting,
+  ): Observable<AppSetting> {
+    return this.settingsService.save(body, request.user.userId).pipe(
       catchError(() =>
-        of({} as Segment[]).pipe(
+        of(undefined).pipe(
           tap(() => {
             throw new HttpException(
-              'Calculation of optimal investment failed!',
+              'Save settings failed!',
+              HttpStatus.INTERNAL_SERVER_ERROR,
+            );
+          }),
+        ),
+      ),
+    );
+  }
+
+  @UseGuards(AuthenticatedGuard)
+  @Post('reset')
+  reset(@Request() request: UserRequest): Observable<void> {
+    return this.settingsService.reset(request.user.userId).pipe(
+      catchError(() =>
+        of(undefined).pipe(
+          tap(() => {
+            throw new HttpException(
+              'Reset failed!',
               HttpStatus.INTERNAL_SERVER_ERROR,
             );
           }),

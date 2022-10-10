@@ -4,6 +4,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { NgbAccordionModule } from '@ng-bootstrap/ng-bootstrap';
 import { MathjaxModule } from 'mathjax-angular';
 
+import { LayoutsModule } from '../../../layouts/layouts.module';
 import { BpfRoutingModule } from './bpf-routing.module';
 import { BpfComponent } from './bpf.component';
 import { BpfAdvancedComponent } from './components/bpf-advanced/bpf-advanced.component';
@@ -16,6 +17,7 @@ import { MathJaxDirective } from './directives/math-jax.directive';
   imports: [
     CommonModule,
     BpfRoutingModule,
+    LayoutsModule,
     ReactiveFormsModule,
     NgbAccordionModule,
     MathjaxModule.forRoot({

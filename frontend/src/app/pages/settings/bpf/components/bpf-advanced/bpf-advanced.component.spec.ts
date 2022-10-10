@@ -1,4 +1,4 @@
-/* tslint:disable:no-unused-variable */
+import { HttpClientModule } from '@angular/common/http';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormBuilder } from '@angular/forms';
 
@@ -10,6 +10,7 @@ describe('BpfAdvancedComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      imports: [HttpClientModule],
       declarations: [BpfAdvancedComponent],
       providers: [FormBuilder],
     }).compileComponents();

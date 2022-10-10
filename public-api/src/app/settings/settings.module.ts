@@ -1,11 +1,16 @@
 import { Module } from '@nestjs/common';
+import { MongooseModule } from '@nestjs/mongoose';
 
-import { OptimalInvestmentEquationModule } from '../breach-probability/optimal-investment-equation.module';
-import { SegmentModule } from '../segment/segment.module';
+import { SettingsSchema } from '../models/database.model';
+import { SettingsService } from './services/settings.service';
 import { SettingsController } from './settings.controller';
 
 @Module({
-  imports: [OptimalInvestmentEquationModule, SegmentModule],
+  imports: [
+    MongooseModule.forFeature([{ name: 'settings', schema: SettingsSchema }]),
+  ],
   controllers: [SettingsController],
+  providers: [SettingsService],
+  exports: [SettingsService],
 })
 export class SettingsModule {}

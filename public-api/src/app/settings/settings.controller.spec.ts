@@ -3,6 +3,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 
 import { OptimalInvestmentEquationService } from '../breach-probability/services/optimal-investment-equation.service';
 import { InvestmentCalculatorService } from '../segment/services/investment-calculator.service';
+import { SettingsService } from './services/settings.service';
 import { SettingsController } from './settings.controller';
 
 describe('SettingsController', () => {
@@ -17,8 +18,10 @@ describe('SettingsController', () => {
           provide: getModelToken('optimal-investment-equations'),
           useValue: {},
         },
+        { provide: getModelToken('settings'), useValue: {} },
         InvestmentCalculatorService,
         OptimalInvestmentEquationService,
+        SettingsService,
       ],
     }).compile();
 

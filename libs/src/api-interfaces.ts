@@ -86,3 +86,12 @@ export interface User {
   userName: string;
   password?: string;
 }
+
+export interface BpfValidationResponse {
+  isValid: boolean;
+  error?: string;
+}
+
+export interface AppSetting {
+  bpf: string
+}
