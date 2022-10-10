@@ -77,6 +77,17 @@ export class SegmentDataService {
       );
   }
 
+  calculateTestOptimalInvestment(
+    segments: Segment[],
+    bpf: string,
+  ): Observable<Segment[]> {
+    return this.http.post<Segment[]>(
+      `${backend.url}/segments/test-optimal-investment`,
+      { segments, bpf },
+      httpOptions,
+    );
+  }
+
   updateSegment(segment: Segment): Observable<Segment> {
     return this.http
       .patch<Segment>(`${backend.url}/segments/segment`, segment, httpOptions)

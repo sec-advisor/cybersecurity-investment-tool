@@ -1,9 +1,10 @@
-<div>
-  <div *ngIf="form$ | async as form" [formGroup]="form">
+<div *ngIf="viewModel$ | async as viewModel">
+  <div [formGroup]="viewModel.form">
     <input type="text" class="w-100" formControlName="bpf">
   </div>
 
-  <div *ngIf="error || errorText" class="text-danger font-italic mt-2">
-    {{ error || errorText }}
+  <div *ngIf="errorText || viewModel.error" class="text-danger font-italic mt-2">
+    <span *ngIf="viewModel.error">{{ viewModel.error }}</span>
+    <span *ngIf="errorText">{{ errorText }}</span>
   </div>
 </div>

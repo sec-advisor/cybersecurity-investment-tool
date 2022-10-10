@@ -3,10 +3,12 @@ import {
   ControlValueAccessor,
   FormBuilder,
   FormGroup,
+  NG_VALIDATORS,
   NG_VALUE_ACCESSOR,
 } from '@angular/forms';
 import {
   BehaviorSubject,
+  debounceTime,
   filter,
   map,
   merge,
@@ -16,7 +18,8 @@ import {
   tap,
 } from 'rxjs';
 
-import { validateParenthesis } from '../../functions/check-checkParenthesis.function';
+import { EquationDataService } from '../../../../../services/backend/equation-data.service';
+import { BpfAdvancedViewModel } from './models/bpf-advanced-view.model';
 
 @Component({
   selector: 'app-bpf-advanced',
@@ -28,22 +31,31 @@ import { validateParenthesis } from '../../functions/check-checkParenthesis.func
       useExisting: forwardRef(() => BpfAdvancedComponent),
       multi: true,
     },
+    {
+      provide: NG_VALIDATORS,
+      useExisting: BpfAdvancedComponent,
+      multi: true,
+    },
   ],
 })
 export class BpfAdvancedComponent implements OnInit, ControlValueAccessor {
+  private readonly isFormDisabled$ = new BehaviorSubject(false);
+  private isError = true;
   private bpfSource$ = new BehaviorSubject<string | undefined>(undefined);
   private onChange?: (value: string) => void;
 
-  error?: string;
-  form$!: Observable<FormGroup>;
+  viewModel$!: Observable<BpfAdvancedViewModel>;
   onTouched?: () => void;
 
   @Input() errorText = '';
 
-  constructor(private formBuilder: FormBuilder) {}
+  constructor(
+    private equationDataService: EquationDataService,
+    private formBuilder: FormBuilder,
+  ) {}
 
   ngOnInit() {
-    this.form$ = this.getForm();
+    this.viewModel$ = this.getViewModel();
   }
 
   writeValue(value: string): void {
@@ -58,29 +70,56 @@ export class BpfAdvancedComponent implements OnInit, ControlValueAccessor {
     this.onTouched = fn;
   }
 
-  private getForm(): Observable<FormGroup> {
+  validate(): { invalid: boolean } | undefined {
+    return this.isError ? { invalid: true } : undefined;
+  }
+
+  setDisabledState?(isDisabled: boolean): void {
+    this.isFormDisabled$.next(isDisabled);
+  }
+
+  private getViewModel(): Observable<BpfAdvancedViewModel> {
     return this.bpfSource$.pipe(
       filter((value) => !!value),
-      map((value) => this.formBuilder.group({ bpf: [value] })),
-      switchMap((form) =>
-        merge(of(form), this.handleFormChanges(form).pipe(map(() => form))),
+      map((value) => ({
+        form: this.formBuilder.group({ bpf: [value] }),
+      })),
+
+      switchMap((viewModel) =>
+        merge(
+          of(viewModel),
+          this.handleFormChanges(viewModel.form).pipe(
+            map((error) => ({ ...viewModel, error })),
+          ),
+          this.isFormDisabled$.pipe(
+            tap((isDisabled) =>
+              isDisabled
+                ? viewModel.form.disable({ emitEvent: false })
+                : viewModel.form.enable({ emitEvent: false }),
+            ),
+            map(() => viewModel),
+          ),
+        ),
       ),
     );
   }
 
-  private handleFormChanges(form: FormGroup): Observable<string> {
+  private handleFormChanges(form: FormGroup): Observable<string | undefined> {
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     return form.get('bpf')!.valueChanges.pipe(
-      tap((value) => {
-        if (validateParenthesis(value)) {
-          if (this.onChange) {
-            this.onChange(value);
-          }
-          this.error = '';
-        } else {
-          this.error = 'Parenthesis no balanced!';
-        }
-      }),
+      debounceTime(400),
+      switchMap((value) =>
+        this.equationDataService.validateBpf(value).pipe(
+          map((validationResponse) => validationResponse.error),
+          tap((error) => {
+            this.isError = !!error;
+
+            if (this.onChange) {
+              this.onChange(value);
+            }
+          }),
+        ),
+      ),
     );
   }
 }

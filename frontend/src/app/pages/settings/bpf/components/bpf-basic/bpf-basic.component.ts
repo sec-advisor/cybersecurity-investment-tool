@@ -1,6 +1,15 @@
 import { Component, forwardRef, OnDestroy, OnInit } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { catchError, Observable, of, Subscriber, tap } from 'rxjs';
+import {
+  BehaviorSubject,
+  catchError,
+  merge,
+  Observable,
+  of,
+  Subscriber,
+  tap,
+} from 'rxjs';
+import { map, switchMap } from 'rxjs/operators';
 
 import { BpfBasicViewModel } from './models/bpf-basic-view.model';
 import { BpfBasicViewService } from './services/bpf-basic-view.service';
@@ -21,6 +30,7 @@ import { BpfBasicViewService } from './services/bpf-basic-view.service';
 export class BpfBasicComponent
   implements OnInit, OnDestroy, ControlValueAccessor
 {
+  private readonly isFormDisabled$ = new BehaviorSubject(false);
   private readonly subscriber = new Subscriber();
   private onChange?: (value: string) => void;
 
@@ -30,9 +40,7 @@ export class BpfBasicComponent
   constructor(private bpfBasicViewService: BpfBasicViewService) {}
 
   ngOnInit() {
-    this.viewModel$ = this.bpfBasicViewService
-      .getViewModel()
-      .pipe(catchError((error) => of({ error: error })));
+    this.viewModel$ = this.getViewModel();
     this.subscriber.add(this.updateValue().subscribe());
   }
 
@@ -44,12 +52,35 @@ export class BpfBasicComponent
     this.bpfBasicViewService.updateValue(value);
   }
 
+  setDisabledState?(isDisabled: boolean): void {
+    this.isFormDisabled$.next(isDisabled);
+  }
+
   registerOnChange(fn: (value: string) => void): void {
     this.onChange = fn;
   }
 
   registerOnTouched(fn: () => void): void {
     this.onTouched = fn;
+  }
+
+  private getViewModel(): Observable<BpfBasicViewModel> {
+    return this.bpfBasicViewService.getViewModel().pipe(
+      switchMap((viewModel) =>
+        merge(
+          of(viewModel),
+          this.isFormDisabled$.pipe(
+            tap((isDisabled) =>
+              isDisabled
+                ? viewModel.viewModel?.form.disable({ emitEvent: false })
+                : viewModel.viewModel?.form.enable({ emitEvent: false }),
+            ),
+            map(() => viewModel),
+          ),
+        ),
+      ),
+      catchError((error) => of({ error: error })),
+    );
   }
 
   private updateValue(): Observable<string> {

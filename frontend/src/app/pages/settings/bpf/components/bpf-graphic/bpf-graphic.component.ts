@@ -29,7 +29,7 @@ export class BpfGraphicComponent implements OnInit, OnChanges, OnDestroy {
   ngOnInit() {
     this.subscriber.add(
       this.equationDataService
-        .getOptimalInvestmentEquation()
+        .getEquation()
         .subscribe((equation) => (this.equation = equation)),
     );
 

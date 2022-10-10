@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Segment } from '@libs';
+import { AppSetting } from '@libs';
 import { Observable } from 'rxjs';
 
 import { backend } from '../../constants/backend.constants';
@@ -12,13 +12,18 @@ import { httpOptions } from '../../constants/http-options.constants';
 export class SettingsDataService {
   constructor(private http: HttpClient) {}
 
-  calculateOptimalInvestment(
-    segments: Segment[],
-    bpf: string,
-  ): Observable<Segment[]> {
-    return this.http.post<Segment[]>(
-      `${backend.url}/settings/optimal-investment`,
-      { segments, bpf },
+  save(appSetting: AppSetting): Observable<AppSetting> {
+    return this.http.post<AppSetting>(
+      `${backend.url}/settings/save`,
+      appSetting,
+      httpOptions,
+    );
+  }
+
+  reset(): Observable<void> {
+    return this.http.post<void>(
+      `${backend.url}/settings/reset`,
+      {},
       httpOptions,
     );
   }
