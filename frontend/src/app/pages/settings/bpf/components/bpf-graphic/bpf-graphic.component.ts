@@ -69,6 +69,16 @@ export class BpfGraphicComponent implements OnInit, OnChanges, OnDestroy {
       ]
     }
   ];
+  showXAxis = true;
+  showYAxis = true;
+  gradient = true;
+  showLegend = true;
+  showXAxisLabel = true;
+  xAxisLabel = 'Segment';
+  showYAxisLabel = true;
+  yAxisLabel = 'Optimal investment';
+  yAxisTickFormatting = (value: any) => `$${value}`;
+
   ngOnInit() {
     this.subscriber.add(
       this.equationDataService
