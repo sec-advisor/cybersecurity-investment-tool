@@ -10,6 +10,7 @@ import { Segment } from '@libs';
 import { Subscriber } from 'rxjs';
 
 import { EquationDataService } from '../../../../../services/backend/equation-data.service';
+import { LegendPosition } from "@swimlane/ngx-charts";
 
 @Component({
   selector: 'app-bpf-graphic',
@@ -72,6 +73,7 @@ export class BpfGraphicComponent implements OnInit, OnChanges, OnDestroy {
   showXAxis = true;
   showYAxis = true;
   gradient = true;
+  legendPosition = LegendPosition.Below;
   showLegend = true;
   showXAxisLabel = true;
   xAxisLabel = 'Segment';
