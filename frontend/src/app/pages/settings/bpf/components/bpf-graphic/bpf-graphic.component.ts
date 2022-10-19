@@ -31,7 +31,7 @@ export class BpfGraphicComponent implements OnInit, OnChanges, OnDestroy {
       "name": "Customers Db",
       "series": [
         {
-          "name": "Normal BPF",
+          "name": "GL BPF",
           "value": 2280000
         },
         {
@@ -45,8 +45,8 @@ export class BpfGraphicComponent implements OnInit, OnChanges, OnDestroy {
       "name": "Internal Operations Db",
       "series": [
         {
-          "name": "Normal BPF",
-          "value": 7870000
+          "name": "GL BPF",
+          "value": 788528
         },
         {
           "name": "Your BPF",
@@ -59,7 +59,7 @@ export class BpfGraphicComponent implements OnInit, OnChanges, OnDestroy {
       "name": "External Operations Db",
       "series": [
         {
-          "name": "Normal BPF",
+          "name": "GL BPF",
           "value": 180000
         },
         {
@@ -95,6 +95,12 @@ export class BpfGraphicComponent implements OnInit, OnChanges, OnDestroy {
     if (bpf && segments) {
       this.doSomething(bpf, segments);
     }
+    if(changes['segments']){
+      this.multi[0].series[1].value = changes['segments'].currentValue[0].optimalInvestment;
+      this.multi[1].series[1].value = changes['segments'].currentValue[1].optimalInvestment;
+      this.multi[2].series[1].value = changes['segments'].currentValue[2].optimalInvestment;
+      this.multi = [...this.multi];
+    }
   }
 
   ngOnDestroy(): void {
@@ -102,6 +108,6 @@ export class BpfGraphicComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   doSomething(bpf: string, segments: Segment[]): void {
-    console.log(bpf, segments);
+    // console.log(bpf, segments);
   }
 }
