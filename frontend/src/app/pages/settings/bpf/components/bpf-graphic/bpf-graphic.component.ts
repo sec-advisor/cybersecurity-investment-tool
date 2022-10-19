@@ -77,7 +77,7 @@ export class BpfGraphicComponent implements OnInit, OnChanges, OnDestroy {
   xAxisLabel = 'Segment';
   showYAxisLabel = true;
   yAxisLabel = 'Optimal investment';
-  yAxisTickFormatting = (value: any) => `$${value}`;
+  yAxisTickFormatting = (value: any) => new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(value);
 
   ngOnInit() {
     this.subscriber.add(
