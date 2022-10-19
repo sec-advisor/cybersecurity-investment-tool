@@ -1,11 +1,6 @@
 <div class="bpf-graphic">
-  Here comes the graphic!
-
-  <br>
-  <br>
-  <div>BPF: {{ bpf | json }}</div>
-  <br>
-  <div>Segments: {{ segments | json }}</div>
-  <br>
-  <div>Equation: {{ equation | json }}</div>
+  <ngx-charts-bar-vertical-2d
+    [results]="multi"
+  >
+  </ngx-charts-bar-vertical-2d>
 </div>

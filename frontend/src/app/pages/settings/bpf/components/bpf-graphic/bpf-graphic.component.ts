@@ -26,6 +26,49 @@ export class BpfGraphicComponent implements OnInit, OnChanges, OnDestroy {
 
   constructor(private equationDataService: EquationDataService) {}
 
+  multi: any[] = [
+    {
+      "name": "Customers Db",
+      "series": [
+        {
+          "name": "Normal BPF",
+          "value": 2280000
+        },
+        {
+          "name": "Your BPF",
+          "value": this.segments && this.segments[0] && this.segments[0].optimalInvestment|| 0
+        }
+      ]
+    },
+
+    {
+      "name": "Internal Operations Db",
+      "series": [
+        {
+          "name": "Normal BPF",
+          "value": 7870000
+        },
+        {
+          "name": "Your BPF",
+          "value": this.segments && this.segments[1] && this.segments[0].optimalInvestment|| 0
+        }
+      ]
+    },
+
+    {
+      "name": "External Operations Db",
+      "series": [
+        {
+          "name": "Normal BPF",
+          "value": 180000
+        },
+        {
+          "name": "Your BPF",
+          "value": this.segments && this.segments[2] && this.segments[0].optimalInvestment || 0
+        }
+      ]
+    }
+  ];
   ngOnInit() {
     this.subscriber.add(
       this.equationDataService
