@@ -85,21 +85,16 @@ export class BpfGraphicComponent implements OnInit, OnChanges, OnDestroy {
         .getEquation()
         .subscribe((equation) => (this.equation = equation)),
     );
-
-    console.log('here you can perform stuff when the component is mounted');
   }
 
   ngOnChanges(changes: SimpleChanges): void {
     const bpf = changes['bpf']?.currentValue as string;
     const segments = changes['segments']?.currentValue as Segment[];
-    if (bpf && segments) {
-      this.doSomething(bpf, segments);
+    if (segments) {
+      this.changedSegments(segments);
     }
     if(changes['segments']){
-      this.multi[0].series[1].value = changes['segments'].currentValue[0].optimalInvestment;
-      this.multi[1].series[1].value = changes['segments'].currentValue[1].optimalInvestment;
-      this.multi[2].series[1].value = changes['segments'].currentValue[2].optimalInvestment;
-      this.multi = [...this.multi];
+
     }
   }
 
@@ -107,7 +102,11 @@ export class BpfGraphicComponent implements OnInit, OnChanges, OnDestroy {
     this.subscriber.unsubscribe();
   }
 
-  doSomething(bpf: string, segments: Segment[]): void {
-    // console.log(bpf, segments);
+  changedSegments(segments: Segment[]): void {
+    // Update the data for the graph
+    [...Array(3).keys()].forEach((i) => {
+      this.multi[i].series[1].value = segments[i].optimalInvestment;}
+    )
+    this.multi = [...this.multi];
   }
 }
