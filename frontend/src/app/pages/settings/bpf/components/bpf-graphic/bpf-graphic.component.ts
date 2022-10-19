@@ -93,9 +93,6 @@ export class BpfGraphicComponent implements OnInit, OnChanges, OnDestroy {
     if (segments) {
       this.changedSegments(segments);
     }
-    if(changes['segments']){
-
-    }
   }
 
   ngOnDestroy(): void {
