@@ -7,10 +7,10 @@ import {
   SimpleChanges,
 } from '@angular/core';
 import { Segment } from '@libs';
+import { LegendPosition } from '@swimlane/ngx-charts';
 import { Subscriber } from 'rxjs';
 
 import { EquationDataService } from '../../../../../services/backend/equation-data.service';
-import { LegendPosition } from "@swimlane/ngx-charts";
 
 @Component({
   selector: 'app-bpf-graphic',
@@ -21,54 +21,60 @@ export class BpfGraphicComponent implements OnInit, OnChanges, OnDestroy {
   private readonly subscriber = new Subscriber();
 
   equation?: string;
-
-  @Input() bpf?: string;
-  @Input() segments?: Segment[];
-
-  constructor(private equationDataService: EquationDataService) {}
-
   multi: any[] = [
     {
-      "name": "Customers Db",
-      "series": [
+      name: 'Customers Db',
+      series: [
         {
-          "name": "GL BPF",
-          "value": 2280000
+          name: 'GL BPF',
+          value: 2280000,
         },
         {
-          "name": "Your BPF",
-          "value": this.segments && this.segments[0] && this.segments[0].optimalInvestment|| 0
-        }
-      ]
+          name: 'Your BPF',
+          value:
+            (this.segments &&
+              this.segments[0] &&
+              this.segments[0].optimalInvestment) ||
+            0,
+        },
+      ],
     },
 
     {
-      "name": "Internal Operations Db",
-      "series": [
+      name: 'Internal Operations Db',
+      series: [
         {
-          "name": "GL BPF",
-          "value": 788528
+          name: 'GL BPF',
+          value: 788528,
         },
         {
-          "name": "Your BPF",
-          "value": this.segments && this.segments[1] && this.segments[0].optimalInvestment|| 0
-        }
-      ]
+          name: 'Your BPF',
+          value:
+            (this.segments &&
+              this.segments[1] &&
+              this.segments[0].optimalInvestment) ||
+            0,
+        },
+      ],
     },
 
     {
-      "name": "External Operations Db",
-      "series": [
+      name: 'External Operations Db',
+      series: [
         {
-          "name": "GL BPF",
-          "value": 180000
+          name: 'GL BPF',
+          value: 180000,
         },
         {
-          "name": "Your BPF",
-          "value": this.segments && this.segments[2] && this.segments[0].optimalInvestment || 0
-        }
-      ]
-    }
+          name: 'Your BPF',
+          value:
+            (this.segments &&
+              this.segments[2] &&
+              this.segments[0].optimalInvestment) ||
+            0,
+        },
+      ],
+    },
   ];
   showXAxis = true;
   showYAxis = true;
@@ -79,7 +85,16 @@ export class BpfGraphicComponent implements OnInit, OnChanges, OnDestroy {
   xAxisLabel = 'Segment';
   showYAxisLabel = true;
   yAxisLabel = 'Optimal investment';
-  yAxisTickFormatting = (value: any) => new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(value);
+  yAxisTickFormatting = (value: any) =>
+    new Intl.NumberFormat('en-US', {
+      style: 'currency',
+      currency: 'USD',
+    }).format(value);
+
+  @Input() bpf?: string;
+  @Input() segments?: Segment[];
+
+  constructor(private equationDataService: EquationDataService) {}
 
   ngOnInit() {
     this.subscriber.add(
@@ -101,11 +116,11 @@ export class BpfGraphicComponent implements OnInit, OnChanges, OnDestroy {
     this.subscriber.unsubscribe();
   }
 
-  changedSegments(segments: Segment[]): void {
+  private changedSegments(segments: Segment[]): void {
     // Update the data for the graph
     [...Array(3).keys()].forEach((i) => {
-      this.multi[i].series[1].value = segments[i].optimalInvestment;}
-    )
+      this.multi[i].series[1].value = segments[i].optimalInvestment;
+    });
     this.multi = [...this.multi];
   }
 }
