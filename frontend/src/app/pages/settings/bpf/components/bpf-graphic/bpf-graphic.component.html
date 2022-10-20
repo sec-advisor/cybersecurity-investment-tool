@@ -1,11 +1,18 @@
 <div class="bpf-graphic">
-  Here comes the graphic!
-
-  <br>
-  <br>
-  <div>BPF: {{ bpf | json }}</div>
-  <br>
-  <div>Segments: {{ segments | json }}</div>
-  <br>
-  <div>Equation: {{ equation | json }}</div>
+  <div class="instructions">
+    See how you updated BPF function compares to the BPF from <a href="https://en.wikipedia.org/wiki/Gordon%E2%80%93Loeb_model" target="_blank">Gordon Loeb</a>.
+  </div>
+  <ngx-charts-bar-vertical-2d
+    [results]="multi"
+    [xAxis]="showXAxis"
+    [yAxis]="showYAxis"
+    [legend]="showLegend"
+    [legendPosition]="legendPosition"
+    [showXAxisLabel]="showXAxisLabel"
+    [showYAxisLabel]="showYAxisLabel"
+    [xAxisLabel]="xAxisLabel"
+    [yAxisLabel]="yAxisLabel"
+    [yAxisTickFormatting]="yAxisTickFormatting"
+  >
+  </ngx-charts-bar-vertical-2d>
 </div>

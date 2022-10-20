@@ -13,6 +13,7 @@
   "private": true,
   "dependencies": {
     "@angular/animations": "~13.2.0",
+    "@angular/cdk": "~13.2.0",
     "@angular/common": "~13.2.0",
     "@angular/compiler": "~13.2.0",
     "@angular/core": "~13.2.0",
@@ -24,6 +25,7 @@
     "@libs": "file:libs/libs-v1.0.7.tgz",
     "@ng-bootstrap/ng-bootstrap": "^12.1.2",
     "@popperjs/core": "^2.11.5",
+    "@swimlane/ngx-charts": "^20.1.0",
     "bootstrap": "^5.1.3",
     "bootstrap-icons": "^1.9.0",
     "mathjax-angular": "^1.4.2",
@@ -36,6 +38,7 @@
     "@angular-devkit/build-angular": "~13.2.2",
     "@angular/cli": "~13.2.2",
     "@angular/compiler-cli": "~13.2.0",
+    "@types/d3": "^7.4.0",
     "@types/jasmine": "~3.10.0",
     "@types/mathjax": "^0.0.37",
     "@types/node": "^12.11.1",
