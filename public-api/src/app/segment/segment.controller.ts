@@ -1,3 +1,4 @@
+import { Segment } from '@libs';
 import {
   Body,
   Controller,
@@ -8,13 +9,14 @@ import {
   Param,
   Patch,
   Post,
+  Request,
   UseGuards,
 } from '@nestjs/common';
 import { catchError, map, Observable, of, switchMap, tap } from 'rxjs';
 
-import { Segment } from '../../../libs/api-interfaces';
 import { AuthenticatedGuard } from '../auth/authenticated.guard';
 import { OptimalInvestmentEquationService } from '../breach-probability/services/optimal-investment-equation.service';
+import { UserRequest } from '../models/request.type';
 import { InvestmentCalculatorService } from './services/investment-calculator.service';
 import { SegmentService } from './services/segment.service';
 
@@ -102,8 +104,11 @@ export class SegmentController {
 
   @UseGuards(AuthenticatedGuard)
   @Post('investment-calculation')
-  calculateInvestment(@Body() segments: Segment[]): Observable<Segment[]> {
-    return this.breachProbabilityService.getFunction().pipe(
+  calculateInvestment(
+    @Request() request: UserRequest,
+    @Body() segments: Segment[],
+  ): Observable<Segment[]> {
+    return this.breachProbabilityService.getFunction(request.user.userId).pipe(
       switchMap((equation) =>
         this.investmentCalculatorService.calculateInvestments(
           segments,
@@ -115,7 +120,7 @@ export class SegmentController {
         of({} as Segment[]).pipe(
           tap(() => {
             throw new HttpException(
-              'Calculattion of optimal investment failed!',
+              'Calculation of optimal investment failed!',
               HttpStatus.INTERNAL_SERVER_ERROR,
             );
           }),
@@ -127,9 +132,10 @@ export class SegmentController {
   @UseGuards(AuthenticatedGuard)
   @Post('investment-calculation-without-segmentation')
   calculateInvestmentWithoutSegmentation(
+    @Request() request: UserRequest,
     @Body() segments: Segment[],
   ): Observable<Partial<Segment>> {
-    return this.breachProbabilityService.getFunction().pipe(
+    return this.breachProbabilityService.getFunction(request.user.userId).pipe(
       switchMap((equation) =>
         this.investmentCalculatorService.calculateInvestmentsWithoutSegmentation(
           segments,
@@ -140,7 +146,33 @@ export class SegmentController {
         of({} as Partial<Segment>).pipe(
           tap(() => {
             throw new HttpException(
-              'Calculattion of optimal investment without segmentation failed!',
+              'Calculation of optimal investment without segmentation failed!',
+              HttpStatus.INTERNAL_SERVER_ERROR,
+            );
+          }),
+        ),
+      ),
+    );
+  }
+
+  @UseGuards(AuthenticatedGuard)
+  @Post('test-optimal-investment')
+  calculateTestInvestment(
+    @Request() request: UserRequest,
+    @Body() body: { segments: Segment[]; bpf: string },
+  ): Observable<Segment[]> {
+    return this.breachProbabilityService.getFunction(request.user.userId).pipe(
+      switchMap((equation) =>
+        this.investmentCalculatorService.calculateInvestments(body.segments, {
+          optimalInvestmentEquation: equation.optimalInvestmentEquation,
+          breachProbabilityFunction: body.bpf,
+        }),
+      ),
+      catchError(() =>
+        of({} as Segment[]).pipe(
+          tap(() => {
+            throw new HttpException(
+              'Calculation of optimal investment failed!',
               HttpStatus.INTERNAL_SERVER_ERROR,
             );
           }),

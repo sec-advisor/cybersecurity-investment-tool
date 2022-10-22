@@ -640,6 +640,10 @@
     "@jridgewell/resolve-uri" "^3.0.3"
     "@jridgewell/sourcemap-codec" "^1.4.10"
 
+"@libs@file:libs/libs-v1.0.7.tgz":
+  version "1.0.7"
+  resolved "file:libs/libs-v1.0.7.tgz#b93c93d237a67c5b70e921c53464a73e429c1eec"
+
 "@mapbox/node-pre-gyp@^1.0.0":
   version "1.0.10"
   resolved "https://registry.yarnpkg.com/@mapbox/node-pre-gyp/-/node-pre-gyp-1.0.10.tgz#8e6735ccebbb1581e5a7e652244cadc8a844d03c"

@@ -1,0 +1,146 @@
+<div *ngIf="data && data.segments && data.segments.length > 0" class="container pt-3">
+  <table class="table table-bordered table-hover table-striped">
+    <thead>
+      <tr>
+        <th class="text-center" scope="col"></th>
+        <ng-container *ngFor="let segment of data.segments">
+          <th class="text-center align-middle" scope="col">
+            {{ segment.name }}
+          </th>
+        </ng-container>
+        <th class="text-center align-middle" scope="col">Total</th>
+        <th class="text-center align-middle" scope="col">
+          Without Segmentation
+        </th>
+        <th class="text-center align-middle" scope="col">
+          Economic Benefits of Information Segmentation
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th class="align-middle" rowspan="1" scope="rowgroup">
+          Value of Information
+        </th>
+        <ng-container *ngFor="let segment of data.segments">
+          <td class="text-end align-middle">{{ segment.value | number }}</td>
+        </ng-container>
+        <td class="text-end align-middle">
+          {{ data.withoutSegmentation?.value | number }}
+        </td>
+        <td class="text-end align-middle">
+          {{ data.withoutSegmentation?.value | number }}
+        </td>
+        <td></td>
+      </tr>
+    </tbody>
+    <tbody>
+      <tr>
+        <th class="align-middle" rowspan="1" scope="rowgroup">
+          Calculated Vulnerability
+        </th>
+        <ng-container *ngFor="let segment of data.segments">
+          <td class="text-end align-middle">
+            {{ (((segment.calculatedVulnerability || 0) * 100).toPrecision(5)) | number }}%
+          </td>
+        </ng-container>
+        <td></td>
+        <td class="text-end align-middle">
+          {{ (((data.withoutSegmentation?.calculatedVulnerability || 0) * 100).toPrecision(5)) | number }}%
+        </td>
+        <td></td>
+      </tr>
+    </tbody>
+    <tbody>
+      <tr>
+        <th class="align-middle" rowspan="1" scope="rowgroup">
+          Expected Loss Before Additional Investments
+        </th>
+        <ng-container *ngFor="let segment of data.segments">
+          <td class="text-end align-middle">
+            {{ segment.expectedLossBeforeInvestment | number }}
+          </td>
+        </ng-container>
+        <td class="text-end align-middle">
+          {{ data.withoutSegmentation?.expectedLossBeforeInvestment | number }}
+        </td>
+        <td class="text-end align-middle">
+          {{ data.withoutSegmentation?.expectedLossBeforeInvestment | number }}
+        </td>
+        <td></td>
+      </tr>
+    </tbody>
+    <tbody>
+      <tr>
+        <th class="align-middle" rowspan="1" scope="rowgroup">
+          Optimal Investment
+        </th>
+        <ng-container *ngFor="let segment of data.segments">
+          <td class="text-end align-middle">
+            {{ segment.optimalInvestment | number }}
+          </td>
+        </ng-container>
+        <td class="text-end align-middle">
+          {{ getCalculatedInvestmentTotal(data.segments) | number }}
+        </td>
+        <td class="text-end align-middle">
+          {{ data.withoutSegmentation?.optimalInvestment | number }}
+        </td>
+        <td class="text-end align-middle">
+          {{
+          (data.withoutSegmentation?.optimalInvestment || 0) -
+          getCalculatedInvestmentTotal(data.segments) | number
+          }}
+        </td>
+      </tr>
+    </tbody>
+    <tbody>
+      <tr>
+        <th class="align-middle" rowspan="1" scope="rowgroup">
+          Expected Loss with Optimal Investment
+        </th>
+        <ng-container *ngFor="let segment of data.segments">
+          <td class="text-end align-middle">
+            {{ segment.expectedLossWithInvestment | number }}
+          </td>
+        </ng-container>
+        <td class="text-end align-middle">
+          {{ getLossWithInvestmentTotal(data.segments) | number }}
+        </td>
+        <td class="text-end align-middle">
+          {{ data.withoutSegmentation?.expectedLossWithInvestment | number }}
+        </td>
+        <td class="text-end align-middle">
+          {{
+          (data.withoutSegmentation?.expectedLossWithInvestment || 0) -
+          getLossWithInvestmentTotal(data.segments) | number
+          }}
+        </td>
+      </tr>
+    </tbody>
+    <tbody>
+      <tr>
+        <th class="align-middle" rowspan="1" scope="rowgroup">
+          Total Cybersecurity Costs
+        </th>
+        <ng-container *ngFor="let segment of data.segments">
+          <td class="text-end align-middle">
+            {{ segment.totalCybersecurityCosts | number }}
+          </td>
+        </ng-container>
+        <td class="text-end align-middle">
+          {{ getTotalCosts(data.segments) | number }}
+        </td>
+        <td class="text-end align-middle">
+          {{ data.withoutSegmentation?.totalCybersecurityCosts | number }}
+        </td>
+        <td class="text-end align-middle">
+          {{
+          (data.withoutSegmentation?.totalCybersecurityCosts || 0) -
+          getTotalCosts(data.segments) | number
+          }}
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

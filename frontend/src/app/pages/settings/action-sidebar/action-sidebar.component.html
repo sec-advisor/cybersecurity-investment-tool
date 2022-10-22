@@ -1,0 +1,36 @@
+<div *ngIf="sections"
+  class="d-flex flex-column align-items-stretch flex-shrink-0 justify-content-between segments-overview action-sidebar overflow-hidden"
+  [class.collapsed]="isCollapsed">
+  <div>
+    <ng-container *ngFor="let section of sections">
+      <!-- Section heading -->
+      <div *ngIf="section.heading"
+        class="d-flex align-items-center justify-content-center flex-shrink-0 p-3 link-dark text-decoration-none border-bottom sidebar-header">
+        <i class="bi medium-icon" [ngClass]="section.heading.icon" [class.margin-right]="!isCollapsed"></i>
+        <span *ngIf="!isCollapsed" class="fs-5 fw-semibold">{{ section.heading.text }}</span>
+      </div>
+
+      <!-- Action buttons -->
+      <div class="list-group list-group-flush border-bottom scrollarea">
+        <ng-container *ngFor="let button of section.buttons">
+          <a class="list-group-item list-group-item-action py-3 lh-tight pointer-cursor action-button" type="button"
+            aria-current="true" [class.disabled]="button.disabled" (click)="execute(button)">
+            <div class="d-flex w-100 align-items-center justify-content-between">
+              <span *ngIf="!isCollapsed" class="mb-1 action-text">{{ button.text }}</span>
+              <i class="bi action-icon ms-2" [ngClass]="button.icon"></i>
+            </div>
+          </a>
+        </ng-container>
+      </div>
+    </ng-container>
+  </div>
+
+  <div>
+    <div
+      class="d-flex align-items-center justify-content-center pointer-cursor action-button p-3 link-dark sidebar-header collapse-item"
+      (click)="collapse()">
+      <i class=" bi medium-icon" [ngClass]="isCollapsed ? 'bi-chevron-double-right': 'bi-chevron-double-left'"></i>
+      <span *ngIf="!isCollapsed" class="fs-6 ms-2 fw-semibold">Collapse</span>
+    </div>
+  </div>
+</div>

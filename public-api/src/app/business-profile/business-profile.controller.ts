@@ -1,3 +1,4 @@
+import { BusinessProfile, User } from '@libs';
 import {
   Body,
   Controller,
@@ -12,7 +13,6 @@ import {
 } from '@nestjs/common';
 import { catchError, Observable, of, tap } from 'rxjs';
 
-import { BusinessProfile, User } from '../../../libs/api-interfaces';
 import { AuthenticatedGuard } from '../auth/authenticated.guard';
 import { BusinessProfileService } from './services/business-profile.service';
 

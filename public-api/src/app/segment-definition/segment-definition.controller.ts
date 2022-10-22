@@ -1,3 +1,4 @@
+import { SegmentDefinition, ValueEstimation } from '@libs';
 import {
   Body,
   Controller,
@@ -9,10 +10,6 @@ import {
 } from '@nestjs/common';
 import { catchError, Observable, of, tap } from 'rxjs';
 
-import {
-  SegmentDefinition,
-  ValueEstimation,
-} from '../../../libs/api-interfaces';
 import { AuthenticatedGuard } from '../auth/authenticated.guard';
 import { SegmentDefinitionService } from './services/segment-definition.service';
 

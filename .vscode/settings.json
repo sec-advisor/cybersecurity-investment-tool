@@ -1,3 +1,5 @@
 {
-    "editor.tabSize": 2
+    "editor.tabSize": 2,
+    "typescriptHero.imports.organizeOnSave": true,
+    "angular.view-engine": false
 }

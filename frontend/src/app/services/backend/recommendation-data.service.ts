@@ -1,13 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { RecommendationProfile, ROSIDetail } from '@libs';
 import { catchError, Observable, of, tap } from 'rxjs';
 
-import {
-  RecommendationProfile,
-  ROSIDetail,
-} from '../../../../libs/api-interfaces';
+import { backend } from '../../constants/backend.constants';
 import { httpOptions } from '../../constants/http-options.constants';
-import { publicAPIUrl } from '../../constants/public-api-url';
 
 @Injectable({
   providedIn: 'root',
@@ -18,7 +15,7 @@ export class RecommendationDataService {
   recommend(profile: RecommendationProfile): Observable<any> {
     return this.http
       .post<RecommendationProfile>(
-        `${publicAPIUrl}/recommendation/recommend`,
+        `${backend.url}/recommendation/recommend`,
         profile,
         httpOptions,
       )
@@ -34,7 +31,7 @@ export class RecommendationDataService {
   calculateROSI(rosiDetail: ROSIDetail): Observable<ROSIDetail> {
     return this.http
       .post<ROSIDetail>(
-        `${publicAPIUrl}/recommendation/calculate-rosi`,
+        `${backend.url}/recommendation/calculate-rosi`,
         rosiDetail,
         httpOptions,
       )

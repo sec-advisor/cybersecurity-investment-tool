@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { BusinessProfile, Segment } from '@libs';
 import {
   BehaviorSubject,
   filter,
@@ -10,7 +11,6 @@ import {
   tap,
 } from 'rxjs';
 
-import { BusinessProfile, Segment } from '../../../libs/api-interfaces';
 import { AppSegment } from '../models/app-segment.model';
 import { StorageKey } from '../models/storage-key.enum';
 import { BusinessProfileDataService } from './backend/business-profile-data.service';
@@ -26,7 +26,7 @@ export class StorageService {
   >(undefined);
   private isFirstCallProfile = true;
   private isFirstCallSegments = true;
-  private isLoggedIn$ = new BehaviorSubject<boolean>(false);
+  private isLoggedIn$ = new BehaviorSubject<boolean | undefined>(undefined);
   private segmentsSource$ = new BehaviorSubject<AppSegment[]>([]);
 
   constructor(
@@ -155,7 +155,11 @@ export class StorageService {
   }
 
   getLoggingState(): Observable<boolean> {
-    return this.isLoggedIn$;
+    return this.isLoggedIn$.pipe(
+      filter((isLoggedIn) => isLoggedIn !== undefined),
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      map((isLoggedIn) => isLoggedIn!),
+    );
   }
 
   reset(): void {

@@ -1,0 +1,54 @@
+version: "3.9"
+services:
+  mentor:
+    build:
+      context: ./mentor/
+    ports:
+      - 8000:8000
+
+  mongodb:
+    image: mongo:5.0.0
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=aWEsomeDatabase
+    ports:
+      - 27017:27017
+    volumes:
+      - ~/mongodb/data:/data/db
+      - ~/mongodb/configdb:/data/configdb
+    restart: unless-stopped
+
+  mongo-seed:
+    build: ./mongo-seed
+    depends_on:
+      - mongodb
+
+  publicapi:
+    build:
+      context: ./public-api/
+    environment:
+      NODE_ENV: development
+      PORT: 3333
+    ports:
+      - 3333:3333
+      - 9229:9229 # 9229 is the default node debug port
+    depends_on:
+      - mongo-seed
+    volumes:
+      - "/usr/src/app/node_modules" # save the compiled node_modules to anonymous volume so make sure we don't attach the volume to our host node_modules
+      - "./public-api:/usr/src/app" # link our project directory to the docker  directory so any change will get updated in the running container and also we will benefit from sourcemaps for debugging
+    command: yarn start:debug:docker # override entry command
+
+  frontend:
+    build:
+      dockerfile: Dockerfile.dev
+      context: ./frontend/
+    restart: always
+    ports:
+      - 80:4200
+      - 49153:49153
+    depends_on:
+      - publicapi
+    volumes:
+      - ./frontend:/app
+      - ./frontend/node_modules:/app/node_modules

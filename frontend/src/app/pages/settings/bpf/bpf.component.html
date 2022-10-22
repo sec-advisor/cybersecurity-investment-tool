@@ -1,0 +1,73 @@
+<div *ngIf="viewModel$ | async as viewModel" class="d-flex flex-wrap justify-content-center">
+  <div class="settings shadow-lg p-3 mb-5 bg-white rounded me-3">
+    <form [formGroup]="viewModel.form">
+      <div class="row justify-content-center">
+        <div class="mx-auto">
+          <h2 class="h3 mb-4 page-title">GL - Breach Probability Function (BPF)</h2>
+          <div class="mt-4">
+            <h5 class="mb-0 mt-5">BPF Settings</h5>
+            <p>Customize the BPF to your needs</p>
+
+            <!-- Current BPF -->
+            <hr class="my-4" />
+            <strong class="mb-0">Current BPF</strong>
+            <div class="m-2" [appMathJax]="'`' + viewModel.form.get('bpf')?.value + '`'"></div>
+
+            <!-- BPF -->
+            <hr class="my-4" />
+            <strong class="mb-0">BPF Customization</strong>
+            <p>Customize the BPF</p>
+            <ngb-accordion #acc="ngbAccordion" class="no-padding" [closeOthers]="true">
+              <ngb-panel id="bpf-basic" title="Basic">
+                <ng-template ngbPanelContent>
+                  <app-bpf-basic formControlName="bpf"></app-bpf-basic>
+                </ng-template>
+              </ngb-panel>
+              <ngb-panel title="Advanced">
+                <ng-template ngbPanelContent>
+                  <app-bpf-advanced formControlName="bpf" [errorText]="errorText"></app-bpf-advanced>
+                </ng-template>
+              </ngb-panel>
+            </ngb-accordion>
+
+            <!-- Test Segments -->
+            <hr class="my-4" />
+            <strong class="mb-0">Test Segments</strong>
+            <p>Segments for testing the BPF.</p>
+            <ngb-accordion #acc="ngbAccordion" class="no-padding">
+              <ngb-panel id="bpf-test-segment" title="Segments">
+                <ng-template ngbPanelContent>
+                  <app-test-segments formControlName="segments"></app-test-segments>
+                </ng-template>
+              </ngb-panel>
+            </ngb-accordion>
+          </div>
+        </div>
+      </div>
+    </form>
+
+    <!-- Restore, Edit, Save Buttons -->
+    <hr class="mt-4 mb-2" />
+    <div class="d-flex justify-content-between w-100">
+      <div>
+        <button *ngIf="viewModel.originBpf !== userBpf" type="button" class="btn btn-danger m-1"
+          [disabled]="viewModel.form.enabled" (click)="reset()">Reset</button>
+      </div>
+      <div>
+        <button type="button" class="btn btn-secondary m-1" (click)="changeEditMode(viewModel.form)">
+          {{ viewModel.form.enabled ? 'Cancel' : 'Edit' }}
+        </button>
+        <button type="button" class="btn btn-primary m-1"
+          [disabled]="viewModel.form.invalid || viewModel.form.pristine || errorText"
+          (click)="save(viewModel.form)">Save</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Graphic -->
+  <app-bpf-graphic class="shadow-lg p-3 mb-5 bg-white rounded" [bpf]="viewModel.form.get('bpf')?.value"
+    [segments]="viewModel.form.get('segments')?.value">
+  </app-bpf-graphic>
+</div>
+
+<app-toast-notification></app-toast-notification>

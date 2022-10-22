@@ -2,16 +2,18 @@ import { Injectable, OnDestroy } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import {
   filter,
+  first,
   map,
   merge,
-  Observable,
   of,
   Subscriber,
+  Subscription,
   switchMap,
   tap,
 } from 'rxjs';
 
 import { StorageKey } from '../models/storage-key.enum';
+import { UserDataService } from './backend/user-data.service';
 import { LocalStorageService } from './local-storage.service';
 import { Page } from './models/page.enum';
 import { StorageService } from './storage.service';
@@ -60,17 +62,25 @@ export class RoutingService implements OnDestroy {
       active: false,
       disabled: true,
     },
+    {
+      id: Page.Settings,
+      name: 'Settings',
+      icon: 'bi-gear',
+      path: '/settings',
+      active: false,
+    },
   ];
 
   constructor(
     private router: Router,
     private storageService: StorageService,
     private localStorageService: LocalStorageService,
+    private userDataService: UserDataService,
   ) {
-    // TODO CH: Solve this issue properly
-    this.browseTo('/home');
+    this.setUserLoggingState();
+
     this.subscriber.add(this.handlePageEnabling());
-    this.subscriber.add(this.handleRouterChanges().subscribe());
+    this.subscriber.add(this.handleRouterChanges());
   }
 
   ngOnDestroy(): void {
@@ -94,7 +104,7 @@ export class RoutingService implements OnDestroy {
   reset(): void {
     this.pages.forEach((page) => {
       page.active = false;
-      if (![Page.Home, Page.BusinessProfile].includes(page.id)) {
+      if (![Page.Home, Page.BusinessProfile, Page.Settings].includes(page.id)) {
         page.disabled = true;
       }
     });
@@ -102,25 +112,27 @@ export class RoutingService implements OnDestroy {
   }
 
   // TODO CH: Refactor almost same code
-  handleRouterChanges(): Observable<any> {
-    return this.router.events.pipe(
-      filter((event) => event instanceof NavigationEnd),
-      tap((event) => {
-        const newPage = this.pages.find(
-          (page) => page.path === (event as NavigationEnd).url,
-        );
-        if (newPage) {
-          if (!newPage.disabled) {
-            this.pages.forEach((item) => (item.active = false));
-            newPage.active = true;
+  handleRouterChanges(): Subscription {
+    return this.router.events
+      .pipe(
+        filter((event) => event instanceof NavigationEnd),
+        tap((event) => {
+          const newPage = this.pages.find((page) =>
+            (event as NavigationEnd).url.startsWith(page.path),
+          );
+          if (newPage) {
+            if (!newPage.disabled) {
+              this.pages.forEach((item) => (item.active = false));
+              newPage.active = true;
+            }
           }
-        }
-      }),
-    );
+        }),
+      )
+      .subscribe();
   }
 
-  private handlePageEnabling(): void {
-    this.storageService
+  private handlePageEnabling(): Subscription {
+    return this.storageService
       .getLoggingState()
       .pipe(
         filter((isLoggedIn) => isLoggedIn),
@@ -139,6 +151,18 @@ export class RoutingService implements OnDestroy {
         if (isProfileDefined) {
           this.pages.forEach((page) => (page.disabled = false));
         }
+      });
+  }
+
+  private setUserLoggingState(): void {
+    this.userDataService
+      .isActive()
+      .pipe(first())
+      .subscribe((isLoggedIn) => {
+        if (!isLoggedIn) {
+          this.browseTo('/home');
+        }
+        this.storageService.setLoggingState(isLoggedIn);
       });
   }
 }

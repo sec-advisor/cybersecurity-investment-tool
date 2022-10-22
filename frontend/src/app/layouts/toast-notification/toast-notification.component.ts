@@ -4,7 +4,7 @@ import { ToastNotificationService } from './services/toast-notification.service'
 
 @Component({
   selector: 'app-toast-notification',
-  styleUrls: ['app-toast-notification.scss'],
+  styleUrls: ['toast-notification.component.scss'],
   template: `
     <ngb-toast
       *ngFor="let toast of toastService.toasts"

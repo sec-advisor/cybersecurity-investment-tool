@@ -1,0 +1,5 @@
+{
+  "publicAPI": {
+    "url": "${PUBLIC_API_URL}"
+  }
+}
