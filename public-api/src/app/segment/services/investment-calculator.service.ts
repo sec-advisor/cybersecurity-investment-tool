@@ -100,9 +100,8 @@ export class InvestmentCalculatorService {
     segments: Segment[],
     investmentEquation: OptimalInvestmentEquation,
   ): number {
-    const diff = nerdamer(
-      `diff(${investmentEquation.breachProbabilityFunction}, z)`,
-    );
+    const bpf = nerdamer(investmentEquation.breachProbabilityFunction);
+    const diff = nerdamer.diff(bpf, 'z');
     const optimalInvestmentEquation = nerdamer(
       investmentEquation.optimalInvestmentEquation,
       { S: `(${diff.toString()})` },
