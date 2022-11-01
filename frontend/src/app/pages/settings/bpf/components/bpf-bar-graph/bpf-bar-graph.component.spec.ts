@@ -2,21 +2,21 @@
 import { HttpClientModule } from '@angular/common/http';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { BpfGraphicComponent } from './bpf-graphic.component';
+import { BpfBarGraphComponent } from './bpf-bar-graph.component';
 
 describe('BpfGraphicComponent', () => {
-  let component: BpfGraphicComponent;
-  let fixture: ComponentFixture<BpfGraphicComponent>;
+  let component: BpfBarGraphComponent;
+  let fixture: ComponentFixture<BpfBarGraphComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [HttpClientModule],
-      declarations: [BpfGraphicComponent],
+      declarations: [BpfBarGraphComponent],
     }).compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(BpfGraphicComponent);
+    fixture = TestBed.createComponent(BpfBarGraphComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
