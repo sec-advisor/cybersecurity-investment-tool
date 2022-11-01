@@ -172,4 +172,27 @@ export class InvestmentCalculatorService {
       return 0;
     }
   }
+
+  private getEBIS(
+    segment: Segment | Partial<Segment>,
+    investmentEquation: OptimalInvestmentEquation,
+    z: number,
+  ): number {
+    const formula = nerdamer(
+      `(v-${investmentEquation.breachProbabilityFunction})*L`,
+    );
+    return formula.evaluate({
+      v: segment.calculatedVulnerability,
+      z: z,
+      L: segment.value,
+    });
+  }
+
+  private getENBIS(
+    segment: Segment | Partial<Segment>,
+    investmentEquation: OptimalInvestmentEquation,
+    z: number,
+  ): number {
+    return this.getEBIS(segment, investmentEquation, z) - z;
+  }
 }
