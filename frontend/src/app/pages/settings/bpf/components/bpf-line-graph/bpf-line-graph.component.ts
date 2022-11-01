@@ -20,71 +20,33 @@ import { EquationDataService } from '../../../../../services/backend/equation-da
 export class BpfLineGraphComponent implements OnInit, OnChanges, OnDestroy {
   private readonly subscriber = new Subscriber();
 
+  selectedSegmentIndex = 0;
+
   equation?: string;
-  multi: any[] = [
+  multi: any[] = Array(3).fill([
     {
-      name: 'Customers Db',
-      series: [
-        {
-          name: 'GL BPF',
-          value: 2280000,
-        },
-        {
-          name: 'Your BPF',
-          value:
-            (this.segments &&
-              this.segments[0] &&
-              this.segments[0].optimalInvestment) ||
-            0,
-        },
-      ],
+      name: 'GL BPF',
+      series: [],
     },
-
     {
-      name: 'Internal Operations Db',
-      series: [
-        {
-          name: 'GL BPF',
-          value: 788528,
-        },
-        {
-          name: 'Your BPF',
-          value:
-            (this.segments &&
-              this.segments[1] &&
-              this.segments[0].optimalInvestment) ||
-            0,
-        },
-      ],
+      name: 'Your BPF',
+      series: [],
     },
-
-    {
-      name: 'External Operations Db',
-      series: [
-        {
-          name: 'GL BPF',
-          value: 180000,
-        },
-        {
-          name: 'Your BPF',
-          value:
-            (this.segments &&
-              this.segments[2] &&
-              this.segments[0].optimalInvestment) ||
-            0,
-        },
-      ],
-    },
-  ];
+  ]);
   showXAxis = true;
   showYAxis = true;
   gradient = true;
   legendPosition = LegendPosition.Below;
   showLegend = true;
   showXAxisLabel = true;
-  xAxisLabel = 'Segment';
+  xAxisLabel = 'Investment';
+  xAxisTickFormatting = (value: any) =>
+    new Intl.NumberFormat('en-US', {
+      style: 'currency',
+      currency: 'USD',
+    }).format(value);
   showYAxisLabel = true;
-  yAxisLabel = 'Optimal investment';
+  yAxisLabel = 'ENBIS';
   yAxisTickFormatting = (value: any) =>
     new Intl.NumberFormat('en-US', {
       style: 'currency',
@@ -105,7 +67,6 @@ export class BpfLineGraphComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    const bpf = changes['bpf']?.currentValue as string;
     const segments = changes['segments']?.currentValue as Segment[];
     if (segments) {
       this.changedSegments(segments);
@@ -117,10 +78,6 @@ export class BpfLineGraphComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   private changedSegments(segments: Segment[]): void {
-    // Update the data for the graph
-    [...Array(3).keys()].forEach((i) => {
-      this.multi[i].series[1].value = segments[i].optimalInvestment;
-    });
-    this.multi = [...this.multi];
+    console.log("Segement changed, do the update");
   }
 }
