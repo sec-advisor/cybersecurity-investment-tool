@@ -793,6 +793,16 @@
   dependencies:
     "@sinonjs/commons" "^1.7.0"
 
+"@stdlib/array-base-linspace@^0.0.3":
+  version "0.0.3"
+  resolved "https://registry.yarnpkg.com/@stdlib/array-base-linspace/-/array-base-linspace-0.0.3.tgz#626c927a37a1fbb64b0bbd838e651fcbe54afc9c"
+  integrity sha512-PivWaNJOMduM6lDZlLIjR6n/LYNXmOHeFgUSMusktQwnhu41Duh0TRtJd/M/yawmOijmOaUDzPfkxTy9LQQ8ow==
+
+"@stdlib/types@^0.0.14":
+  version "0.0.14"
+  resolved "https://registry.yarnpkg.com/@stdlib/types/-/types-0.0.14.tgz#02d3aab7a9bfaeb86e34ab749772ea22f7b2f7e0"
+  integrity sha512-AP3EI9/il/xkwUazcoY+SbjtxHRrheXgSbWZdEGD+rWpEgj6n2i63hp6hTOpAB5NipE0tJwinQlDGOuQ1lCaCw==
+
 "@tootallnate/once@1":
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/@tootallnate/once/-/once-1.1.2.tgz#ccb91445360179a04e7fe6aff78c00ffc1eeaf82"

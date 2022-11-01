@@ -3,6 +3,8 @@ import { Injectable } from '@nestjs/common';
 import { map, Observable, of } from 'rxjs';
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
+const linspace = require('@stdlib/array-base-linspace');
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const nerdamer = require('nerdamer/all.min');
 
 @Injectable()
@@ -28,6 +30,12 @@ export class InvestmentCalculatorService {
           ),
           expectedLossBeforeInvestment:
             this.getExpectedLossBeforeInvestment(segment),
+        })),
+      ),
+      map((segments) =>
+        segments.map((segment) => ({
+          ...segment,
+          enbisCurve: this.getENBISCurve(segment, equation),
         })),
       ),
       map((segments) =>
@@ -194,5 +202,21 @@ export class InvestmentCalculatorService {
     z: number,
   ): number {
     return this.getEBIS(segment, investmentEquation, z) - z;
+  }
+
+  private getENBISCurve(
+    segment: Segment | Partial<Segment>,
+    investmentEquation: OptimalInvestmentEquation,
+  ) {
+    const start = 0;
+    const end = segment.optimalInvestment * 2; // Currently just twice the optimal investment so we can see something.
+    const resolution = 101; // Higher means more resolution but also more calculation, odd number ensures that the optimal value is also a point.
+
+    const xValues = linspace(start, end, resolution);
+
+    return xValues.map((x) => ({
+      investment: x,
+      enbis: this.getENBIS(segment, investmentEquation, x),
+    }));
   }
 }
