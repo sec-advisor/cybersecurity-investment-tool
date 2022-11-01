@@ -4,7 +4,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { BpfBarGraphComponent } from './bpf-bar-graph.component';
 
-describe('BpfGraphicComponent', () => {
+describe('BpfBarGraphComponent', () => {
   let component: BpfBarGraphComponent;
   let fixture: ComponentFixture<BpfBarGraphComponent>;
 
