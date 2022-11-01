@@ -1,18 +1,20 @@
-<div class="bpf-graphic">
+<div class="bpf-bar-graph">
   <div class="instructions">
     Compare the optimal investment under your BPF function and the BPF from <a href="https://en.wikipedia.org/wiki/Gordon%E2%80%93Loeb_model" target="_blank">Gordon Loeb</a>.
   </div>
-  <ngx-charts-bar-vertical-2d
-    [results]="multi"
-    [xAxis]="showXAxis"
-    [yAxis]="showYAxis"
-    [legend]="showLegend"
-    [legendPosition]="legendPosition"
-    [showXAxisLabel]="showXAxisLabel"
-    [showYAxisLabel]="showYAxisLabel"
-    [xAxisLabel]="xAxisLabel"
-    [yAxisLabel]="yAxisLabel"
-    [yAxisTickFormatting]="yAxisTickFormatting"
-  >
-  </ngx-charts-bar-vertical-2d>
+  <div class="bar-chart">
+    <ngx-charts-bar-vertical-2d
+      [results]="multi"
+      [xAxis]="showXAxis"
+      [yAxis]="showYAxis"
+      [legend]="showLegend"
+      [legendPosition]="legendPosition"
+      [showXAxisLabel]="showXAxisLabel"
+      [showYAxisLabel]="showYAxisLabel"
+      [xAxisLabel]="xAxisLabel"
+      [yAxisLabel]="yAxisLabel"
+      [yAxisTickFormatting]="yAxisTickFormatting"
+    >
+    </ngx-charts-bar-vertical-2d>
+  </div>
 </div>
