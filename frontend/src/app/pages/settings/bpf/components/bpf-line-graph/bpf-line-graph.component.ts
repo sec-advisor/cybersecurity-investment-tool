@@ -9,6 +9,7 @@ import {
 import { Segment } from '@libs';
 import { LegendPosition } from '@swimlane/ngx-charts';
 import { Subscriber } from 'rxjs';
+import { chartData } from './data';
 
 import { EquationDataService } from '../../../../../services/backend/equation-data.service';
 
@@ -21,18 +22,9 @@ export class BpfLineGraphComponent implements OnInit, OnChanges, OnDestroy {
   private readonly subscriber = new Subscriber();
 
   selectedSegmentIndex = 0;
-
+  chartData: any[] = [...chartData];
   equation?: string;
-  multi: any[] = Array(3).fill([
-    {
-      name: 'GL BPF',
-      series: [],
-    },
-    {
-      name: 'Your BPF',
-      series: [],
-    },
-  ]);
+  multi: any[] = [...this.chartData[this.selectedSegmentIndex]];
   showXAxis = true;
   showYAxis = true;
   gradient = true;
@@ -52,6 +44,8 @@ export class BpfLineGraphComponent implements OnInit, OnChanges, OnDestroy {
       style: 'currency',
       currency: 'USD',
     }).format(value);
+
+  selectedData = this.multi[this.selectedSegmentIndex];
 
   @Input() bpf?: string;
   @Input() segments?: Segment[];
@@ -78,6 +72,22 @@ export class BpfLineGraphComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   private changedSegments(segments: Segment[]): void {
-    console.log("Segement changed, do the update");
+    console.log('Segement changed, do the update');
+    segments.forEach((segment, index) => {
+      if (segment && segment.enbisCurve) {
+        this.chartData[index][1].series = segment.enbisCurve.map((point) => ({
+          name: point.investment,
+          value: point.enbis,
+        }));
+      }
+    });
+    this.chartData = [...this.chartData];
+
+    this.updateSelected(this.selectedSegmentIndex);
+  }
+
+  updateSelected(newSelectedSegmentIndex: number): void {
+    this.selectedSegmentIndex = newSelectedSegmentIndex;
+    this.multi = [...this.chartData[newSelectedSegmentIndex]];
   }
 }

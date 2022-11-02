@@ -4,7 +4,7 @@
   </div>
   <div class="buttons">
     <div class="button" *ngFor="let segment of segments; let i = index">
-      <button type="button" class="btn btn-primary m-1" (click)="selectedSegmentIndex=i">
+      <button type="button" class="btn btn-primary m-1" (click)="updateSelected(i)">
         {{segment.name}}
       </button>
     </div>
@@ -12,7 +12,7 @@
   <div class="line-chart" *ngIf="segments">
     <strong>ENBIS for {{segments[selectedSegmentIndex].name}}</strong>
     <ngx-charts-line-chart
-      [results]="multi[selectedSegmentIndex]"
+      [results]="multi"
       [xAxis]="showXAxis"
       [yAxis]="showYAxis"
       [legend]="showLegend"
