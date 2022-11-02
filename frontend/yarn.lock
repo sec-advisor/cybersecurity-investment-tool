@@ -1363,9 +1363,9 @@
     "@jridgewell/resolve-uri" "^3.0.3"
     "@jridgewell/sourcemap-codec" "^1.4.10"
 
-"@libs@file:libs/libs-v1.0.7.tgz":
-  version "1.0.7"
-  resolved "file:libs/libs-v1.0.7.tgz#b93c93d237a67c5b70e921c53464a73e429c1eec"
+"@libs@file:libs/libs-v1.0.8.tgz":
+  version "1.0.8"
+  resolved "file:libs/libs-v1.0.8.tgz#0058f015465baf103f7781ab13bd5fa11d3a3420"
 
 "@ng-bootstrap/ng-bootstrap@^12.1.2":
   version "12.1.2"
