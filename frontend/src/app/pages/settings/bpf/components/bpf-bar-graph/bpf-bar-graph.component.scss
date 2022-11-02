@@ -1,0 +1,12 @@
+.bpf-bar-graph {
+  width: 600px;
+
+  .instructions {
+    text-align: center;
+  }
+
+  .bar-chart{
+    height: 500px;
+    margin-bottom: 66px; // Height of the legend at the bottom
+  }
+}

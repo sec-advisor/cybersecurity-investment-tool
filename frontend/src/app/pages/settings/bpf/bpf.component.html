@@ -64,10 +64,15 @@
     </div>
   </div>
 
-  <!-- Graphic -->
-  <app-bpf-graphic class="shadow-lg p-3 mb-5 bg-white rounded" [bpf]="viewModel.form.get('bpf')?.value"
+  <!-- Line Graph -->
+  <app-bpf-line-graph class="shadow-lg p-3 mb-5 bg-white rounded" [bpf]="viewModel.form.get('bpf')?.value"
+                     [segments]="viewModel.form.get('segments')?.value">
+  </app-bpf-line-graph>
+
+  <!-- Bar Graph -->
+  <app-bpf-bar-graph class="shadow-lg p-3 mb-5 bg-white rounded" [bpf]="viewModel.form.get('bpf')?.value"
     [segments]="viewModel.form.get('segments')?.value">
-  </app-bpf-graphic>
+  </app-bpf-bar-graph>
 </div>
 
 <app-toast-notification></app-toast-notification>

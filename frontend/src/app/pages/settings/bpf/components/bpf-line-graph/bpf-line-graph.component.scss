@@ -1,0 +1,18 @@
+.bpf-line-graph {
+  width: 600px;
+
+  .instructions {
+    text-align: center;
+  }
+
+  .line-chart{
+    height: 500px;
+    margin-bottom: calc(66px + var(--bs-body-font-size)); // Height of the legend at the bottom
+  }
+
+  .buttons {
+    .button {
+      display: inline-block;
+    }
+  }
+}

@@ -640,9 +640,9 @@
     "@jridgewell/resolve-uri" "^3.0.3"
     "@jridgewell/sourcemap-codec" "^1.4.10"
 
-"@libs@file:libs/libs-v1.0.7.tgz":
-  version "1.0.7"
-  resolved "file:libs/libs-v1.0.7.tgz#b93c93d237a67c5b70e921c53464a73e429c1eec"
+"@libs@file:libs/libs-v1.0.9.tgz":
+  version "1.0.9"
+  resolved "file:libs/libs-v1.0.9.tgz#f57b61a3502e10ce084d8159dc66c1b21846bbc5"
 
 "@mapbox/node-pre-gyp@^1.0.0":
   version "1.0.10"
@@ -792,6 +792,16 @@
   integrity sha512-OAPJUAtgeINhh/TAlUID4QTs53Njm7xzddaVlEs/SXwgtiD1tW22zAB/W1wdqfrpmikgaWQ9Fw6Ws+hsiRm5Vg==
   dependencies:
     "@sinonjs/commons" "^1.7.0"
+
+"@stdlib/array-base-linspace@^0.0.3":
+  version "0.0.3"
+  resolved "https://registry.yarnpkg.com/@stdlib/array-base-linspace/-/array-base-linspace-0.0.3.tgz#626c927a37a1fbb64b0bbd838e651fcbe54afc9c"
+  integrity sha512-PivWaNJOMduM6lDZlLIjR6n/LYNXmOHeFgUSMusktQwnhu41Duh0TRtJd/M/yawmOijmOaUDzPfkxTy9LQQ8ow==
+
+"@stdlib/types@^0.0.14":
+  version "0.0.14"
+  resolved "https://registry.yarnpkg.com/@stdlib/types/-/types-0.0.14.tgz#02d3aab7a9bfaeb86e34ab749772ea22f7b2f7e0"
+  integrity sha512-AP3EI9/il/xkwUazcoY+SbjtxHRrheXgSbWZdEGD+rWpEgj6n2i63hp6hTOpAB5NipE0tJwinQlDGOuQ1lCaCw==
 
 "@tootallnate/once@1":
   version "1.1.2"

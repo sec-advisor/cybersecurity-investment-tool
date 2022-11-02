@@ -3,6 +3,8 @@ import { Injectable } from '@nestjs/common';
 import { map, Observable, of } from 'rxjs';
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
+const linspace = require('@stdlib/array-base-linspace');
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const nerdamer = require('nerdamer/all.min');
 
 @Injectable()
@@ -28,6 +30,12 @@ export class InvestmentCalculatorService {
           ),
           expectedLossBeforeInvestment:
             this.getExpectedLossBeforeInvestment(segment),
+        })),
+      ),
+      map((segments) =>
+        segments.map((segment) => ({
+          ...segment,
+          enbisCurve: this.getENBISCurve(segment, equation),
         })),
       ),
       map((segments) =>
@@ -100,9 +108,8 @@ export class InvestmentCalculatorService {
     segments: Segment[],
     investmentEquation: OptimalInvestmentEquation,
   ): number {
-    const diff = nerdamer(
-      `diff(${investmentEquation.breachProbabilityFunction}, z)`,
-    );
+    const bpf = nerdamer(investmentEquation.breachProbabilityFunction);
+    const diff = nerdamer.diff(bpf, 'z');
     const optimalInvestmentEquation = nerdamer(
       investmentEquation.optimalInvestmentEquation,
       { S: `(${diff.toString()})` },
@@ -172,5 +179,45 @@ export class InvestmentCalculatorService {
     } else {
       return 0;
     }
+  }
+
+  private getEBIS(
+    segment: Segment | Partial<Segment>,
+    investmentEquation: OptimalInvestmentEquation,
+    z: number,
+  ): number {
+    const formula = nerdamer(
+      `(v-${investmentEquation.breachProbabilityFunction})*L`,
+    );
+    return formula.evaluate({
+      v: segment.calculatedVulnerability,
+      z: z,
+      L: segment.value,
+    });
+  }
+
+  private getENBIS(
+    segment: Segment | Partial<Segment>,
+    investmentEquation: OptimalInvestmentEquation,
+    z: number,
+  ): number {
+    return this.getEBIS(segment, investmentEquation, z) - z;
+  }
+
+  private getENBISCurve(
+    segment: Segment | Partial<Segment>,
+    investmentEquation: OptimalInvestmentEquation,
+  ) {
+    const start = 0;
+    const end = segment.optimalInvestment * 2; // Currently just twice the optimal investment so we can see something.
+    const resolution = 101; // Higher means more resolution but also more calculation, odd number ensures that the optimal value is also a point.
+
+    const xValues = linspace(start, end, resolution);
+
+    const calculatedPoints = xValues.map((x) => ({
+      investment: x,
+      enbis: this.getENBIS(segment, investmentEquation, x),
+    }));
+    return calculatedPoints.filter((point) => point.enbis >= 0);
   }
 }

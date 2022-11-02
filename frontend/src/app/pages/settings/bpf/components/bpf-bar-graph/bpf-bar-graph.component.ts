@@ -13,11 +13,11 @@ import { Subscriber } from 'rxjs';
 import { EquationDataService } from '../../../../../services/backend/equation-data.service';
 
 @Component({
-  selector: 'app-bpf-graphic',
-  templateUrl: './bpf-graphic.component.html',
-  styleUrls: ['./bpf-graphic.component.scss'],
+  selector: 'app-bpf-bar-graph',
+  templateUrl: './bpf-bar-graph.component.html',
+  styleUrls: ['./bpf-bar-graph.component.scss'],
 })
-export class BpfGraphicComponent implements OnInit, OnChanges, OnDestroy {
+export class BpfBarGraphComponent implements OnInit, OnChanges, OnDestroy {
   private readonly subscriber = new Subscriber();
 
   equation?: string;

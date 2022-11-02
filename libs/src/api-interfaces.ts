@@ -33,6 +33,10 @@ export interface Segment {
   expectedLossBeforeInvestment?: number;
   expectedLossWithInvestment?: number;
   totalCybersecurityCosts?: number;
+  enbisCurve?: {
+    investment: number,
+    enbis: number
+  }[];
 }
 
 export interface ValueEstimation {
