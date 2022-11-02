@@ -36,7 +36,7 @@ export interface Segment {
   enbisCurve?: {
     investment: number,
     enbis: number
-  };
+  }[];
 }
 
 export interface ValueEstimation {
