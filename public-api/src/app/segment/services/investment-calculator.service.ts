@@ -214,9 +214,10 @@ export class InvestmentCalculatorService {
 
     const xValues = linspace(start, end, resolution);
 
-    return xValues.map((x) => ({
+    const calculatedPoints = xValues.map((x) => ({
       investment: x,
       enbis: this.getENBIS(segment, investmentEquation, x),
     }));
+    return calculatedPoints.filter((point) => point.enbis >= 0);
   }
 }
