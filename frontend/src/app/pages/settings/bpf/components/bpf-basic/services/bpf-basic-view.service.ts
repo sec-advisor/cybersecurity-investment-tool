@@ -1,22 +1,9 @@
 import { Injectable } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import {
-  BehaviorSubject,
-  filter,
-  map,
-  merge,
-  Observable,
-  of,
-  Subject,
-  switchMap,
-  tap,
-} from 'rxjs';
+import { BehaviorSubject, filter, map, merge, Observable, of, Subject, switchMap, tap } from 'rxjs';
 
 import { BpfBasicFormName } from '../models/bpf-basic-form-name.enum';
-import {
-  BpfBasicVariable,
-  BpfBasicViewModel,
-} from '../models/bpf-basic-view.model';
+import { BpfBasicVariable, BpfBasicViewModel } from '../models/bpf-basic-view.model';
 
 @Injectable({
   providedIn: 'root',
@@ -27,7 +14,7 @@ export class BpfBasicViewService {
   >(undefined);
   private readonly valueSubject$ = new Subject<string>();
 
-  constructor(private formBuilder: FormBuilder) {}
+  constructor(private formBuilder: FormBuilder) { }
 
   getViewModel(): Observable<BpfBasicViewModel> {
     return this.updateValueSubject$.pipe(
@@ -104,17 +91,17 @@ export class BpfBasicViewService {
     const variables = [
       {
         name: 'v',
-        description: 'This is variable v',
+        description: 'Vulnerability',
         controlName: BpfBasicFormName.V,
       },
       {
         name: 'z',
-        description: 'This is variable z',
+        description: 'Investment',
         controlName: BpfBasicFormName.Z,
       },
       {
         name: 'L',
-        description: 'This is variable L',
+        description: 'Potential Loss',
         controlName: BpfBasicFormName.L,
       },
     ];
