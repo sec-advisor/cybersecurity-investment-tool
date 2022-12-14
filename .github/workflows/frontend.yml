@@ -12,9 +12,9 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Set Node.js 16.x
-        uses: actions/setup-node@v3
-        with:
-          node-version: 16.x
+      uses: actions/setup-node@v3
+      with:
+        node-version: 16.x
     - name: Check formatting frontend
       run: |
         cd frontend
@@ -25,9 +25,9 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Set Node.js 16.x
-        uses: actions/setup-node@v3
-        with:
-          node-version: 16.x
+      uses: actions/setup-node@v3
+      with:
+        node-version: 16.x
     - name: Lint frontend
       run: |
         cd frontend
@@ -38,9 +38,9 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Set Node.js 16.x
-        uses: actions/setup-node@v3
-        with:
-          node-version: 16.x
+      uses: actions/setup-node@v3
+      with:
+        node-version: 16.x
     - name: Build frontend
       run: |
         cd frontend
