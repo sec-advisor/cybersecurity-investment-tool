@@ -7,7 +7,7 @@ on:
     branches: [ main ]
 
 jobs:
-  deploy:
+  info:
     runs-on: self-hosted
     steps:
     - name: Get some info about the runner
