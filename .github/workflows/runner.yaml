@@ -10,7 +10,7 @@ jobs:
   deploy:
     runs-on: self-hosted
     steps:
-    - name: Pull docker down and put it up
+    - name: Get some info about the runner
       run: |
         whoami
         pwd
