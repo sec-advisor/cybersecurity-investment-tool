@@ -5,9 +5,11 @@
     text-align: center;
   }
 
-  .line-chart{
+  .line-chart {
     height: 500px;
-    margin-bottom: calc(66px + var(--bs-body-font-size)); // Height of the legend at the bottom
+    margin-bottom: calc(
+      66px + var(--bs-body-font-size)
+    ); // Height of the legend at the bottom
   }
 
   .buttons {

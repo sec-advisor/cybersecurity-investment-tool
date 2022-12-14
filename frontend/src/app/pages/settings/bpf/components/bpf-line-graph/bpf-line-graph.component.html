@@ -1,16 +1,25 @@
 <div class="bpf-line-graph">
   <div class="instructions">
-    Compare the optimal investment under your BPF function and the BPF from <a href="https://en.wikipedia.org/wiki/Gordon%E2%80%93Loeb_model" target="_blank">Gordon Loeb</a>.
+    Compare the optimal investment under your BPF function and the BPF from
+    <a
+      href="https://en.wikipedia.org/wiki/Gordon%E2%80%93Loeb_model"
+      target="_blank"
+      >Gordon Loeb</a
+    >.
   </div>
   <div class="buttons">
     <div class="button" *ngFor="let segment of segments; let i = index">
-      <button type="button" class="btn btn-primary m-1" (click)="updateSelected(i)">
-        {{segment.name}}
+      <button
+        type="button"
+        class="btn btn-primary m-1"
+        (click)="updateSelected(i)"
+      >
+        {{ segment.name }}
       </button>
     </div>
   </div>
   <div class="line-chart" *ngIf="segments">
-    <strong>ENBIS for {{segments[selectedSegmentIndex].name}}</strong>
+    <strong>ENBIS for {{ segments[selectedSegmentIndex].name }}</strong>
     <ngx-charts-line-chart
       [results]="multi"
       [xAxis]="showXAxis"
@@ -24,6 +33,5 @@
       [yAxisTickFormatting]="yAxisTickFormatting"
     >
     </ngx-charts-line-chart>
-
   </div>
 </div>
