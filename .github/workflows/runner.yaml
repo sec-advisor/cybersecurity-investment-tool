@@ -1,0 +1,16 @@
+name: Runner
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  info:
+    runs-on: self-hosted
+    steps:
+    - name: Get some info about the runner
+      run: |
+        whoami
+        pwd

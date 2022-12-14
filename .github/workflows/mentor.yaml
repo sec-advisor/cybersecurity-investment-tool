@@ -8,31 +8,26 @@ on:
 
 jobs:
   format:
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
-    - name: Create venv
-      run: |
-        cd mentor
-        python -m venv venv
-        source venv/bin/activate
+    - uses: actions/setup-python@v4
+      with:
+        python-version: '3.9' 
     - name: Format Mentor
       run: |
         cd mentor
-        source venv/bin/activate
         pip install black
         black server.py engine
   lint:
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
-    - name: Create and enter venv
-      run: |
-        cd mentor
-        python -m venv venv
+    - uses: actions/setup-python@v4
+      with:
+        python-version: '3.9'
     - name: Lint Mentor
       run: |
         cd mentor
-        source venv/bin/activate
         pip install flake8
         flake8 server.py engine

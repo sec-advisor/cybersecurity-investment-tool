@@ -8,36 +8,52 @@ on:
 
 jobs:
   format:
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
+    - name: Set Node.js 16.x
+      uses: actions/setup-node@v3
+      with:
+        node-version: 16.x
     - name: Check formatting of PublicAPI
       run: |
         cd public-api
         yarn install --frozen-lockfile
         yarn prettier -c src/ test/
   lint:
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
-    - name: Check formatting of PublicAPI
+    - name: Set Node.js 16.x
+      uses: actions/setup-node@v3
+      with:
+        node-version: 16.x
+    - name: Lint PublicAPI
       run: |
         cd public-api
         yarn install --frozen-lockfile
         yarn eslint src/ test/
   test:
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
+    - name: Set Node.js 16.x
+      uses: actions/setup-node@v3
+      with:
+        node-version: 16.x
     - name: Test PublicAPI
       run: |
         cd public-api
         yarn install --frozen-lockfile
         yarn test
   build:
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
+    - name: Set Node.js 16.x
+      uses: actions/setup-node@v3
+      with:
+        node-version: 16.x
     - name: Build PublicAPI
       run: |
         cd public-api
