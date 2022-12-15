@@ -12,5 +12,5 @@ jobs:
     - name: Pull docker down and put it up
       run: |
         docker compose down
-        docker compose up --build -d
+        docker compose --env-file /home/secadvisor/prod.env up --build -d
         docker system prune -a --force
