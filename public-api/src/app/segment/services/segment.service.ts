@@ -19,7 +19,7 @@ export class SegmentService {
   }
 
   getSegment(segmentID: string): Observable<Segment> {
-    return from(this.segmentModel.findOne({ id: segmentID })).pipe(
+    return from(this.segmentModel.findById(segmentID)).pipe(
       map((segment) => this.mapToDetailedSegment(segment, segment.companyId)),
     );
   }
@@ -93,8 +93,10 @@ export class SegmentService {
     const details = investmentValues.map((investment: number) => {
       // TODO use probability function from DB and evaluate in that way
       const breachProbablity =
-        model.vulnerability / (1 + investment / (model.value * 0.001));
-      const ebis = (model.vulnerability - breachProbablity) * model.value;
+        model.calculatedVulnerability /
+        (1 + investment / (model.value * 0.001));
+      const ebis =
+        (model.calculatedVulnerability - breachProbablity) * model.value;
       const enbis = ebis - investment;
       const segmentDetail = {
         investment: investment,
