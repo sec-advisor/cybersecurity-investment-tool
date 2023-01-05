@@ -63,7 +63,7 @@ export class SegmentController {
           of({} as Segment | undefined).pipe(
             tap(() => {
               throw new HttpException(
-                'Getting segments failed!',
+                'Getting segment failed!',
                 HttpStatus.INTERNAL_SERVER_ERROR,
               );
             }),
@@ -72,7 +72,7 @@ export class SegmentController {
       );
     } catch (error) {
       throw new HttpException(
-        'Getting segments failed!',
+        'Getting segment failed!',
         HttpStatus.INTERNAL_SERVER_ERROR,
       );
     }
