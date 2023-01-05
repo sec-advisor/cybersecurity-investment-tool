@@ -93,8 +93,8 @@ export class SegmentService {
     const details = investmentValues.map((investment: number) => {
       // TODO use probability function from DB and evaluate in that way
       const breachProbablity =
-      const ebis = (model.vulnerability - breachProbablity) / model.value;
         model.vulnerability / (1 + investment / (model.value * 0.001));
+      const ebis = (model.vulnerability - breachProbablity) * model.value;
       const enbis = ebis - investment;
       const segmentDetail = {
         investment: investment,
