@@ -4,6 +4,9 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { forkJoin, from, map, Observable, switchMap, tap } from 'rxjs';
 
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const nerdamer = require('nerdamer/all.min');
+
 @Injectable()
 export class SegmentService {
   constructor(
@@ -92,9 +95,12 @@ export class SegmentService {
     ];
     const details = investmentValues.map((investment: number) => {
       // TODO use probability function from DB and evaluate in that way
-      const breachProbablity =
-        model.calculatedVulnerability /
-        (1 + investment / (model.value * 0.001));
+      const formula = nerdamer('v/(1+(z/(L*0.001)))');
+      const breachProbablity = +formula.evaluate({
+        v: model.calculatedVulnerability,
+        z: investment,
+        L: model.value,
+      });
       const ebis =
         (model.calculatedVulnerability - breachProbablity) * model.value;
       const enbis = ebis - investment;
