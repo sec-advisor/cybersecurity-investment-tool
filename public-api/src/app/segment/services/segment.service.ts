@@ -83,4 +83,30 @@ export class SegmentService {
       totalCybersecurityCosts: model.totalCybersecurityCosts,
     };
   }
+
+  private mapToDetailedSegment(model: any, companyId: string): Segment {
+    const investmentValues = [
+      0,
+      model.optimalInvestment,
+      model.optimalInvestment * 2,
+    ];
+    const details = investmentValues.map((investment: number) => {
+      // TODO use probability function from DB and evaluate in that way
+      const breachProbablity =
+        model.vulnerability / (1 + (investment / model.value) * 0.001);
+      const ebis = (model.vulnerability - breachProbablity) / model.value;
+      const enbis = ebis - investment;
+      const segmentDetail = {
+        investment: investment,
+        breachProbability: breachProbablity,
+        ebis: ebis,
+        enbis: enbis,
+      };
+      return segmentDetail;
+    });
+
+    const segment = this.mapToSegment(model, companyId);
+    segment.details = details;
+    return segment;
+  }
 }
