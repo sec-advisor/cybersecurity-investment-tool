@@ -33,6 +33,7 @@
     "@types/express-session": "^1.17.5",
     "bcrypt": "^5.0.1",
     "express-session": "^1.17.3",
+    "lodash": "^4.17.21",
     "mongoose": "^6.0.12",
     "nerdamer": "^1.1.13",
     "passport": "^0.6.0",

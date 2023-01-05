@@ -3,6 +3,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { forkJoin, from, map, Observable, switchMap, tap } from 'rxjs';
+import { range } from 'lodash';
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const nerdamer = require('nerdamer/all.min');
@@ -88,10 +89,22 @@ export class SegmentService {
   }
 
   private mapToDetailedSegment(model: any, companyId: string): Segment {
+    const factor = 3;
+    const minsteps = 10;
+    const maxsteps = 30;
+    const maxValueExact = model.optimalInvestment * factor;
+    let step = 10 ** Math.ceil(Math.log10(maxValueExact / minsteps)) / 10;
+    while (maxValueExact / step > maxsteps) {
+      step = step * 2;
+    }
     const investmentValues = [
-      0,
+      ...range(0, model.optimalInvestment, step),
       model.optimalInvestment,
-      model.optimalInvestment * 2,
+      ...range(
+        Math.ceil(model.optimalInvestment / step) * step,
+        maxValueExact,
+        step,
+      ),
     ];
     const details = investmentValues.map((investment: number) => {
       // TODO use probability function from DB and evaluate in that way
