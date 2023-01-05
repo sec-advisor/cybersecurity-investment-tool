@@ -53,6 +53,31 @@ export class SegmentController {
   }
 
   @UseGuards(AuthenticatedGuard)
+  @Get('segment/:segmentId')
+  getSegment(
+    @Param('segmentId') segmentId: string,
+  ): Observable<Segment | undefined> {
+    try {
+      return this.segmentService.getSegment(segmentId).pipe(
+        catchError(() =>
+          of({} as Segment | undefined).pipe(
+            tap(() => {
+              throw new HttpException(
+                'Getting segments failed!',
+                HttpStatus.INTERNAL_SERVER_ERROR,
+              );
+            }),
+          ),
+        ),
+      );
+    } catch (error) {
+      throw new HttpException(
+        'Getting segments failed!',
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
+  }
+  @UseGuards(AuthenticatedGuard)
   @Get('segments/:companyId')
   getSegments(
     @Param('companyId') companyId: string,

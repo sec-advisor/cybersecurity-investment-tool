@@ -18,6 +18,11 @@ export class SegmentService {
     );
   }
 
+  getSegment(segmentID: string): Observable<Segment> {
+    return from(this.segmentModel.findOne({ id: segmentID })).pipe(
+      map((segment) => segment),
+    );
+  }
   getSegments(companyId: string): Observable<Segment[]> {
     return from(this.segmentModel.find({ companyId })).pipe(
       map((segments) =>
