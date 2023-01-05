@@ -54,7 +54,7 @@ export class SegmentController {
 
   @UseGuards(AuthenticatedGuard)
   @Get('segments/:companyId')
-  getSegment(
+  getSegments(
     @Param('companyId') companyId: string,
   ): Observable<Segment[] | undefined> {
     try {
