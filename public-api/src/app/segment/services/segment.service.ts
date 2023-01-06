@@ -1,4 +1,4 @@
-import { Segment } from '@libs';
+import { OptimalInvestmentEquation, Segment } from '@libs';
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
@@ -22,9 +22,18 @@ export class SegmentService {
     );
   }
 
-  getSegment(segmentID: string): Observable<Segment> {
+  getSegment(
+    segmentID: string,
+    breachProbabilityFunction: string,
+  ): Observable<Segment> {
     return from(this.segmentModel.findById(segmentID)).pipe(
-      map((segment) => this.mapToDetailedSegment(segment, segment.companyId)),
+      map((segment) =>
+        this.mapToDetailedSegment(
+          segment,
+          segment.companyId,
+          breachProbabilityFunction,
+        ),
+      ),
     );
   }
   getSegments(companyId: string): Observable<Segment[]> {
@@ -88,7 +97,11 @@ export class SegmentService {
     };
   }
 
-  private mapToDetailedSegment(model: any, companyId: string): Segment {
+  private mapToDetailedSegment(
+    model: any,
+    companyId: string,
+    breachProbabilityFunction: string,
+  ): Segment {
     const factor = 3;
     const minsteps = 10;
     const maxsteps = 30;
@@ -108,7 +121,7 @@ export class SegmentService {
     ];
     const details = investmentValues.map((investment: number) => {
       // TODO use probability function from DB and evaluate in that way
-      const formula = nerdamer('v/(1+(z/(L*0.001)))');
+      const formula = nerdamer(breachProbabilityFunction);
       const breachProbablity = +formula.evaluate({
         v: model.calculatedVulnerability,
         z: investment,

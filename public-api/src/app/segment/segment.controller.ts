@@ -55,21 +55,32 @@ export class SegmentController {
   @UseGuards(AuthenticatedGuard)
   @Get('segment/:segmentId')
   getSegment(
+    @Request() request: UserRequest,
     @Param('segmentId') segmentId: string,
   ): Observable<Segment | undefined> {
     try {
-      return this.segmentService.getSegment(segmentId).pipe(
-        catchError(() =>
-          of({} as Segment | undefined).pipe(
-            tap(() => {
-              throw new HttpException(
-                'Getting segment failed!',
-                HttpStatus.INTERNAL_SERVER_ERROR,
-              );
-            }),
+      return this.breachProbabilityService
+        .getFunction(request.user.userId)
+        .pipe(
+          switchMap((equation) =>
+            this.segmentService.getSegment(
+              segmentId,
+              equation.breachProbabilityFunction,
+            ),
           ),
-        ),
-      );
+        )
+        .pipe(
+          catchError(() =>
+            of({} as Segment | undefined).pipe(
+              tap(() => {
+                throw new HttpException(
+                  'Getting segment failed!',
+                  HttpStatus.INTERNAL_SERVER_ERROR,
+                );
+              }),
+            ),
+          ),
+        );
     } catch (error) {
       throw new HttpException(
         'Getting segment failed!',
