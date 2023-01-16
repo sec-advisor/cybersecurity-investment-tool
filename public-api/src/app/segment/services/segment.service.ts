@@ -1,9 +1,9 @@
-import { OptimalInvestmentEquation, Segment } from '@libs';
+import { Segment } from '@libs';
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
+import { range } from 'lodash';
 import { Model } from 'mongoose';
 import { forkJoin, from, map, Observable, switchMap, tap } from 'rxjs';
-import { range } from 'lodash';
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const nerdamer = require('nerdamer/all.min');
@@ -22,7 +22,7 @@ export class SegmentService {
     );
   }
 
-  getSegment(
+  getSegmentDetail(
     segmentID: string,
     breachProbabilityFunction: string,
   ): Observable<Segment> {

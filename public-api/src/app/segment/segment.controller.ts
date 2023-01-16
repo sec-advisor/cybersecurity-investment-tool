@@ -53,8 +53,8 @@ export class SegmentController {
   }
 
   @UseGuards(AuthenticatedGuard)
-  @Get('segment/:segmentId')
-  getSegment(
+  @Get('segment-details/:segmentId')
+  getSegmentDetail(
     @Request() request: UserRequest,
     @Param('segmentId') segmentId: string,
   ): Observable<Segment | undefined> {
@@ -63,7 +63,7 @@ export class SegmentController {
         .getFunction(request.user.userId)
         .pipe(
           switchMap((equation) =>
-            this.segmentService.getSegment(
+            this.segmentService.getSegmentDetail(
               segmentId,
               equation.breachProbabilityFunction,
             ),

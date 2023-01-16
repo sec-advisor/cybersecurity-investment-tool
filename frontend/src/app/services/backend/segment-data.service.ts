@@ -22,6 +22,19 @@ export class SegmentDataService {
       );
   }
 
+  getSegmentDetails(segmentId: string): Observable<Segment | undefined> {
+    return this.http
+      .get<Segment>(
+        `${backend.url}/segments/segment-details/${segmentId}`,
+        httpOptions,
+      )
+      .pipe(
+        catchError((err) =>
+          of(undefined).pipe(tap(() => console.error(err.error.message))),
+        ),
+      );
+  }
+
   getSegments(companyId: string): Observable<Segment[]> {
     return this.http
       .get<Segment[]>(
