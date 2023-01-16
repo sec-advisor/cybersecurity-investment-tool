@@ -10,28 +10,26 @@
     ></button>
   </div>
   <div class="modal-body">
-    <div class="container pt-3">
-      <table class="table table-bordered table-hover table-striped">
-        <thead>
-          <tr>
-            <th class="text-center" scope="col">Investment</th>
-            <th class="text-center" scope="col">Breach Probability</th>
-            <th class="text-center" scope="col">EBIS</th>
-            <th class="text-center" scope="col">ENBIS Rate</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr
-            *ngFor="let detail of stream.details"
-            [class.highlight]="detail.investment === stream.optimalInvestment"
-          >
-            <td scope="row" class="text-end">{{ detail.investment }}</td>
-            <td class="text-end">{{ detail.breachProbability }}</td>
-            <td class="text-end">{{ detail.ebis }}</td>
-            <td class="text-end">{{ detail.enbis }}</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+    <table class="table table-bordered table-hover table-striped">
+      <thead>
+        <tr>
+          <th class="text-center" scope="col">Investment</th>
+          <th class="text-center" scope="col">Breach Probability</th>
+          <th class="text-center" scope="col">EBIS</th>
+          <th class="text-center" scope="col">ENBIS Rate</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          *ngFor="let detail of stream.details"
+          [class.highlight]="detail.investment === stream.optimalInvestment"
+        >
+          <td scope="row" class="text-end">{{ detail.investment }}</td>
+          <td class="text-end">{{ detail.breachProbability }}</td>
+          <td class="text-end">{{ detail.ebis }}</td>
+          <td class="text-end">{{ detail.enbis }}</td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </ng-container>
