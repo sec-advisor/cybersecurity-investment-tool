@@ -129,7 +129,7 @@ export class SegmentService {
     }
     const investmentValues = [
       ...range(0, model.optimalInvestment, step),
-      model.optimalInvestment,
+      ...(model.optimalInvestment % step == 0 ? [] : [model.optimalInvestment]),
       ...range(
         Math.ceil(model.optimalInvestment / step) * step,
         maxValueExact,
