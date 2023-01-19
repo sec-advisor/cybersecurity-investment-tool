@@ -33,7 +33,6 @@ export class InvestmentDetailTableComponent implements OnInit {
     // @ts-ignore
     this.segmentDataService
       .getInvestmentDetails(this.segmentId, newInvestmentValue)
-      .pipe(take(1))
       .subscribe((value) => {
         this.investmentDetail = value;
       });
