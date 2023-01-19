@@ -120,7 +120,6 @@ export class SegmentService {
       ),
     ];
     const details = investmentValues.map((investment: number) => {
-      // TODO use probability function from DB and evaluate in that way
       const formula = nerdamer(breachProbabilityFunction);
       const breachProbablity = +formula.evaluate({
         v: model.calculatedVulnerability,
