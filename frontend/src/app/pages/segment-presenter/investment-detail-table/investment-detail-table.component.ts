@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Segment } from '@libs';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { catchError, Observable, of, switchMap, take, tap } from 'rxjs';
+import { Observable, take } from 'rxjs';
 
 import { SegmentDataService } from '../../../services/backend/segment-data.service';
 import { SegmentDetail } from '@libs/dist/api-interfaces';
