@@ -1,4 +1,4 @@
-import { Segment } from '@libs';
+import {Segment, SegmentDetail} from '@libs';
 import {
   Body,
   Controller,
@@ -88,6 +88,45 @@ export class SegmentController {
       );
     }
   }
+
+    @UseGuards(AuthenticatedGuard)
+    @Post('segment-details/:segmentId/investmentCalculate')
+    getInvestmentCalculation(
+        @Request() request: UserRequest,
+        @Param('segmentId') segmentId: string,
+        @Body('investment') investment: number,
+    ): Observable<SegmentDetail | undefined> {
+        try {
+            return this.breachProbabilityService
+                .getFunction(request.user.userId)
+                .pipe(
+                    switchMap((equation) =>
+                        this.segmentService.getInvestmentDetail(
+                            segmentId,
+                            equation.breachProbabilityFunction,
+                            investment
+                        ),
+                    ),
+                )
+                .pipe(
+                    catchError(() =>
+                        of({} as SegmentDetail | undefined).pipe(
+                            tap(() => {
+                                throw new HttpException(
+                                    'Getting segment failed!',
+                                    HttpStatus.INTERNAL_SERVER_ERROR,
+                                );
+                            }),
+                        ),
+                    ),
+                );
+        } catch (error) {
+            throw new HttpException(
+                'Getting segment failed!',
+                HttpStatus.INTERNAL_SERVER_ERROR,
+            );
+        }
+    }
 
   @UseGuards(AuthenticatedGuard)
   @Get('segments/:companyId')

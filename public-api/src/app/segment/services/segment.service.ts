@@ -1,9 +1,9 @@
-import { Segment } from '@libs';
-import { Injectable } from '@nestjs/common';
-import { InjectModel } from '@nestjs/mongoose';
-import { range } from 'lodash';
-import { Model } from 'mongoose';
-import { forkJoin, from, map, Observable, switchMap, tap } from 'rxjs';
+import {Segment, SegmentDetail} from '@libs';
+import {Injectable} from '@nestjs/common';
+import {InjectModel} from '@nestjs/mongoose';
+import {range} from 'lodash';
+import {Model} from 'mongoose';
+import {forkJoin, from, map, Observable, switchMap, tap} from 'rxjs';
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const nerdamer = require('nerdamer/all.min');
@@ -36,6 +36,23 @@ export class SegmentService {
       ),
     );
   }
+
+  getInvestmentDetail(
+      segmentID: string,
+      breachProbabilityFunction: string,
+      investment: number): Observable<SegmentDetail> {
+    return from(this.segmentModel.findById(segmentID)).pipe(
+        map((segment) =>
+            this.mapToInvestmentDetail(
+                segment,
+                breachProbabilityFunction,
+                investment
+            ),
+        ),
+    );
+  }
+
+
   getSegments(companyId: string): Observable<Segment[]> {
     return from(this.segmentModel.find({ companyId })).pipe(
       map((segments) =>
@@ -119,27 +136,34 @@ export class SegmentService {
         step,
       ),
     ];
-    const details = investmentValues.map((investment: number) => {
-      const formula = nerdamer(breachProbabilityFunction);
-      const breachProbablity = +formula.evaluate({
-        v: model.calculatedVulnerability,
-        z: investment,
-        L: model.value,
-      });
-      const ebis =
-        (model.calculatedVulnerability - breachProbablity) * model.value;
-      const enbis = ebis - investment;
-      const segmentDetail = {
-        investment: investment,
-        breachProbability: breachProbablity,
-        ebis: ebis,
-        enbis: enbis,
-      };
-      return segmentDetail;
-    });
+    const details = investmentValues.map((investment: number) =>
+      this.mapToInvestmentDetail(model, breachProbabilityFunction, investment),
+    );
 
     const segment = this.mapToSegment(model, companyId);
     segment.details = details;
     return segment;
+  }
+
+  private mapToInvestmentDetail(
+    model: any,
+    breachProbabilityFunction: string,
+    investment: number,
+  ): SegmentDetail {
+    const formula = nerdamer(breachProbabilityFunction);
+    const breachProbablity = +formula.evaluate({
+      v: model.calculatedVulnerability,
+      z: investment,
+      L: model.value,
+    });
+    const ebis =
+      (model.calculatedVulnerability - breachProbablity) * model.value;
+    const enbis = ebis - investment;
+    return {
+      investment: investment,
+      breachProbability: breachProbablity,
+      ebis: ebis,
+      enbis: enbis,
+    };
   }
 }
