@@ -88,6 +88,7 @@ export class SegmentController {
       );
     }
   }
+
   @UseGuards(AuthenticatedGuard)
   @Get('segments/:companyId')
   getSegments(
