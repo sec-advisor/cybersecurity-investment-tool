@@ -24,10 +24,18 @@
       <tbody>
         <!-- Input row -->
         <tr>
-          <td scope="row" class="text-end"><input type="number" class="text-end" (keyup)="changeInvestment($event)" /> </td>
-          <td class="text-end">{{investmentDetail.breachProbability |number}}</td>
-          <td class="text-end">{{investmentDetail.ebis | number }}</td>
-          <td class="text-end">{{ investmentDetail.enbis | number}}</td>
+          <td scope="row" class="text-end">
+            <input
+              type="number"
+              class="text-end"
+              (keyup)="changeInvestment($event)"
+            />
+          </td>
+          <td class="text-end">
+            {{ investmentDetail.breachProbability | number }}
+          </td>
+          <td class="text-end">{{ investmentDetail.ebis | number }}</td>
+          <td class="text-end">{{ investmentDetail.enbis | number }}</td>
         </tr>
         <tr
           *ngFor="let detail of stream.details"
