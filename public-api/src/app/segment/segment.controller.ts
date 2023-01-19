@@ -90,7 +90,7 @@ export class SegmentController {
   }
 
   @UseGuards(AuthenticatedGuard)
-  @Post('segment-details/:segmentId/investmentCalculate')
+  @Post('segment-details/:segmentId/investment-calculate')
   getInvestmentCalculation(
     @Request() request: UserRequest,
     @Param('segmentId') segmentId: string,

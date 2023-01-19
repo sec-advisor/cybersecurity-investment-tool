@@ -5,6 +5,7 @@ import { catchError, Observable, of, tap } from 'rxjs';
 
 import { backend } from '../../constants/backend.constants';
 import { httpOptions } from '../../constants/http-options.constants';
+import { SegmentDetail } from '@libs/dist/api-interfaces';
 
 @Injectable({
   providedIn: 'root',
@@ -31,6 +32,25 @@ export class SegmentDataService {
       .pipe(
         catchError((err) =>
           of(undefined).pipe(tap(() => console.error(err.error.message))),
+        ),
+      );
+  }
+
+  getInvestmentDetails(
+    segmentId: string,
+    investment: number,
+  ): Observable<SegmentDetail> | undefined {
+    return this.http
+      .post<SegmentDetail>(
+        `${backend.url}/segments/segment-details/${segmentId}/investment-calculate`,
+        { investment: investment },
+        httpOptions,
+      )
+      .pipe(
+        catchError((err) =>
+          of({} as SegmentDetail).pipe(
+            tap(() => console.error(err.error.message)),
+          ),
         ),
       );
   }

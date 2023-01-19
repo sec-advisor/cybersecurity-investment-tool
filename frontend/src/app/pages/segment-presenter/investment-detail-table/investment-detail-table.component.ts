@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Segment } from '@libs';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { Observable } from 'rxjs';
+import { catchError, Observable, of, switchMap, take, tap } from 'rxjs';
 
 import { SegmentDataService } from '../../../services/backend/segment-data.service';
 import { SegmentDetail } from '@libs/dist/api-interfaces';
@@ -29,12 +29,14 @@ export class InvestmentDetailTableComponent implements OnInit {
 
   changeInvestment(event: any) {
     const newInvestmentValue = event.target.value;
-    this.investmentDetail = {
-      investment: newInvestmentValue,
-      breachProbability: newInvestmentValue,
-      ebis: newInvestmentValue,
-      enbis: newInvestmentValue,
-    };
+
+    // @ts-ignore
+    this.segmentDataService
+      .getInvestmentDetails(this.segmentId, newInvestmentValue)
+      .pipe(take(1))
+      .subscribe((value) => {
+        this.investmentDetail = value;
+      });
   }
 
   ngOnInit() {
