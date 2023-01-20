@@ -1,0 +1,58 @@
+<ng-container *ngIf="viewModel$ | async as viewModel">
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-title">
+      Investment Analysis - {{ viewModel.segment?.name }}
+    </h4>
+    <button
+      type="button"
+      class="btn-close"
+      aria-label="Close"
+      tabindex="-1"
+      (click)="modal.dismiss('Cross click')"
+    ></button>
+  </div>
+  <div class="modal-body">
+    <table class="table table-bordered table-hover table-striped">
+      <thead>
+        <tr>
+          <th class="text-center" scope="col">Investment</th>
+          <th class="text-center" scope="col">Breach Probability</th>
+          <th class="text-center" scope="col">EBIS</th>
+          <th class="text-center" scope="col">ENBIS Rate</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Input row -->
+        <tr>
+          <td scope="row" class="text-end" [formGroup]="viewModel.form">
+            <input
+              type="number"
+              class="text-end w-100"
+              formControlName="investmentInput"
+            />
+          </td>
+          <td class="text-end">
+            {{ viewModel.customInvestment?.breachProbability | number }}
+          </td>
+          <td class="text-end">
+            {{ viewModel.customInvestment?.ebis | number }}
+          </td>
+          <td class="text-end">
+            {{ viewModel.customInvestment?.enbis | number }}
+          </td>
+        </tr>
+        <tr
+          *ngFor="let detail of viewModel.segment?.details"
+          [class.highlight]="
+            detail.investment === viewModel.segment?.optimalInvestment
+          "
+        >
+          <td scope="row" class="text-end">{{ detail.investment | number }}</td>
+          <td class="text-end">{{ detail.breachProbability | number }}</td>
+          <td class="text-end">{{ detail.ebis | number }}</td>
+          <td class="text-end">{{ detail.enbis | number }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</ng-container>

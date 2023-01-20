@@ -23,7 +23,13 @@
           <td class="text-center">
             <button
               type="button"
-              class="bi bi-pencil-fill text-secondary icon-button me-2"
+              class="bi bi-table icon-button me-1"
+              aria-label="Detail View"
+              (click)="showInvestmentDetails(segment)"
+            ></button>
+            <button
+              type="button"
+              class="bi bi-pencil-fill text-secondary icon-button me-1"
               aria-label="Delete"
               (click)="editSegment(segment)"
             ></button>

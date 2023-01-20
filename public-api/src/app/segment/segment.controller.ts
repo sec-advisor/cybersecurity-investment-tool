@@ -1,4 +1,4 @@
-import { Segment } from '@libs';
+import { Segment, SegmentDetail } from '@libs';
 import {
   Body,
   Controller,
@@ -53,8 +53,84 @@ export class SegmentController {
   }
 
   @UseGuards(AuthenticatedGuard)
+  @Get('segment-details/:segmentId')
+  getSegmentDetail(
+    @Request() request: UserRequest,
+    @Param('segmentId') segmentId: string,
+  ): Observable<Segment | undefined> {
+    try {
+      return this.breachProbabilityService
+        .getFunction(request.user.userId)
+        .pipe(
+          switchMap((equation) =>
+            this.segmentService.getSegmentDetail(
+              segmentId,
+              equation.breachProbabilityFunction,
+            ),
+          ),
+        )
+        .pipe(
+          catchError(() =>
+            of({} as Segment | undefined).pipe(
+              tap(() => {
+                throw new HttpException(
+                  'Getting segment failed!',
+                  HttpStatus.INTERNAL_SERVER_ERROR,
+                );
+              }),
+            ),
+          ),
+        );
+    } catch (error) {
+      throw new HttpException(
+        'Getting segment failed!',
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
+  }
+
+  @UseGuards(AuthenticatedGuard)
+  @Post('segment-details/:segmentId/investment-calculate')
+  getInvestmentCalculation(
+    @Request() request: UserRequest,
+    @Param('segmentId') segmentId: string,
+    @Body('investment') investment: number,
+  ): Observable<SegmentDetail | undefined> {
+    try {
+      return this.breachProbabilityService
+        .getFunction(request.user.userId)
+        .pipe(
+          switchMap((equation) =>
+            this.segmentService.getInvestmentDetail(
+              segmentId,
+              equation.breachProbabilityFunction,
+              investment,
+            ),
+          ),
+        )
+        .pipe(
+          catchError(() =>
+            of({} as SegmentDetail | undefined).pipe(
+              tap(() => {
+                throw new HttpException(
+                  'Getting segment failed!',
+                  HttpStatus.INTERNAL_SERVER_ERROR,
+                );
+              }),
+            ),
+          ),
+        );
+    } catch (error) {
+      throw new HttpException(
+        'Getting segment failed!',
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
+  }
+
+  @UseGuards(AuthenticatedGuard)
   @Get('segments/:companyId')
-  getSegment(
+  getSegments(
     @Param('companyId') companyId: string,
   ): Observable<Segment[] | undefined> {
     try {

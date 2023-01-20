@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Segment } from '@libs';
+import { SegmentDetail } from '@libs/dist/api-interfaces';
 import { catchError, Observable, of, tap } from 'rxjs';
 
 import { backend } from '../../constants/backend.constants';
@@ -18,6 +19,38 @@ export class SegmentDataService {
       .pipe(
         catchError((err) =>
           of({} as string).pipe(tap(() => console.error(err.error.message))),
+        ),
+      );
+  }
+
+  getSegmentDetails(segmentId: string): Observable<Segment | undefined> {
+    return this.http
+      .get<Segment>(
+        `${backend.url}/segments/segment-details/${segmentId}`,
+        httpOptions,
+      )
+      .pipe(
+        catchError((err) =>
+          of(undefined).pipe(tap(() => console.error(err.error.message))),
+        ),
+      );
+  }
+
+  getInvestmentDetails(
+    segmentId: string,
+    investment: number,
+  ): Observable<SegmentDetail | undefined> {
+    return this.http
+      .post<SegmentDetail>(
+        `${backend.url}/segments/segment-details/${segmentId}/investment-calculate`,
+        { investment: investment },
+        httpOptions,
+      )
+      .pipe(
+        catchError((err) =>
+          of({} as SegmentDetail).pipe(
+            tap(() => console.error(err.error.message)),
+          ),
         ),
       );
   }

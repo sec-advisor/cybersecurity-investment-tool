@@ -22,7 +22,7 @@
     "test:e2e": "jest --config ./test/jest-e2e.json"
   },
   "dependencies": {
-    "@libs": "file:libs/libs-v1.0.9.tgz",
+    "@libs": "file:libs/libs-v1.0.11.tgz",
     "@nestjs/common": "^8.0.0",
     "@nestjs/core": "^8.0.0",
     "@nestjs/mongoose": "^9.0.1",
@@ -33,6 +33,7 @@
     "@types/express-session": "^1.17.5",
     "bcrypt": "^5.0.1",
     "express-session": "^1.17.3",
+    "lodash": "^4.17.21",
     "mongoose": "^6.0.12",
     "nerdamer": "^1.1.13",
     "passport": "^0.6.0",

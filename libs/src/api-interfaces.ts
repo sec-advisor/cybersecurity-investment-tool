@@ -19,6 +19,12 @@ export interface Input {
   value?: number;
 }
 
+export interface SegmentDetail {
+  investment: number;
+  breachProbability: number;
+  ebis: number;
+  enbis: number;
+}
 export interface Segment {
   id?: string;
   companyId?: string;
@@ -37,6 +43,7 @@ export interface Segment {
     investment: number,
     enbis: number
   }[];
+  details?: SegmentDetail[];
 }
 
 export interface ValueEstimation {

@@ -5,6 +5,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { LayoutsModule } from '../../layouts/layouts.module';
 import { ActionBoardComponent } from './action-board/action-board.component';
+import { InvestmentDetailTableComponent } from './investment-detail-table/investment-detail-table.component';
 import { SegmentDetailTableComponent } from './segment-detail-table/segment-detail-table.component';
 import { SegmentOverviewTableComponent } from './segment-overview-table/segment-overview-table.component';
 import { SegmentOverviewComponent } from './segment-overview/segment-overview.component';
@@ -20,6 +21,7 @@ import { SegmentRegistratorComponent } from './segment-registrator/segment-regis
     ActionBoardComponent,
     SegmentDetailTableComponent,
     SegmentOverviewTableComponent,
+    InvestmentDetailTableComponent,
   ],
   exports: [SegmentPresenterComponent],
 })
