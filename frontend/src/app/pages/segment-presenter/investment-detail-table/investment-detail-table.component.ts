@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { Segment } from '@libs';
+import { FormBuilder } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { Observable } from 'rxjs';
+import { merge, Observable, of } from 'rxjs';
+import { debounceTime, map, switchMap } from 'rxjs/operators';
 
 import { SegmentDataService } from '../../../services/backend/segment-data.service';
-import { SegmentDetail } from '@libs/dist/api-interfaces';
+import { InvestmentDetailViewModel } from './models/investment-detail-view.model';
 
 @Component({
   selector: 'app-investment-detail-table',
@@ -13,31 +14,46 @@ import { SegmentDetail } from '@libs/dist/api-interfaces';
 })
 export class InvestmentDetailTableComponent implements OnInit {
   segmentId!: string;
-  stream$!: Observable<Segment | undefined>;
+  viewModel$!: Observable<InvestmentDetailViewModel>;
 
   constructor(
+    private formBuilder: FormBuilder,
     private segmentDataService: SegmentDataService,
     public modal: NgbActiveModal,
   ) {}
 
-  investmentDetail: SegmentDetail = {
-    investment: 0,
-    breachProbability: NaN,
-    ebis: NaN,
-    enbis: NaN,
-  };
-
-  changeInvestment(event: any) {
-    const newInvestmentValue = event.target.value;
-
-    this.segmentDataService
-      .getInvestmentDetails(this.segmentId, newInvestmentValue)
-      ?.subscribe((investmentDetail) => {
-        this.investmentDetail = investmentDetail;
-      });
+  ngOnInit() {
+    this.viewModel$ = this.getViewModel();
   }
 
-  ngOnInit() {
-    this.stream$ = this.segmentDataService.getSegmentDetails(this.segmentId);
+  private getViewModel(): Observable<InvestmentDetailViewModel> {
+    return this.segmentDataService.getSegmentDetails(this.segmentId).pipe(
+      map((segment) => ({
+        segment,
+        form: this.formBuilder.group({ investmentInput: [undefined] }),
+        customInvestment: {
+          investment: 0,
+          breachProbability: NaN,
+          ebis: NaN,
+          enbis: NaN,
+        },
+      })),
+      switchMap((viewModel) =>
+        merge(
+          of(viewModel),
+          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+          viewModel.form.get('investmentInput')!.valueChanges.pipe(
+            debounceTime(500),
+            switchMap((investment) =>
+              this.segmentDataService.getInvestmentDetails(
+                this.segmentId,
+                investment,
+              ),
+            ),
+            map((customInvestment) => ({ ...viewModel, customInvestment })),
+          ),
+        ),
+      ),
+    );
   }
 }

@@ -1,11 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Segment } from '@libs';
+import { SegmentDetail } from '@libs/dist/api-interfaces';
 import { catchError, Observable, of, tap } from 'rxjs';
 
 import { backend } from '../../constants/backend.constants';
 import { httpOptions } from '../../constants/http-options.constants';
-import { SegmentDetail } from '@libs/dist/api-interfaces';
 
 @Injectable({
   providedIn: 'root',
@@ -39,7 +39,7 @@ export class SegmentDataService {
   getInvestmentDetails(
     segmentId: string,
     investment: number,
-  ): Observable<SegmentDetail> | undefined {
+  ): Observable<SegmentDetail | undefined> {
     return this.http
       .post<SegmentDetail>(
         `${backend.url}/segments/segment-details/${segmentId}/investment-calculate`,

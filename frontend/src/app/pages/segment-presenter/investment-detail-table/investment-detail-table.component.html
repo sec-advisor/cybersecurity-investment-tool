@@ -1,7 +1,7 @@
-<ng-container *ngIf="stream$ | async as stream">
+<ng-container *ngIf="viewModel$ | async as viewModel">
   <div class="modal-header">
     <h4 class="modal-title" id="modal-title">
-      Investment Analysis - {{ stream.name }}
+      Investment Analysis - {{ viewModel.segment?.name }}
     </h4>
     <button
       type="button"
@@ -24,22 +24,28 @@
       <tbody>
         <!-- Input row -->
         <tr>
-          <td scope="row" class="text-end">
+          <td scope="row" class="text-end" [formGroup]="viewModel.form">
             <input
               type="number"
-              class="text-end"
-              (keyup)="changeInvestment($event)"
+              class="text-end w-100"
+              formControlName="investmentInput"
             />
           </td>
           <td class="text-end">
-            {{ investmentDetail.breachProbability | number }}
+            {{ viewModel.customInvestment?.breachProbability | number }}
           </td>
-          <td class="text-end">{{ investmentDetail.ebis | number }}</td>
-          <td class="text-end">{{ investmentDetail.enbis | number }}</td>
+          <td class="text-end">
+            {{ viewModel.customInvestment?.ebis | number }}
+          </td>
+          <td class="text-end">
+            {{ viewModel.customInvestment?.enbis | number }}
+          </td>
         </tr>
         <tr
-          *ngFor="let detail of stream.details"
-          [class.highlight]="detail.investment === stream.optimalInvestment"
+          *ngFor="let detail of viewModel.segment?.details"
+          [class.highlight]="
+            detail.investment === viewModel.segment?.optimalInvestment
+          "
         >
           <td scope="row" class="text-end">{{ detail.investment | number }}</td>
           <td class="text-end">{{ detail.breachProbability | number }}</td>
