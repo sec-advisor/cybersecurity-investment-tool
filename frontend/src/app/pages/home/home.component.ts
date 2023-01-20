@@ -13,7 +13,7 @@ import { HomeService } from './services/home.service';
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit {
-  stream$!: Observable<{ profile: BusinessProfile | undefined }>;
+  stream$!: Observable<{ profile?: BusinessProfile }>;
 
   constructor(
     private loginService: LoginService,

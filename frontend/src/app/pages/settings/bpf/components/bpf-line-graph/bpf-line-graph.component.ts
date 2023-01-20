@@ -9,9 +9,9 @@ import {
 import { Segment } from '@libs';
 import { LegendPosition } from '@swimlane/ngx-charts';
 import { Subscriber } from 'rxjs';
-import { chartData } from './data';
 
 import { EquationDataService } from '../../../../../services/backend/equation-data.service';
+import { chartData } from './data';
 
 @Component({
   selector: 'app-bpf-line-graph',
@@ -72,7 +72,6 @@ export class BpfLineGraphComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   private changedSegments(segments: Segment[]): void {
-    console.log('Segement changed, do the update');
     segments.forEach((segment, index) => {
       if (segment && segment.enbisCurve) {
         this.chartData[index][1].series = segment.enbisCurve.map((point) => ({
