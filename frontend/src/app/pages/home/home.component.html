@@ -25,7 +25,7 @@
 
         <ng-container *ngIf="stream$ | async as stream; else loading">
           <ng-container *ngIf="stream.profile">
-            <h2>Hi, {{ stream.profile?.companyName }}</h2>
+            <h2>Hi, {{ stream.profile.companyName }}</h2>
             <p>
               Please use the main menu on the left to interact with the tool.
             </p>
