@@ -28,10 +28,13 @@ services:
       - FRONTEND_URL=${HOST_URL}
     build:
       context: ./public-api/
-    ports:
-      - 3333:3333
     depends_on:
       - mongo-seed
+    labels:
+    - "traefik.enable=true"
+    - "traefik.http.routers.backend.entrypoints=web"
+    - "traefik.http.routers.backend.rule=HostRegexp(`{catchall:.*}`) && PathPrefix(`/api`)"
+    - "traefik.http.services.backend.loadbalancer.server.port=3333"
 
   frontend:
     environment:
