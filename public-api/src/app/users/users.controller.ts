@@ -1,12 +1,5 @@
 import { User } from '@libs';
-import {
-  Body,
-  Controller,
-  Get,
-  Post,
-  Request,
-  UseGuards,
-} from '@nestjs/common';
+import { Body, Controller, Get, Post, Request, UseGuards } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
 import { from, map, Observable, of, switchMap } from 'rxjs';
 
@@ -16,7 +9,7 @@ import { UsersService } from './services/users.service';
 
 @Controller('users')
 export class UsersController {
-  constructor(private readonly usersService: UsersService) {}
+  constructor(private readonly usersService: UsersService) { }
 
   @Post('/signup')
   addUser(

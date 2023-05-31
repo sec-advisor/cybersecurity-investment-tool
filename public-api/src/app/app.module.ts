@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 
+import { AnalyseCompaniesModule } from './analyse-companies/analyse-companies.module';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
@@ -9,8 +10,8 @@ import { BusinessProfileModule } from './business-profile/business-profile.modul
 import { RecommendationModule } from './recommendation/recommendation.module';
 import { SegmentDefinitionModule } from './segment-definition/segment-definition.module';
 import { SegmentModule } from './segment/segment.module';
-import { UsersModule } from './users/users.module';
 import { SettingsModule } from './settings/settings.module';
+import { UsersModule } from './users/users.module';
 
 @Module({
   imports: [
@@ -25,8 +26,9 @@ import { SettingsModule } from './settings/settings.module';
     UsersModule,
     AuthModule,
     SettingsModule,
+    AnalyseCompaniesModule
   ],
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {}
+export class AppModule { }
