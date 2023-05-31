@@ -1,4 +1,4 @@
-import calculateCorrelation from 'calculate-correlation';
+// import euclideanDistance from 'euclidean-distance';
 
 import { Cloud, getNormalizedCloud, getNormalizedCloud1 } from './models/cloud-comparer';
 import { Country, getNormalizedCountry, getNormalizedCountry1 } from './models/country-comparer';
@@ -23,8 +23,8 @@ import { getNormalizedRemote, getNormalizedRemote1 } from './models/remote_compa
 
 // eslint-disable-next-line prettier/prettier
 const calculateCorrelation = require("calculate-correlation");
+const euclideanDistance = require("euclidean-distance");
 // eslint-disable-next-line @typescript-eslint/no-var-requires
-const euclideanDistance = require("calculate-correlation");
 // import euclideanDistance from 'euclidean-distance';
 
 // export interface Boundaries {

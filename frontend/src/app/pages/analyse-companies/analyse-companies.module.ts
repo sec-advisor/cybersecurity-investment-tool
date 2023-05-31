@@ -3,10 +3,12 @@ import { NgModule } from '@angular/core';
 
 import { AnalyseCompaniesComponent } from './analyse-companies.component';
 import { AnalyseCompaniesViewService } from './services/analyse-companies-view.service';
+import { NgApexchartsModule } from 'ng-apexcharts';
 
 @NgModule({
   imports: [
-    CommonModule
+    CommonModule,
+    NgApexchartsModule
   ],
   providers: [AnalyseCompaniesViewService],
   declarations: [AnalyseCompaniesComponent]

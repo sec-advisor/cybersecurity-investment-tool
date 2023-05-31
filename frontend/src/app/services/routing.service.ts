@@ -101,7 +101,7 @@ export class RoutingService implements OnDestroy {
   reset(): void {
     this.pages.forEach((page) => {
       page.active = false;
-      if (![Page.Home, Page.BusinessProfile, Page.Settings].includes(page.id)) {
+      if (![Page.Home, Page.BusinessProfile, Page.Settings, Page.AnalyseCompanies].includes(page.id)) {
         page.disabled = true;
       }
     });

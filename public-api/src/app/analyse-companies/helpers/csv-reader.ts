@@ -6,7 +6,7 @@ import { Observable, Observer } from 'rxjs';
 export const readCSV = (): Observable<object[]> => {
   const csvFilePath = path.resolve(
     __dirname,
-    '../assets/Data_10000_entries_test.csv',
+    '../../../assets/Data_10000_entries_test.csv',
   );
 
   const headers = [

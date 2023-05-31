@@ -17,6 +17,7 @@ import { SegmentPresenterModule } from './pages/segment-presenter/segment-presen
 import { SettingsModule } from './pages/settings/settings.module';
 import { CustomReuseStrategy } from './routing';
 import { BackendUrlResolverService } from './services/backend-url-resolver.service';
+import { AnalyseCompaniesModule } from './pages/analyse-companies/analyse-companies.module';
 
 registerLocaleData(localeDECH);
 
@@ -35,6 +36,7 @@ registerLocaleData(localeDECH);
     RecommendationModule,
     BrowserAnimationsModule,
     SettingsModule,
+    AnalyseCompaniesModule
   ],
   providers: [
     {
@@ -49,4 +51,4 @@ registerLocaleData(localeDECH);
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }

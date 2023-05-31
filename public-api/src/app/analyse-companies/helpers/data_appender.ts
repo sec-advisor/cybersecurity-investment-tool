@@ -5,7 +5,7 @@ import { NetworkInfrastructure } from './models/network-infrastructor-comparer';
 import { RemoteAccess } from './models/remote-access-comparer';
 
 export const appendData = (data: object[]): object[] => {
-  return data.map((d) => ({ ...d, ...getRandomData() }));
+  return data.map((d, index) => ({ ...d, id: index, ...getRandomData() }));
 };
 
 const getRandomData = () => {
