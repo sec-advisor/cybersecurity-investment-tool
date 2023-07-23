@@ -1,29 +1,50 @@
 // import euclideanDistance from 'euclidean-distance';
 
-import { Cloud, getNormalizedCloud, getNormalizedCloud1 } from './models/cloud-comparer';
-import { Country, getNormalizedCountry, getNormalizedCountry1 } from './models/country-comparer';
+import { Company } from '../models/company.interface';
+import {
+  Cloud,
+  CloudEnum,
+  getNormalizedCloud,
+  getNormalizedCloud1,
+} from './models/cloud-comparer';
+import {
+  Country,
+  getNormalizedCountry,
+  getNormalizedCountry1,
+} from './models/country-comparer';
 import {
   CyberAttackThreats,
   getNormalizedCyberAttackThreats,
-  getNormalizedCyberAttackThreats1
+  getNormalizedCyberAttackThreats1,
 } from './models/cyber-attack-threats-comparer';
-import { getNormalizedMultifactor, getNormalizedMultifactor1, Multifactor } from './models/multifactor-comparer';
+import {
+  getNormalizedMultifactor,
+  getNormalizedMultifactor1,
+  Multifactor,
+} from './models/multifactor-comparer';
 import {
   getNormalizedNetworkInfrastructure,
   getNormalizedNetworkInfrastructure1,
-  NetworkInfrastructure
+  NetworkInfrastructure,
 } from './models/network-infrastructor-comparer';
 import {
   getNormalizedOrganizationSize,
   getNormalizedOrganizationSize1,
-  OrganizationSize
+  OrganizationSize,
 } from './models/organization-size-comparer';
-import { getNormalizedRemoteAccess, getNormalizedRemoteAccess1, RemoteAccess } from './models/remote-access-comparer';
-import { getNormalizedRemote, getNormalizedRemote1 } from './models/remote_comparer';
+import {
+  getNormalizedRemoteAccess,
+  getNormalizedRemoteAccess1,
+  RemoteAccess,
+} from './models/remote-access-comparer';
+import {
+  getNormalizedRemote,
+  getNormalizedRemote1,
+} from './models/remote_comparer';
 
 // eslint-disable-next-line prettier/prettier
-const calculateCorrelation = require("calculate-correlation");
-const euclideanDistance = require("euclidean-distance");
+const calculateCorrelation = require('calculate-correlation');
+const euclideanDistance = require('euclidean-distance');
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 // import euclideanDistance from 'euclidean-distance';
 
@@ -44,10 +65,13 @@ export interface MinMax {
 
 export let boundaries: Boundaries;
 
-export const findSimilarity = (data: object[]): object[] => {
+export const findSimilarity = (
+  compareCompany: Company,
+  data: object[],
+): object[] => {
   findBoundaries(data);
-  normalizeData(data);
-  return calculateEuclideanDistance(data);
+  normalizeData(compareCompany, data);
+  return calculateEuclideanDistance(compareCompany, data);
 };
 
 const numericFactors = [
@@ -67,7 +91,7 @@ export const normalize = (data: object, prop: string) => {
   return (value - boundary.min) / (boundary.max - boundary.min);
 };
 
-const normalizeData = (data: object[]) => {
+const normalizeData = (compareCompany: Company, data: object[]) => {
   data.forEach((d) => {
     const country = d['country' as keyof typeof d] as string;
     const organizationSize = d['org_size' as keyof typeof d] as string;
@@ -90,25 +114,24 @@ const normalizeData = (data: object[]) => {
     (d['cyberAttackThreatsN' as keyof typeof d] as number) =
       getNormalizedCyberAttackThreats(
         cyberAttackThreats,
-        compareEconomicCompany.cyberAttackThreats,
+        compareEconomicCompany(compareCompany).cyberAttackThreats,
       );
     (d['cloudN' as keyof typeof d] as number) = getNormalizedCloud(
-      cloud,
-      compareTechnicalCompany.cloud,
+      compareTechnicalCompany(compareCompany).cloud,
     );
     (d['multifactorN' as keyof typeof d] as number) = getNormalizedMultifactor(
       multifactor,
-      compareTechnicalCompany.multifactor,
+      compareTechnicalCompany(compareCompany).multifactor,
     );
     (d['networkInfrastructureN' as keyof typeof d] as number) =
       getNormalizedNetworkInfrastructure(
         networkInfrastructure,
-        compareTechnicalCompany.networkInfrastructure,
+        compareTechnicalCompany(compareCompany).networkInfrastructure,
       );
     (d['remoteAccessN' as keyof typeof d] as number) =
       getNormalizedRemoteAccess(
         remoteAccess,
-        compareTechnicalCompany.remoteAccess,
+        compareTechnicalCompany(compareCompany).remoteAccess,
       );
   });
 };
@@ -163,50 +186,66 @@ const findBoundaries = (data: object[]) => {
 };
 
 // TODO CH: Industry missing
-const compareCompany = {
-  revenue: 290000000,
-  marketShare: 30,
-  growthRate: 50,
-  country: 'GER' as Country,
-  organizationSize: 'Medium' as OrganizationSize,
-  remote: 50,
-};
-const compareEconomicCompany = {
-  cybersecurityInvestment: 2000000,
-  cybersecurityBudget: 2000000,
-  cybersecurityStaffing: 50,
-  cybersecurityTrainingInvestment: 30000,
-  cybersecurityInsuranceInvestment: 10000,
-  cyberAttackThreats: CyberAttackThreats.DoS,
-};
-const compareTechnicalCompany = {
-  cloud: Cloud.Private,
-  multifactor: Multifactor.Multifactor,
-  networkInfrastructure: NetworkInfrastructure.WAN,
-  remoteAccess: RemoteAccess.VPN,
-};
+const compareBusinessCompany = (compareCompany: Company) => ({
+  revenue: compareCompany.revenue,
+  marketShare: compareCompany.marketShare,
+  growthRate: compareCompany.growthRate,
+  country: compareCompany.country,
+  organizationSize: compareCompany.organizationSize,
+  remote: compareCompany.remote,
+});
+const compareEconomicCompany = (compareCompany: Company) => ({
+  cybersecurityInvestment: compareCompany.cybersecurityInvestment,
+  cybersecurityBudget: compareCompany.cybersecurityBudget,
+  cybersecurityStaffing: compareCompany.cybersecurityStaffing,
+  cybersecurityTrainingInvestment:
+    compareCompany.cybersecurityTrainingInvestment,
+  cybersecurityInsuranceInvestment:
+    compareCompany.cybersecurityInsuranceInvestment,
+  cyberAttackThreats: compareCompany.cyberAttackThreats,
+});
+const compareTechnicalCompany = (compareCompany: Company) => ({
+  cloud: compareCompany.cloud,
+  multifactor: compareCompany.multifactor,
+  networkInfrastructure: compareCompany.networkInfrastructure,
+  remoteAccess: compareCompany.remoteAccess,
+});
 
-const calculateEuclideanDistance = (data: object[]): object[] => {
+const calculateEuclideanDistance = (
+  compareCompany: Company,
+  data: object[],
+): object[] => {
   const compareObject = [
-    normalize(compareCompany, 'revenue'),
-    normalize(compareCompany, 'marketShare'),
-    normalize(compareCompany, 'growthRate'),
-    getNormalizedCountry1(compareCompany.country),
-    getNormalizedOrganizationSize1(compareCompany.organizationSize),
-    getNormalizedRemote1(compareCompany.remote),
+    normalize(compareBusinessCompany(compareCompany), 'revenue'),
+    normalize(compareBusinessCompany(compareCompany), 'marketShare'),
+    normalize(compareBusinessCompany(compareCompany), 'growthRate'),
+    getNormalizedCountry1(compareBusinessCompany(compareCompany).country),
+    getNormalizedOrganizationSize1(
+      compareBusinessCompany(compareCompany).organizationSize,
+    ),
+    getNormalizedRemote1(compareBusinessCompany(compareCompany).remote),
   ];
 
   const economicCompareObject = [
-    normalize(compareEconomicCompany, 'cybersecurityInvestment'),
-    normalize(compareEconomicCompany, 'cybersecurityBudget'),
-    normalize(compareEconomicCompany, 'cybersecurityStaffing'),
-    normalize(compareEconomicCompany, 'cybersecurityTrainingInvestment'),
-    normalize(compareEconomicCompany, 'cybersecurityInsuranceInvestment'),
+    normalize(
+      compareEconomicCompany(compareCompany),
+      'cybersecurityInvestment',
+    ),
+    normalize(compareEconomicCompany(compareCompany), 'cybersecurityBudget'),
+    normalize(compareEconomicCompany(compareCompany), 'cybersecurityStaffing'),
+    normalize(
+      compareEconomicCompany(compareCompany),
+      'cybersecurityTrainingInvestment',
+    ),
+    normalize(
+      compareEconomicCompany(compareCompany),
+      'cybersecurityInsuranceInvestment',
+    ),
     getNormalizedCyberAttackThreats1(),
   ];
 
   const technicalCompareObject = [
-    getNormalizedCloud1(),
+    getNormalizedCloud1(compareTechnicalCompany(compareCompany).cloud),
     getNormalizedMultifactor1(),
     getNormalizedNetworkInfrastructure1(),
     getNormalizedRemoteAccess1(),

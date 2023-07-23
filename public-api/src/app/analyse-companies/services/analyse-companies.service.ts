@@ -5,13 +5,14 @@ import { readCSV } from '../helpers/csv-reader';
 import { appendData } from '../helpers/data_appender';
 import { findClosed, findClosed1 } from '../helpers/find_closest';
 import { findSimilarity } from '../helpers/similarity';
+import { Company } from '../models/company.interface';
 
 @Injectable()
 export class AnalyseCompaniesService {
-  getSimilarity() {
+  getSimilarity(compareCompany: Company) {
     return readCSV().pipe(
       map((data) => appendData(data)),
-      map((data) => findSimilarity(data)),
+      map((data) => findSimilarity(compareCompany, data)),
       map((data) => ({
         data,
         closed: {

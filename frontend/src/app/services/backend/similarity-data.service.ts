@@ -4,19 +4,19 @@ import { Observable } from 'rxjs';
 
 import { backend } from '../../constants/backend.constants';
 import { httpOptions } from '../../constants/http-options.constants';
+import { Company } from '../../models/company.interface';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class SimilarityDataService {
+  constructor(private http: HttpClient) {}
 
-  constructor(private http: HttpClient) { }
-
-  getData(): Observable<any> {
-    return this.http.get(
+  getData(company: Company): Observable<any> {
+    return this.http.post(
       `${backend.url}/analyse-companies`,
+      { company },
       httpOptions,
     );
   }
-
 }

@@ -6,11 +6,14 @@ import { AnalyseCompaniesViewService } from './analyse-companies-view.service';
 describe('Service: AnalyseCompaniesView', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [AnalyseCompaniesViewService]
+      providers: [AnalyseCompaniesViewService],
     });
   });
 
-  it('should ...', inject([AnalyseCompaniesViewService], (service: AnalyseCompaniesViewService) => {
-    expect(service).toBeTruthy();
-  }));
+  it('should ...', inject(
+    [AnalyseCompaniesViewService],
+    (service: AnalyseCompaniesViewService) => {
+      expect(service).toBeTruthy();
+    },
+  ));
 });

@@ -1,0 +1,118 @@
+<ng-container *ngIf="viewModel$ | async as viewModel">
+  <div class="modal-header modal-dialog-centered">
+    <h4 class="modal-title">Company Information</h4>
+    <button
+      type="button"
+      class="btn-close"
+      aria-label="Close"
+      tabindex="-1"
+      (click)="dismiss()"
+    ></button>
+  </div>
+  <div class="modal-body">
+    <div class="input-grid">
+      <div *ngFor="let input of viewModel.inputs" class="m-1">
+        <ng-container *ngIf="input.type === 'number'">
+          <label class="small-text"> {{ input.description }}: </label>
+          <input
+            class="form-control small-input"
+            type="number"
+            [formControl]="viewModel.form.controls[input.name]"
+          />
+        </ng-container>
+        <ng-container *ngIf="input.type === 'select'">
+          <label class="small-text"> {{ input.description }}: </label>
+          <select
+            id="type-selection"
+            class="form-select"
+            [formControl]="viewModel.form.controls[input.name]"
+          >
+            <ng-container *ngFor="let option of input.options">
+              <option [value]="option.key">{{ option.value }}</option>
+            </ng-container>
+          </select>
+        </ng-container>
+      </div>
+    </div>
+
+    <!-- <form [formGroup]="form">
+        <div class="row pb-2">
+          <div class="col">
+            <div class="d-flex mb-1">
+              <label for="mitigation-rate">Mitigation Rate (%):</label>
+              <i
+                class="bi bi-info-circle text-primary info-tooltip"
+                placement="top"
+                ngbTooltip="Mitigation rate of the solution"
+              ></i>
+            </div>
+            <input
+              id="mitigation-rate"
+              class="form-control"
+              type="number"
+              min="1"
+              max="99"
+              [class.is-invalid]="isControlInvalid(form.get('mitigationRate'))"
+              formControlName="mitigationRate"
+            />
+          </div>
+          <div class="col">
+            <div class="d-flex mb-1">
+              <label for="incident-cost">Cost of Incident($):</label>
+              <i
+                class="bi bi-info-circle text-primary info-tooltip"
+                placement="top"
+                ngbTooltip="Estimated cost of a security incident"
+              ></i>
+            </div>
+            <input
+              id="incident-cost"
+              class="form-control"
+              type="number"
+              min="1"
+              [class.is-invalid]="isControlInvalid(form.get('costOfIncident'))"
+              formControlName="costOfIncident"
+            />
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <div class="d-flex mb-1">
+              <label for="incidence-occurrence"
+                >Annual Rate of Occurrence (Decimal):</label
+              >
+              <i
+                class="bi bi-info-circle text-primary info-tooltip"
+                placement="top"
+                ngbTooltip="Estimated annual rate of a incidence occurrence (decimal)"
+              ></i>
+            </div>
+            <input
+              id="incidence-occurrence"
+              class="form-control"
+              type="number"
+              min="1"
+              [class.is-invalid]="
+                isControlInvalid(form.get('incidenceOccurrence'))
+              "
+              formControlName="incidenceOccurrence"
+            />
+          </div>
+          <div class="col"></div>
+        </div>
+      </form> -->
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-secondary" (click)="dismiss()">
+      Cancel
+    </button>
+    <button
+      type="button"
+      class="btn btn-primary"
+      [disabled]="viewModel.form.invalid"
+      (click)="submit(viewModel.form)"
+    >
+      Submit
+    </button>
+  </div>
+</ng-container>

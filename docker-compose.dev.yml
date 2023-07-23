@@ -46,7 +46,7 @@ services:
     restart: always
     ports:
       - 80:4200
-      - 49153:49153
+      # - 49153:49153
     depends_on:
       - publicapi
     volumes:

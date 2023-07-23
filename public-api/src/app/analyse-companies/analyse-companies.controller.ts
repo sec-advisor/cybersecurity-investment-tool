@@ -1,15 +1,16 @@
-import { Controller, Get } from '@nestjs/common';
+import { Body, Controller, Post } from '@nestjs/common';
 
+import { Company } from './models/company.interface';
 import { AnalyseCompaniesService } from './services/analyse-companies.service';
 
 @Controller('analyse-companies')
 export class AnalyseCompaniesController {
-  constructor(private analyseCompaniesService: AnalyseCompaniesService) { }
+  constructor(private analyseCompaniesService: AnalyseCompaniesService) {}
 
   // @UseGuards(AuthenticatedGuard)
-  @Get('')
-  getSegmentDetail() {
-    console.log('hit')
-    return this.analyseCompaniesService.getSimilarity();
+  @Post('')
+  getSimilarCompanies(@Body() body) {
+    const compareCompany = body.company as Company;
+    return this.analyseCompaniesService.getSimilarity(compareCompany);
   }
 }

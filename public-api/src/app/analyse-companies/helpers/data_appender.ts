@@ -1,4 +1,4 @@
-import { Cloud } from './models/cloud-comparer';
+import { CloudEnum } from './models/cloud-comparer';
 import { CyberAttackThreats } from './models/cyber-attack-threats-comparer';
 import { Multifactor } from './models/multifactor-comparer';
 import { NetworkInfrastructure } from './models/network-infrastructor-comparer';
@@ -20,11 +20,12 @@ const getRandomData = () => {
     cybersecurityInsuranceInvestment: randomInteger(50000, 9000000),
     cyberAttackThreats: randomEnum(CyberAttackThreats),
 
-    cloud: randomEnum(Cloud),
+    cloud: randomEnum(CloudEnum),
     multifactor: randomEnum(Multifactor),
     networkInfrastructure: randomEnum(NetworkInfrastructure),
     remoteAccess: randomEnum(RemoteAccess),
   };
+  console.log(a);
   return {
     ...a,
     cybersecurityInvestment: (a.revenue / 100) * randomInteger(4, 15),

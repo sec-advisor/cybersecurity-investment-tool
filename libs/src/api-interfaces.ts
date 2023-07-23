@@ -15,7 +15,7 @@ export interface SegmentDefinition {
 export interface Input {
   key: string;
   description: string;
-  type: 'number';
+  type: "number";
   value?: number;
 }
 
@@ -40,8 +40,8 @@ export interface Segment {
   expectedLossWithInvestment?: number;
   totalCybersecurityCosts?: number;
   enbisCurve?: {
-    investment: number,
-    enbis: number
+    investment: number;
+    enbis: number;
   }[];
   details?: SegmentDetail[];
 }
@@ -104,5 +104,5 @@ export interface BpfValidationResponse {
 }
 
 export interface AppSetting {
-  bpf: string
+  bpf: string;
 }

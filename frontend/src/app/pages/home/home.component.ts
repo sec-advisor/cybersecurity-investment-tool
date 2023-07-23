@@ -28,7 +28,7 @@ export class HomeComponent implements OnInit {
 
   private getStream(): Observable<{ profile: BusinessProfile | undefined }> {
     return this.storageService.getLoggingState().pipe(
-      switchMap(isLoggedIn =>
+      switchMap((isLoggedIn) =>
         isLoggedIn
           ? this.homeService.getProfile()
           : this.loginService.showModal().pipe(

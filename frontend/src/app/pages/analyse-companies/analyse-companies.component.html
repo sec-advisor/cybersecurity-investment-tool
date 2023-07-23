@@ -1,33 +1,22 @@
-<div *ngIf="viewModel$ | async as viewModel">
-  <div class="chart-grid">
-    <apx-chart #eb [series]="viewModel.euclideanDistanceBusiness.series!"
-      [chart]="viewModel.euclideanDistanceBusiness.chart!" [xaxis]="viewModel.euclideanDistanceBusiness.xaxis!"
-      [yaxis]="viewModel.euclideanDistanceBusiness.yaxis!" [title]="viewModel.euclideanDistanceBusiness.title"
-      [tooltip]="viewModel.euclideanDistanceBusiness.tooltip"></apx-chart>
+<app-header [text]="'Analyse Companies'"></app-header>
 
-    <apx-chart #ee [series]=" viewModel.euclideanDistanceEconomic.series!"
-      [chart]="viewModel.euclideanDistanceEconomic.chart!" [xaxis]="viewModel.euclideanDistanceEconomic.xaxis!"
-      [yaxis]="viewModel.euclideanDistanceEconomic.yaxis!" [title]="viewModel.euclideanDistanceEconomic.title"
-      [tooltip]="viewModel.euclideanDistanceEconomic.tooltip"></apx-chart>
+<div
+  *ngIf="viewModel$ | async as viewModel"
+  class="content-wrapper d-flex flex-grow-1 flex-column bg-light"
+>
+  <app-analyse-companies-instruction
+    *ngIf="viewModel.showIntroduction"
+  ></app-analyse-companies-instruction>
 
-    <apx-chart #et [series]="viewModel.euclideanDistanceTechnical.series!"
-      [chart]="viewModel.euclideanDistanceTechnical.chart!" [xaxis]="viewModel.euclideanDistanceTechnical.xaxis!"
-      [yaxis]="viewModel.euclideanDistanceTechnical.yaxis!" [title]="viewModel.euclideanDistanceTechnical.title"
-      [tooltip]="viewModel.euclideanDistanceTechnical.tooltip"></apx-chart>
+  <div *ngIf="viewModel.companyInformation">
+    <div class="d-flex justify-content-end">
+      <button type="button" class="btn btn-primary m-1" (click)="showModal()">
+        Edit Company Information
+      </button>
+    </div>
 
-    <apx-chart #pb [series]="viewModel.pearsonCorrelationBusiness.series!"
-      [chart]="viewModel.pearsonCorrelationBusiness.chart!" [xaxis]="viewModel.pearsonCorrelationBusiness.xaxis!"
-      [yaxis]="viewModel.pearsonCorrelationBusiness.yaxis!" [title]="viewModel.pearsonCorrelationBusiness.title"
-      [tooltip]="viewModel.pearsonCorrelationBusiness.tooltip"></apx-chart>
-
-    <apx-chart #pe [series]="viewModel.pearsonCorrelationEconomic.series!"
-      [chart]="viewModel.pearsonCorrelationEconomic.chart!" [xaxis]="viewModel.pearsonCorrelationEconomic.xaxis!"
-      [yaxis]="viewModel.pearsonCorrelationEconomic.yaxis!" [title]="viewModel.pearsonCorrelationEconomic.title"
-      [tooltip]="viewModel.pearsonCorrelationEconomic.tooltip"></apx-chart>
-
-    <apx-chart #pt [series]="viewModel.pearsonCorrelationTechnical.series!"
-      [chart]="viewModel.pearsonCorrelationTechnical.chart!" [xaxis]="viewModel.pearsonCorrelationTechnical.xaxis!"
-      [yaxis]="viewModel.pearsonCorrelationTechnical.yaxis!" [title]="viewModel.pearsonCorrelationTechnical.title"
-      [tooltip]="viewModel.pearsonCorrelationTechnical.tooltip"></apx-chart>
+    <app-analyse-companies-comparsion-charts
+      [company]="viewModel.companyInformation"
+    ></app-analyse-companies-comparsion-charts>
   </div>
 </div>

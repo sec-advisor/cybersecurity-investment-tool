@@ -1,4 +1,9 @@
-.chart-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+:host {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.content-wrapper {
+  overflow: hidden;
 }

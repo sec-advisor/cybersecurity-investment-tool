@@ -6,11 +6,14 @@ import { SimilarityDataService } from './similarity-data.service';
 describe('Service: SimilarityData', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [SimilarityDataService]
+      providers: [SimilarityDataService],
     });
   });
 
-  it('should ...', inject([SimilarityDataService], (service: SimilarityDataService) => {
-    expect(service).toBeTruthy();
-  }));
+  it('should ...', inject(
+    [SimilarityDataService],
+    (service: SimilarityDataService) => {
+      expect(service).toBeTruthy();
+    },
+  ));
 });

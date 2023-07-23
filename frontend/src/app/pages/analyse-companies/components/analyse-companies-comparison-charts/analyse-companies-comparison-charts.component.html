@@ -1,0 +1,68 @@
+<div *ngIf="viewModel$ | async as viewModel">
+  <div class="con">
+    <div class="d-flex flex-row w-100">
+      <div class="w-50">
+        <apx-chart
+          #eb
+          [series]="viewModel.graphicData.euclideanDistanceBusiness.series!"
+          [chart]="viewModel.graphicData.euclideanDistanceBusiness.chart!"
+          [xaxis]="viewModel.graphicData.euclideanDistanceBusiness.xaxis!"
+          [yaxis]="viewModel.graphicData.euclideanDistanceBusiness.yaxis!"
+          [title]="viewModel.graphicData.euclideanDistanceBusiness.title"
+          [tooltip]="viewModel.graphicData.euclideanDistanceBusiness.tooltip"
+        ></apx-chart>
+
+        <apx-chart
+          #ee
+          [series]="viewModel.graphicData.euclideanDistanceEconomic.series!"
+          [chart]="viewModel.graphicData.euclideanDistanceEconomic.chart!"
+          [xaxis]="viewModel.graphicData.euclideanDistanceEconomic.xaxis!"
+          [yaxis]="viewModel.graphicData.euclideanDistanceEconomic.yaxis!"
+          [title]="viewModel.graphicData.euclideanDistanceEconomic.title"
+          [tooltip]="viewModel.graphicData.euclideanDistanceEconomic.tooltip"
+        ></apx-chart>
+
+        <apx-chart
+          #et
+          [series]="viewModel.graphicData.euclideanDistanceTechnical.series!"
+          [chart]="viewModel.graphicData.euclideanDistanceTechnical.chart!"
+          [xaxis]="viewModel.graphicData.euclideanDistanceTechnical.xaxis!"
+          [yaxis]="viewModel.graphicData.euclideanDistanceTechnical.yaxis!"
+          [title]="viewModel.graphicData.euclideanDistanceTechnical.title"
+          [tooltip]="viewModel.graphicData.euclideanDistanceTechnical.tooltip"
+        ></apx-chart>
+      </div>
+      <div class="w-50">
+        <apx-chart
+          #pb
+          [series]="viewModel.graphicData.pearsonCorrelationBusiness.series!"
+          [chart]="viewModel.graphicData.pearsonCorrelationBusiness.chart!"
+          [xaxis]="viewModel.graphicData.pearsonCorrelationBusiness.xaxis!"
+          [yaxis]="viewModel.graphicData.pearsonCorrelationBusiness.yaxis!"
+          [title]="viewModel.graphicData.pearsonCorrelationBusiness.title"
+          [tooltip]="viewModel.graphicData.pearsonCorrelationBusiness.tooltip"
+        ></apx-chart>
+
+        <apx-chart
+          #pe
+          [series]="viewModel.graphicData.pearsonCorrelationEconomic.series!"
+          [chart]="viewModel.graphicData.pearsonCorrelationEconomic.chart!"
+          [xaxis]="viewModel.graphicData.pearsonCorrelationEconomic.xaxis!"
+          [yaxis]="viewModel.graphicData.pearsonCorrelationEconomic.yaxis!"
+          [title]="viewModel.graphicData.pearsonCorrelationEconomic.title"
+          [tooltip]="viewModel.graphicData.pearsonCorrelationEconomic.tooltip"
+        ></apx-chart>
+
+        <apx-chart
+          #pt
+          [series]="viewModel.graphicData.pearsonCorrelationTechnical.series!"
+          [chart]="viewModel.graphicData.pearsonCorrelationTechnical.chart!"
+          [xaxis]="viewModel.graphicData.pearsonCorrelationTechnical.xaxis!"
+          [yaxis]="viewModel.graphicData.pearsonCorrelationTechnical.yaxis!"
+          [title]="viewModel.graphicData.pearsonCorrelationTechnical.title"
+          [tooltip]="viewModel.graphicData.pearsonCorrelationTechnical.tooltip"
+        ></apx-chart>
+      </div>
+    </div>
+  </div>
+</div>

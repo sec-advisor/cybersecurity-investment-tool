@@ -10,7 +10,7 @@ export class AuthGuardService implements CanActivate {
   constructor(
     public localStorageService: LocalStorageService,
     private routingService: RoutingService,
-  ) { }
+  ) {}
 
   canActivate(): boolean {
     return true;

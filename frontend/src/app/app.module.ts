@@ -36,7 +36,7 @@ registerLocaleData(localeDECH);
     RecommendationModule,
     BrowserAnimationsModule,
     SettingsModule,
-    AnalyseCompaniesModule
+    AnalyseCompaniesModule,
   ],
   providers: [
     {
@@ -51,4 +51,4 @@ registerLocaleData(localeDECH);
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

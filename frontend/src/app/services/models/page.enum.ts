@@ -4,5 +4,5 @@ export enum Page {
   Segments,
   Recommendation,
   Settings,
-  AnalyseCompanies
+  AnalyseCompanies,
 }
