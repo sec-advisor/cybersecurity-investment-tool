@@ -12,10 +12,10 @@ import { Company } from '../../models/company.interface';
 export class SimilarityDataService {
   constructor(private http: HttpClient) {}
 
-  getData(company: Company): Observable<any> {
+  getData(company: Company, numberOfClosest?: number): Observable<any> {
     return this.http.post(
       `${backend.url}/analyse-companies`,
-      { company },
+      { company, numberOfClosest },
       httpOptions,
     );
   }

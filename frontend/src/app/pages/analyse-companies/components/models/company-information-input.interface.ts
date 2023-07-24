@@ -1,10 +1,13 @@
 export interface CompanyInformationInput {
   name: string;
   description: string;
+  info: string;
 }
 
 export interface CompanyInformationNumberInput extends CompanyInformationInput {
   type: 'number';
+  min: number;
+  max: number;
 }
 
 export interface CompanyInformationNumberSelection

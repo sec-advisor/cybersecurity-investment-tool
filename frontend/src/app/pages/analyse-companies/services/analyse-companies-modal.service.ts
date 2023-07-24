@@ -11,9 +11,9 @@ import {
   providedIn: 'root',
 })
 export class AnalyseCompaniesModalService {
-  private readonly companySubject = new BehaviorSubject<Company | undefined>(
-    undefined,
-  );
+  private readonly companySubject = new BehaviorSubject<
+    { company?: Company | undefined; numberOfClosest?: number } | undefined
+  >(undefined);
 
   readonly companyInformation = this.companySubject.asObservable();
 
@@ -30,7 +30,7 @@ export class AnalyseCompaniesModalService {
     );
   }
 
-  setCompareCompany(company?: Company): void {
-    this.companySubject.next(company);
+  setCompareCompany(company?: Company, numberOfClosest?: number): void {
+    this.companySubject.next({ company, numberOfClosest });
   }
 }

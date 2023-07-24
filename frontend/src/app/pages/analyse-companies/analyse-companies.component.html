@@ -8,7 +8,7 @@
     *ngIf="viewModel.showIntroduction"
   ></app-analyse-companies-instruction>
 
-  <div *ngIf="viewModel.companyInformation">
+  <div *ngIf="viewModel.companyDetail">
     <div class="d-flex justify-content-end">
       <button type="button" class="btn btn-primary m-1" (click)="showModal()">
         Edit Company Information
@@ -16,7 +16,7 @@
     </div>
 
     <app-analyse-companies-comparsion-charts
-      [company]="viewModel.companyInformation"
+      [companyDetail]="viewModel.companyDetail"
     ></app-analyse-companies-comparsion-charts>
   </div>
 </div>

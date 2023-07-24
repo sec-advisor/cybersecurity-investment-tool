@@ -9,8 +9,12 @@ export class AnalyseCompaniesController {
 
   // @UseGuards(AuthenticatedGuard)
   @Post('')
-  getSimilarCompanies(@Body() body) {
-    const compareCompany = body.company as Company;
-    return this.analyseCompaniesService.getSimilarity(compareCompany);
+  getSimilarCompanies(
+    @Body() body: { company: Company; numberOfClosest?: number },
+  ) {
+    return this.analyseCompaniesService.getSimilarity(
+      body.company,
+      body.numberOfClosest,
+    );
   }
 }

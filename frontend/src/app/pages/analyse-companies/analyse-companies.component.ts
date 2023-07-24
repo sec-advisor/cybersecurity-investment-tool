@@ -8,10 +8,9 @@ import {
   ApexYAxis,
   ChartComponent
 } from 'ng-apexcharts';
-import { map, merge, Observable, of } from 'rxjs';
+import { filter, map, merge, Observable, of } from 'rxjs';
 
 import { Company } from '../../models/company.interface';
-import { filterUndefined } from '../../operators/filter-undefined.operator';
 import { AnalyseCompaniesModalService } from './services/analyse-companies-modal.service';
 
 export type ChartOptions = {
@@ -30,7 +29,7 @@ export type ChartOptions = {
 })
 export class AnalyseCompaniesComponent implements OnInit {
   viewModel$!: Observable<{
-    companyInformation?: Company;
+    companyDetail?: { company: Company; numberOfClosest?: number };
     showIntroduction: boolean;
   }>;
 
@@ -49,9 +48,13 @@ export class AnalyseCompaniesComponent implements OnInit {
     this.viewModel$ = merge(
       of({ showIntroduction: true }),
       this.analyseCompaniesModalService.companyInformation.pipe(
-        filterUndefined(),
-        map((company) => ({
-          companyInformation: company,
+        filter((data) => !!data?.company),
+        map((data) => ({
+          companyDetail: {
+            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+            company: data!.company!,
+            numberOfClosest: data?.numberOfClosest,
+          },
           showIntroduction: false,
         })),
       ),
