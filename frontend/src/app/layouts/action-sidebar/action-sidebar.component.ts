@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 
-import { StorageKey } from '../../../models/storage-key.enum';
-import { LocalStorageService } from '../../../services/local-storage.service';
+import { StorageKey } from '../../models/storage-key.enum';
+import { LocalStorageService } from '../../services/local-storage.service';
 import { SideBarButton, SideBarSection } from './models/side-bar-button.model';
 
 @Component({

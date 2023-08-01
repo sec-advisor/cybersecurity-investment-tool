@@ -1,16 +1,23 @@
 import { Injectable } from '@angular/core';
-import { tap } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 
-import { Company } from '../../../models/company.interface';
+import { Company, CompanyComparisonDto } from '../../../models/company.interface';
 import { SimilarityDataService } from '../../../services/backend/similarity-data.service';
 
 @Injectable()
 export class AnalyseCompaniesViewService {
   constructor(private similarityDataService: SimilarityDataService) {}
 
-  getViewModel(company: Company, numberOfClosest?: number) {
+  getViewModel(
+    company: Company,
+    numberOfClosest?: number,
+  ): Observable<CompanyComparisonDto> {
     return this.similarityDataService
-      .getData(company, numberOfClosest)
+      .getComparisonCompanies(company, numberOfClosest)
       .pipe(tap(console.log));
+  }
+
+  getSharedCompanyData(companyId: number) {
+    return this.similarityDataService.getSharedCompanyData(companyId);
   }
 }

@@ -1,14 +1,30 @@
+import { CompanyDto } from '../models/company.interface';
+
 export const sortPearson = (
-  data: object[],
-  prop: string,
+  companies: CompanyDto[],
+  type: 'business' | 'economic' | 'technical',
   xClosests?: number,
 ) => {
   const sortedArray = [
-    ...data.sort(
-      (a, b) =>
-        getAbsoluteDistanceToZero(a[prop as keyof object]) -
-        getAbsoluteDistanceToZero(b[prop as keyof object]),
-    ),
+    ...companies.sort((a, b) => {
+      const aValue =
+        type === 'business'
+          ? a.pearsonCorrelationBusiness
+          : type === 'economic'
+          ? a.pearsonCorrelationEconomic
+          : a.pearsonCorrelationTechnical;
+
+      const bValue =
+        type === 'business'
+          ? b.pearsonCorrelationBusiness
+          : type === 'economic'
+          ? b.pearsonCorrelationEconomic
+          : b.pearsonCorrelationTechnical;
+
+      return (
+        getAbsoluteDistanceToZero(aValue) - getAbsoluteDistanceToZero(bValue)
+      );
+    }),
   ];
 
   return xClosests === undefined
@@ -17,16 +33,28 @@ export const sortPearson = (
 };
 
 export const sortEuclidean = (
-  data: object[],
-  prop: string,
+  companies: CompanyDto[],
+  type: 'business' | 'economic' | 'technical',
   xClosests?: number,
 ) => {
   const sortedArray = [
-    ...data.sort(
-      (a, b) =>
-        (a[prop as keyof object] as number) -
-        (b[prop as keyof object] as number),
-    ),
+    ...companies.sort((a, b) => {
+      const aValue =
+        type === 'business'
+          ? a.euclideanDistanceBusiness
+          : type === 'economic'
+          ? a.euclideanDistanceEconomic
+          : a.euclideanDistanceTechnical;
+
+      const bValue =
+        type === 'business'
+          ? b.euclideanDistanceBusiness
+          : type === 'economic'
+          ? b.euclideanDistanceEconomic
+          : b.euclideanDistanceTechnical;
+
+      return aValue - bValue;
+    }),
   ];
 
   return xClosests === undefined

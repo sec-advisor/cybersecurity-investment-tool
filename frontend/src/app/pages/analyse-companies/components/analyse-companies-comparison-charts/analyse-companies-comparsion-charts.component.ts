@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, NgZone, OnChanges, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
 import {
   ApexAxisChartSeries,
   ApexChart,
@@ -10,7 +10,7 @@ import {
 } from 'ng-apexcharts';
 import { BehaviorSubject, map, merge, Observable, of, Subject, switchMap, tap } from 'rxjs';
 
-import { Company } from '../../../../models/company.interface';
+import { Company, CompanyComparisonDto, CompanyDto } from '../../../../models/company.interface';
 import { filterUndefined } from '../../../../operators/filter-undefined.operator';
 import { AnalyseCompaniesViewService } from '../../services/analyse-companies-view.service';
 
@@ -31,7 +31,7 @@ export type ChartOptions = {
 export class AnalyseCompaniesComparisonChartsComponent
   implements OnInit, OnChanges
 {
-  private readonly selectedCompany = new Subject<any>();
+  private readonly selectedCompany = new Subject<CompanyDto>();
   private readonly companyDetailSubject = new BehaviorSubject<
     { company: Company; numberOfClosest?: number } | undefined
   >(undefined);
@@ -39,6 +39,8 @@ export class AnalyseCompaniesComparisonChartsComponent
   viewModel$!: Observable<{ graphicData: any; selectedCompany?: any }>;
 
   @Input() companyDetail!: { company: Company; numberOfClosest?: number };
+
+  @Output() companyIdSelected = new EventEmitter<string>();
 
   @ViewChild('eb') chartEb!: ChartComponent;
   @ViewChild('ee') chartEe!: ChartComponent;
@@ -49,6 +51,7 @@ export class AnalyseCompaniesComparisonChartsComponent
 
   constructor(
     private analyseCompaniesViewService: AnalyseCompaniesViewService,
+    private ngZone: NgZone,
   ) {}
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -71,6 +74,7 @@ export class AnalyseCompaniesComparisonChartsComponent
         merge(
           of({ selectedCompany: undefined, graphicData: viewModel }),
           this.selectedCompany.pipe(
+            filterUndefined(),
             tap((company) => this.updateSeries(data, company)),
             map((company) => ({
               selectedCompany: company,
@@ -82,7 +86,7 @@ export class AnalyseCompaniesComparisonChartsComponent
     );
   }
 
-  private updateSeries(data: any, company: any) {
+  private updateSeries(data: CompanyComparisonDto, company: CompanyDto) {
     // const chartData = this.getChartValues(data, 'euclideanDistanceBusiness')
     // const distanceSelectedCompany = chartData.find((o: any) => o.id === company.id).distance
 
@@ -91,42 +95,42 @@ export class AnalyseCompaniesComparisonChartsComponent
         {
           component: this.chartEb,
           value: this.getChartValues(
-            data.sorted.euclideanDistanceBusiness,
+            data.euclideanDistanceBusiness,
             'euclideanDistanceBusiness',
           ),
         },
         {
           component: this.chartEe,
           value: this.getChartValues(
-            data.sorted.euclideanDistanceEconomic,
+            data.euclideanDistanceEconomic,
             'euclideanDistanceEconomic',
           ),
         },
         {
           component: this.chartEt,
           value: this.getChartValues(
-            data.sorted.euclideanDistanceTechnical,
+            data.euclideanDistanceTechnical,
             'euclideanDistanceTechnical',
           ),
         },
         {
           component: this.chartPb,
           value: this.getChartValues(
-            data.sorted.pearsonCorrelationBusiness,
+            data.pearsonCorrelationBusiness,
             'pearsonCorrelationBusiness',
           ),
         },
         {
           component: this.chartPe,
           value: this.getChartValues(
-            data.sorted.pearsonCorrelationEconomic,
+            data.pearsonCorrelationEconomic,
             'pearsonCorrelationEconomic',
           ),
         },
         {
           component: this.chartPt,
           value: this.getChartValues(
-            data.sorted.pearsonCorrelationTechnical,
+            data.pearsonCorrelationTechnical,
             'pearsonCorrelationTechnical',
           ),
         },
@@ -201,13 +205,13 @@ export class AnalyseCompaniesComparisonChartsComponent
     //   }], false)
   }
 
-  private mapToChartModel(data: any) {
+  private mapToChartModel(data: CompanyComparisonDto) {
     return {
       euclideanDistanceBusiness: {
         ...this.getBaseConfig(
           data,
           this.getChartValues(
-            data.sorted.euclideanDistanceBusiness,
+            data.euclideanDistanceBusiness,
             'euclideanDistanceBusiness',
           ),
           `Business Comparison Euclidean`,
@@ -217,7 +221,7 @@ export class AnalyseCompaniesComparisonChartsComponent
         ...this.getBaseConfig(
           data,
           this.getChartValues(
-            data.sorted.euclideanDistanceEconomic,
+            data.euclideanDistanceEconomic,
             'euclideanDistanceEconomic',
           ),
           'Economic Comparison Euclidean',
@@ -227,7 +231,7 @@ export class AnalyseCompaniesComparisonChartsComponent
         ...this.getBaseConfig(
           data,
           this.getChartValues(
-            data.sorted.euclideanDistanceTechnical,
+            data.euclideanDistanceTechnical,
             'euclideanDistanceTechnical',
           ),
           'Technical Comparison Euclidean',
@@ -237,7 +241,7 @@ export class AnalyseCompaniesComparisonChartsComponent
         ...this.getBaseConfig(
           data,
           this.getChartValues(
-            data.sorted.pearsonCorrelationBusiness,
+            data.pearsonCorrelationBusiness,
             'pearsonCorrelationBusiness',
           ),
           `Business Comparison Pearson`,
@@ -250,7 +254,7 @@ export class AnalyseCompaniesComparisonChartsComponent
         ...this.getBaseConfig(
           data,
           this.getChartValues(
-            data.sorted.pearsonCorrelationEconomic,
+            data.pearsonCorrelationEconomic,
             'pearsonCorrelationEconomic',
           ),
           `Economic Comparison Pearson`,
@@ -263,7 +267,7 @@ export class AnalyseCompaniesComparisonChartsComponent
         ...this.getBaseConfig(
           data,
           this.getChartValues(
-            data.sorted.pearsonCorrelationTechnical,
+            data.pearsonCorrelationTechnical,
             'pearsonCorrelationTechnical',
           ),
           `Technical Comparison Pearson`,
@@ -276,8 +280,8 @@ export class AnalyseCompaniesComparisonChartsComponent
   }
 
   private getBaseConfig(
-    data: any[],
-    compareData: any[],
+    companies: CompanyComparisonDto,
+    compareData: { id: number; distance: number }[],
     title: string,
     min?: number,
     max?: number,
@@ -290,7 +294,9 @@ export class AnalyseCompaniesComparisonChartsComponent
       series: [
         {
           name: 'Company Id',
-          data: compareData.map((e: any) => e.distance).map((a: any) => [a, 0]),
+          data: compareData
+            .map((company) => company.distance)
+            .map((a: any) => [a, 0]),
         },
       ],
       chart: {
@@ -302,10 +308,15 @@ export class AnalyseCompaniesComparisonChartsComponent
         },
         events: {
           dataPointSelection: (_event, _chartContext, opts) => {
-            const id = compareData[opts.dataPointIndex].id;
-            const selectedCompany = this.findCompanyById(data, id);
+            const id = compareData[opts.dataPointIndex].id.toString();
+            const selectedCompany = this.findCompanyById(companies, id);
             console.log(selectedCompany);
-            this.selectedCompany.next(selectedCompany);
+            if (selectedCompany) {
+              this.ngZone.run(() => {
+                this.selectedCompany.next(selectedCompany);
+                this.companyIdSelected.emit(id);
+              });
+            }
             // console.log(chartContext, opts)
             // console.log(opts.w.config.series[opts.seriesIndex].data[opts.dataPointIndex])
             // console.log(config.config.series[config.seriesIndex].name)
@@ -329,23 +340,38 @@ export class AnalyseCompaniesComparisonChartsComponent
       tooltip: {
         y: {
           formatter: (_, opts) => {
-            return compareData[opts.dataPointIndex].id;
+            return compareData[opts.dataPointIndex].id.toString();
           },
         },
       },
     } as Partial<ChartOptions>;
   }
 
-  private getChartValues(data: any, property: string) {
-    return data
-      .filter((o: any) => Number.isFinite(o[property]))
-      .map((o: any) => ({
-        id: o.id as number,
-        distance: o[property as keyof typeof o] as number,
+  private getChartValues(
+    companies: CompanyDto[],
+    property: keyof CompanyDto,
+  ): { id: number; distance: number }[] {
+    return companies
+      .filter((company: CompanyDto) => Number.isFinite(company[property]))
+      .map((company: CompanyDto) => ({
+        id: company.id,
+        distance: company[property],
       }));
   }
 
-  private findCompanyById(data: any, id: string) {
-    return data.data.find((c: any) => c.id === id);
+  private findCompanyById(
+    companies: CompanyComparisonDto,
+    id: string,
+  ): CompanyDto | undefined {
+    const allCompanies = [
+      ...companies.euclideanDistanceBusiness,
+      ...companies.euclideanDistanceEconomic,
+      ...companies.euclideanDistanceTechnical,
+      ...companies.pearsonCorrelationBusiness,
+      ...companies.pearsonCorrelationEconomic,
+      ...companies.pearsonCorrelationTechnical,
+    ];
+
+    return allCompanies.find((company) => company.id.toString() === id);
   }
 }

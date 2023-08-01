@@ -1,3 +1,4 @@
+import { CompanyRawData } from '../models/company.interface';
 import { CloudEnum } from './models/cloud-comparer';
 import { CyberAttackThreats } from './models/cyber-attack-threats-comparer';
 import { Multifactor } from './models/multifactor-comparer';
@@ -24,12 +25,15 @@ const getRandomData = () => {
     multifactor: randomEnum(Multifactor),
     networkInfrastructure: randomEnum(NetworkInfrastructure),
     remoteAccess: randomEnum(RemoteAccess),
-  };
+
+    bpf: getBpf(),
+    sharedData: getSharedProperties(),
+  } as CompanyRawData;
   console.log(a);
   return {
     ...a,
     cybersecurityInvestment: (a.revenue / 100) * randomInteger(4, 15),
-  };
+  } as CompanyRawData;
 };
 
 const randomInteger = (min: number, max: number) => {
@@ -43,4 +47,75 @@ const randomEnum = <T>(anEnum: T): T[keyof T] => {
   const randomIndex = Math.floor(Math.random() * enumValues.length);
   const randomEnumValue = enumValues[randomIndex];
   return randomEnumValue;
+};
+
+const getBpf = () => {
+  const random = randomInteger(0, 100);
+
+  if (random < 25) return 'v/(1+(z/(L*0.001)))';
+  if (random < 50) return '2v/(1+(z/(L*0.001)))';
+  if (random < 75) return '3v/(1+(z/(L*0.001)))';
+  if (random <= 100) return '4v/(1+(z/(L*0.001)))';
+};
+
+const getSharedProperties = (): (keyof CompanyRawData)[] => {
+  const random = randomInteger(0, 100);
+
+  if (random < 25)
+    return [
+      'cloud',
+      'country',
+      'multifactor',
+      'org_size',
+      'remote',
+      'marketShare',
+      'growthRate',
+      'cybersecurityBudget',
+      'cybersecurityStaffing',
+      'cybersecurityTrainingInvestment',
+      'cyberAttackThreats',
+      'networkInfrastructure',
+      'remoteAccess',
+      'cybersecurityInvestment',
+      'bpf',
+    ];
+  if (random < 50)
+    return [
+      'cloud',
+      'country',
+      'multifactor',
+      'remote',
+      'marketShare',
+      'growthRate',
+      'cybersecurityBudget',
+      'cybersecurityTrainingInvestment',
+      'cyberAttackThreats',
+      'remoteAccess',
+      'cybersecurityInvestment',
+      'bpf',
+    ];
+  if (random < 75)
+    return [
+      'country',
+      'multifactor',
+      'org_size',
+      'remote',
+      'growthRate',
+      'cybersecurityStaffing',
+      'cyberAttackThreats',
+      'remoteAccess',
+      'cybersecurityInvestment',
+      'bpf',
+    ];
+  if (random <= 100)
+    return [
+      'multifactor',
+      'remote',
+      'cybersecurityBudget',
+      'cybersecurityStaffing',
+      'cyberAttackThreats',
+      'networkInfrastructure',
+      'cybersecurityInvestment',
+      'bpf',
+    ];
 };

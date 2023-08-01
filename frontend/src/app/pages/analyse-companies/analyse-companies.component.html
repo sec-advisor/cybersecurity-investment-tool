@@ -2,21 +2,42 @@
 
 <div
   *ngIf="viewModel$ | async as viewModel"
-  class="content-wrapper d-flex flex-grow-1 flex-column bg-light"
+  class="content-wrapper d-flex flex-grow-1 flex-row bg-light"
 >
-  <app-analyse-companies-instruction
-    *ngIf="viewModel.showIntroduction"
-  ></app-analyse-companies-instruction>
+  <app-action-sidebar
+    [sections]="viewModel.sidebarSections"
+  ></app-action-sidebar>
 
-  <div *ngIf="viewModel.companyDetail">
-    <div class="d-flex justify-content-end">
-      <button type="button" class="btn btn-primary m-1" (click)="showModal()">
-        Edit Company Information
-      </button>
+  <div class="d-flex flex-grow-1 flex-column">
+    <app-analyse-companies-instruction
+      *ngIf="viewModel.showIntroduction"
+    ></app-analyse-companies-instruction>
+
+    <div *ngIf="viewModel.companyDetail">
+      <div class="d-flex justify-content-end">
+        <button
+          *ngIf="viewModel.view === views.Chart && compareCompanyId"
+          type="button"
+          class="btn btn-primary m-1"
+          (click)="showSharedData(compareCompanyId)"
+        >
+          Show Shared Information
+        </button>
+        <button type="button" class="btn btn-primary m-1" (click)="showModal()">
+          Edit Company Information
+        </button>
+      </div>
+
+      <app-analyse-companies-comparison-table
+        *ngIf="viewModel.view === views.Table"
+        [companyDetail]="viewModel.companyDetail"
+      ></app-analyse-companies-comparison-table>
+
+      <app-analyse-companies-comparsion-charts
+        [hidden]="viewModel.view === views.Table"
+        [companyDetail]="viewModel.companyDetail"
+        (companyIdSelected)="handleCompareCompanySelection($event)"
+      ></app-analyse-companies-comparsion-charts>
     </div>
-
-    <app-analyse-companies-comparsion-charts
-      [companyDetail]="viewModel.companyDetail"
-    ></app-analyse-companies-comparsion-charts>
   </div>
 </div>

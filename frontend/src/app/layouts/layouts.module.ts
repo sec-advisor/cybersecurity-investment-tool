@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
+import { ActionSidebarComponent } from './action-sidebar/action-sidebar.component';
 import { ContentWithIconComponent } from './content-with-icon/content-with-icon.component';
 import { DangerModalComponent } from './danger-modal/danger-modal.component';
 import { HeaderComponent } from './header/header.component';
@@ -12,6 +13,7 @@ import { ToastNotificationComponent } from './toast-notification/toast-notificat
 @NgModule({
   imports: [CommonModule, NgbModule],
   declarations: [
+    ActionSidebarComponent,
     HeaderComponent,
     SideBarComponent,
     ContentWithIconComponent,
@@ -20,6 +22,7 @@ import { ToastNotificationComponent } from './toast-notification/toast-notificat
   ],
   providers: [ToastNotificationService],
   exports: [
+    ActionSidebarComponent,
     HeaderComponent,
     SideBarComponent,
     ContentWithIconComponent,

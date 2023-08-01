@@ -1,0 +1,41 @@
+<ng-container>
+  <div class="modal-header modal-dialog-centered">
+    <h4 class="modal-title">Shared Data</h4>
+    <button
+      type="button"
+      class="btn-close"
+      aria-label="Close"
+      tabindex="-1"
+      (click)="dismiss()"
+    ></button>
+  </div>
+  <div class="modal-body">
+    <table class="table table-bordered table-hover table-striped">
+      <thead>
+        <tr>
+          <th class="text-center" scope="col">Object</th>
+          <th class="text-center" scope="col">Compare Company</th>
+          <th class="text-center" scope="col">Your Company</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let row of viewModel">
+          <td>{{ row.key }}</td>
+          <td class="text-end">
+            {{ row.compareCompanyValue }}
+          </td>
+          <td class="text-end">
+            {{ row.companyValue }}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="modal-footer">
+    <div>
+      <button type="button" class="btn btn-primary" (click)="dismiss()">
+        Close
+      </button>
+    </div>
+  </div>
+</ng-container>

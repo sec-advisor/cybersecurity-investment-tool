@@ -1,0 +1,57 @@
+<div *ngIf="viewModel$ | async as viewModel" class="m-2">
+  <label>Comparison:</label>
+  <select
+    class="form-select mb-1 w-20"
+    [formControl]="form.controls.areaSelection"
+  >
+    <ng-container *ngFor="let option of areaSelection">
+      <option [value]="option.key">{{ option.value }}</option>
+    </ng-container>
+  </select>
+
+  <table class="table table-bordered table-hover table-striped">
+    <thead>
+      <tr>
+        <th class="text-center" scope="col">Rank #</th>
+        <th class="text-center" scope="col">Euclidean Distance Business</th>
+        <th class="text-center" scope="col">Euclidean Distance Economic</th>
+        <th class="text-center" scope="col">Euclidean Distance Technical</th>
+        <th class="text-center" scope="col">Pearson Correlation Business</th>
+        <th class="text-center" scope="col">Pearson Correlation Economic</th>
+        <th class="text-center" scope="col">Pearson Correlation Technical</th>
+        <th class="text-center" scope="col">Shared Information</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let company of viewModel; let i = index">
+        <td class="text-end">{{ i + 1 | number }}</td>
+        <td class="text-end">
+          {{ company.euclideanDistanceBusiness | number }}
+        </td>
+        <td class="text-end">
+          {{ company.euclideanDistanceEconomic | number }}
+        </td>
+        <td class="text-end">
+          {{ company.euclideanDistanceTechnical | number }}
+        </td>
+        <td class="text-end">
+          {{ company.pearsonCorrelationBusiness | number }}
+        </td>
+        <td class="text-end">
+          {{ company.pearsonCorrelationEconomic | number }}
+        </td>
+        <td class="text-end">
+          {{ company.pearsonCorrelationTechnical | number }}
+        </td>
+        <td class="text-end d-flex justify-content-center">
+          <button
+            type="button"
+            aria-label="Shared Data"
+            class="bi bi-eye-fill icon-button me-1"
+            (click)="showSharedData(company.id)"
+          ></button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

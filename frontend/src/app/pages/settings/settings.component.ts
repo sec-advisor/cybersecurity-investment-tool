@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { SideBarSection } from './action-sidebar/models/side-bar-button.model';
+import { SideBarSection } from '../../layouts/action-sidebar/models/side-bar-button.model';
 
 @Component({
   selector: 'app-settings',

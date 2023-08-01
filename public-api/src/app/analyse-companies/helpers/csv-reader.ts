@@ -3,7 +3,9 @@ import * as fs from 'fs';
 import * as path from 'path';
 import { Observable, Observer } from 'rxjs';
 
-export const readCSV = (): Observable<object[]> => {
+import { CompanyRawData } from '../models/company.interface';
+
+export const readCSV = (): Observable<CompanyRawData[]> => {
   const csvFilePath = path.resolve(
     __dirname,
     '../../../assets/Data_10000_entries_test.csv',
