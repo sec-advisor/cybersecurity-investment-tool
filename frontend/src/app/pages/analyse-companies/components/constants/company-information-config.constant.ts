@@ -35,7 +35,7 @@ export const getCompanyInformationInputs: CompanyInformationAnyInput[] = [
   },
   {
     name: 'marketShare',
-    description: 'Market Shared (%)',
+    description: 'Market Share (%)',
     type: 'number',
     info: `Company's market share`,
     min: 0,
