@@ -7,12 +7,16 @@ import {
   FormGroup,
   ReactiveFormsModule,
   ValidationErrors,
-  Validators
+  Validators,
 } from '@angular/forms';
 import { NgbActiveModal, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { map, Observable } from 'rxjs';
 
-import { Company, Country, OrganizationSize } from '../../../../models/company.interface';
+import {
+  Company,
+  Country,
+  OrganizationSize,
+} from '../../../../models/company.interface';
 import { AnalyseCompaniesModalService } from '../../services/analyse-companies-modal.service';
 import { getCompanyInformationInputs } from '../constants/company-information-config.constant';
 import { CompanyInformationAnyInput } from '../models/company-information-input.interface';

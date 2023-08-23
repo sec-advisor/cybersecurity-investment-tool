@@ -13,19 +13,39 @@
     <table class="table table-bordered table-hover table-striped">
       <thead>
         <tr>
-          <th class="text-center" scope="col">Object</th>
+          <th class="text-center" scope="col">Parameter</th>
           <th class="text-center" scope="col">Compare Company</th>
           <th class="text-center" scope="col">Your Company</th>
+          <th class="text-center" scope="col">Average</th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let row of viewModel">
           <td>{{ row.key }}</td>
           <td class="text-end">
-            {{ row.compareCompanyValue }}
+            {{
+              isNumber(row.compareCompanyValue)
+                ? (row.compareCompanyValue | number)
+                : row.compareCompanyValue
+            }}
           </td>
           <td class="text-end">
-            {{ row.companyValue }}
+            {{
+              row.companyValue
+                ? isNumber(row.companyValue)
+                  ? (row.companyValue | number)
+                  : row.companyValue
+                : '-'
+            }}
+          </td>
+          <td class="text-end">
+            {{
+              row.averageValue
+                ? isNumber(row.averageValue)
+                  ? (row.averageValue | number)
+                  : row.averageValue
+                : '-'
+            }}
           </td>
         </tr>
       </tbody>

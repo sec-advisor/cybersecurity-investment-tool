@@ -9,19 +9,17 @@ import {
   CyberAttackThreats,
   Multifactor,
   NetworkInfrastructure,
-  organizationSizeMapping,
   RemoteAccess,
-  SharedCompanyData
+  SharedCompanyData,
+  countryDistanceMapping,
+  organizationSizeMapping,
 } from '../../../../models/company.interface';
 
 interface TableRow {
   key: string;
   compareCompanyValue: string;
   companyValue: string;
-}
-
-interface CompanyExtended extends Company {
-  org_size?: string;
+  averageValue: string;
 }
 
 @Component({
@@ -31,26 +29,29 @@ interface CompanyExtended extends Company {
   imports: [CommonModule],
 })
 export class AnalyseCompaniesSharedDataModalComponent implements OnInit {
-  readonly compareCompanyInformation!: SharedCompanyData;
-  readonly companyInformation!: CompanyExtended;
+  readonly compareCompanyInformation!: {
+    company: SharedCompanyData;
+    average: SharedCompanyData;
+  };
+  readonly companyInformation!: Company;
   viewModel!: TableRow[];
 
   constructor(private activeModal: NgbActiveModal) {}
 
   ngOnInit() {
-    this.companyInformation.org_size = Object.entries(
-      organizationSizeMapping,
-    ).find(
-      ([key, value]) =>
-        value ===
-        (this.companyInformation.organizationSize as unknown as number),
-    )?.[0] as unknown as string;
+    // this.companyInformation.organizationSize = Object.entries(
+    //   organizationSizeMapping,
+    // ).find(
+    //   ([key, value]) =>
+    //     value ===
+    //     (this.companyInformation.organizationSize as unknown as number),
+    // )?.[0] as unknown as string;
 
-    this.viewModel = Object.entries(this.compareCompanyInformation).map(
+    this.viewModel = Object.entries(this.compareCompanyInformation.company).map(
       ([key, value]) => ({
         key: this.getDisplayKey(key),
         compareCompanyValue: this.getDisplayValue(
-          key as keyof CompanyRawData,
+          key as keyof SharedCompanyData,
           value,
         ),
         companyValue: this.getDisplayValue(
@@ -58,12 +59,23 @@ export class AnalyseCompaniesSharedDataModalComponent implements OnInit {
           // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
           this.companyInformation[key as keyof Company],
         ),
+        averageValue: this.getDisplayValue(
+          key as keyof CompanyRawData,
+          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+          this.compareCompanyInformation.average[
+            key as keyof SharedCompanyData
+          ],
+        ),
       }),
     );
   }
 
   dismiss(): void {
     this.activeModal.close();
+  }
+
+  isNumber(value: any): boolean {
+    return Number.isFinite(+value);
   }
 
   private getDisplayValue(
@@ -87,6 +99,21 @@ export class AnalyseCompaniesSharedDataModalComponent implements OnInit {
       return CloudEnum[value as unknown as CloudEnum];
     } else if (key === 'multifactor') {
       return Multifactor[value as unknown as Multifactor];
+    } else if (key === 'organizationSize') {
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      return Object.entries(organizationSizeMapping)
+        .find(([_key, value]) => value === value)![0]
+        .toString();
+    } else if (key === 'country' && Number.isFinite(value)) {
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      return Object.entries(countryDistanceMapping)
+        .find((_key, value) => value === value)![0]
+        .toString();
+    } else if (
+      (key === 'remote' || key === 'marketShare' || key === 'growthRate') &&
+      Number.isFinite(value)
+    ) {
+      return `${value}%`;
     } else if (typeof value === 'string') {
       if (value.startsWith('[')) {
         return value

@@ -1,7 +1,11 @@
 import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { Observable } from 'rxjs';
 
-import { Company, CompanyComparisonDto, SharedCompanyData } from './models/company.interface';
+import {
+  Company,
+  CompanyComparisonDto,
+  SharedCompanyData,
+} from './models/company.interface';
 import { AnalyseCompaniesService } from './services/analyse-companies.service';
 
 @Controller('analyse-companies')
@@ -23,7 +27,7 @@ export class AnalyseCompaniesController {
   @Get('company/:companyId')
   getSharedCompanyData(
     @Param('companyId') companyId: string,
-  ): Observable<SharedCompanyData> {
+  ): Observable<{ company: SharedCompanyData; average: SharedCompanyData }> {
     return this.analyseCompaniesService.getSharedCompanyData(Number(companyId));
   }
 }

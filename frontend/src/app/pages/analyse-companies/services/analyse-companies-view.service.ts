@@ -1,7 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Observable, tap } from 'rxjs';
 
-import { Company, CompanyComparisonDto } from '../../../models/company.interface';
+import {
+  Company,
+  CompanyComparisonDto,
+  SharedCompanyData,
+} from '../../../models/company.interface';
 import { SimilarityDataService } from '../../../services/backend/similarity-data.service';
 
 @Injectable()
@@ -17,7 +21,12 @@ export class AnalyseCompaniesViewService {
       .pipe(tap(console.log));
   }
 
-  getSharedCompanyData(companyId: number) {
-    return this.similarityDataService.getSharedCompanyData(companyId);
+  getSharedCompanyData(companyId: number): Observable<{
+    company: SharedCompanyData;
+    average: SharedCompanyData;
+  }> {
+    return this.similarityDataService
+      .getSharedCompanyData(companyId)
+      .pipe(tap(console.log));
   }
 }

@@ -3,13 +3,14 @@ import { CloudEnum } from './models/cloud-comparer';
 import { CyberAttackThreats } from './models/cyber-attack-threats-comparer';
 import { Multifactor } from './models/multifactor-comparer';
 import { NetworkInfrastructure } from './models/network-infrastructor-comparer';
+import { organizationSizeMapping } from './models/organization-size-comparer';
 import { RemoteAccess } from './models/remote-access-comparer';
 
 export const appendData = (data: object[]): object[] => {
-  return data.map((d, index) => ({ ...d, id: index, ...getRandomData() }));
+  return data.map((d, index) => ({ ...d, id: index, ...getRandomData(d) }));
 };
 
-const getRandomData = () => {
+const getRandomData = (d: object) => {
   const a = {
     revenue: randomInteger(270000000, 90000000000),
     marketShare: randomInteger(0, 100),
@@ -25,11 +26,11 @@ const getRandomData = () => {
     multifactor: randomEnum(Multifactor),
     networkInfrastructure: randomEnum(NetworkInfrastructure),
     remoteAccess: randomEnum(RemoteAccess),
-
+    remote: getRemote(d['remote']),
+    organizationSize: getOrgSizeValue(d['organizationSize']),
     bpf: getBpf(),
     sharedData: getSharedProperties(),
   } as CompanyRawData;
-  console.log(a);
   return {
     ...a,
     cybersecurityInvestment: (a.revenue / 100) * randomInteger(4, 15),
@@ -58,6 +59,33 @@ const getBpf = () => {
   if (random <= 100) return '4v/(1+(z/(L*0.001)))';
 };
 
+const getRemote = (remoteValue: string): number => {
+  const value = remoteValue
+    .replaceAll(`'`, '')
+    .replaceAll('[', '')
+    .replaceAll(']', '')
+    .replaceAll('%', '');
+
+  const isNumber = Number.isFinite(+value);
+  return isNumber ? +value : randomInteger(0, 100);
+};
+
+const getOrgSizeValue = (organizationSizeValue: string): number => {
+  const value = organizationSizeValue
+    .replaceAll(`'`, '')
+    .replaceAll('[', '')
+    .replaceAll(']', '')
+    .replaceAll('%', '');
+
+  const isOrgSizeDefined = organizationSizeMapping[value];
+
+  if (!isOrgSizeDefined) {
+    console.log('defineddsd');
+  }
+
+  return isOrgSizeDefined ? isOrgSizeDefined : randomInteger(0, 3);
+};
+
 const getSharedProperties = (): (keyof CompanyRawData)[] => {
   const random = randomInteger(0, 100);
 
@@ -66,7 +94,7 @@ const getSharedProperties = (): (keyof CompanyRawData)[] => {
       'cloud',
       'country',
       'multifactor',
-      'org_size',
+      'organizationSize',
       'remote',
       'marketShare',
       'growthRate',
@@ -98,7 +126,7 @@ const getSharedProperties = (): (keyof CompanyRawData)[] => {
     return [
       'country',
       'multifactor',
-      'org_size',
+      'organizationSize',
       'remote',
       'growthRate',
       'cybersecurityStaffing',

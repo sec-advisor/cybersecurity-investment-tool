@@ -17,7 +17,6 @@ export interface CompanyComparisonDto {
 
 export interface Company {
   id: number;
-  name?: string;
   revenue: number;
   marketShare: number;
   growthRate: number;
@@ -34,7 +33,6 @@ export interface Company {
   multifactor: Multifactor;
   networkInfrastructure: NetworkInfrastructure;
   remoteAccess: RemoteAccess;
-  bpf: string;
 }
 
 export interface CompanyDto {
@@ -72,8 +70,8 @@ export interface CompanyRawData {
   cloud: CloudEnum;
   country: string;
   multifactor: Multifactor;
-  org_size: string;
-  remote: string;
+  organizationSize: number;
+  remote: number;
   bpf: string;
   sharedData: (keyof CompanyRawData)[];
 }

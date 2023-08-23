@@ -20,7 +20,7 @@ export const readCSV = (): Observable<CompanyRawData[]> => {
     'industry',
     'insurance',
     'multifactor',
-    'org_size',
+    'organizationSize',
     'remote',
     'security_measure',
     'security_training',

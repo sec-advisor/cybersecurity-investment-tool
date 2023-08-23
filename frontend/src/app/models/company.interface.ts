@@ -53,8 +53,8 @@ export interface CompanyRawData {
   cloud: CloudEnum;
   country: string;
   multifactor: Multifactor;
-  org_size: string;
-  remote: string;
+  organizationSize: number;
+  remote: number;
   bpf: string;
   sharedData: (keyof CompanyRawData)[];
 }

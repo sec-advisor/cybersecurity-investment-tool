@@ -1,10 +1,13 @@
 import { Injectable } from '@nestjs/common';
-import { readFileSync } from 'fs';
+import { readFileSync, writeFileSync } from 'fs';
 import * as path from 'path';
-import { map, Observable, of } from 'rxjs';
+import { map, Observable, of, tap } from 'rxjs';
 
 import { readCSV } from '../helpers/csv-reader';
-import { findClosedEuclidean, findClosedPearson } from '../helpers/find_closest';
+import {
+  findClosedEuclidean,
+  findClosedPearson,
+} from '../helpers/find_closest';
 import { findSimilarity } from '../helpers/similarity';
 import { sortEuclidean, sortPearson } from '../helpers/sorter';
 import {
@@ -13,20 +16,29 @@ import {
   CompanyDto,
   CompanyRawData,
   CompanyWithDistance,
-  SharedCompanyData
+  SharedCompanyData,
 } from '../models/company.interface';
+import { AnalyseCompaniesAverageCalculatorService } from './analyse-companies-average-calculator.service';
 
 @Injectable()
 export class AnalyseCompaniesService {
-  getSharedCompanyData(companyId: number): Observable<SharedCompanyData> {
+  constructor(
+    private analyseCompaniesAverageCalculatorService: AnalyseCompaniesAverageCalculatorService,
+  ) {}
+
+  getSharedCompanyData(
+    companyId: number,
+  ): Observable<{ company: SharedCompanyData; average: SharedCompanyData }> {
     return of(this.readMockJsonFile()).pipe(
-      map((companies) => companies.find((company) => company.id === companyId)),
-      map((company) =>
-        company.sharedData.reduce<SharedCompanyData>(
-          (pre, curr) => ({ ...pre, [curr]: company[curr] }),
-          {},
+      map((companies) => ({
+        company: this.getSharedCompanyInformation(
+          companies.find((company) => company.id === companyId),
         ),
-      ),
+        average:
+          this.analyseCompaniesAverageCalculatorService.getAverageData(
+            companies,
+          ),
+      })),
     );
   }
 
@@ -107,5 +119,14 @@ export class AnalyseCompaniesService {
     );
 
     return JSON.parse(readFileSync(jsonFilePath, 'utf-8'));
+  }
+
+  private getSharedCompanyInformation(
+    company: CompanyRawData,
+  ): SharedCompanyData {
+    return company.sharedData.reduce<SharedCompanyData>(
+      (pre, curr) => ({ ...pre, [curr]: company[curr] }),
+      {},
+    );
   }
 }

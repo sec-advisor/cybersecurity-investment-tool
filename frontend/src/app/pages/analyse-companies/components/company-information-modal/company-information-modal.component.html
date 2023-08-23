@@ -24,7 +24,10 @@
           <input
             class="form-control small-input"
             type="number"
-            [class.is-invalid]="viewModel.form.controls[input.name].invalid"
+            [class.is-invalid]="
+              viewModel.form.controls[input.name].invalid &&
+              viewModel.form.controls[input.name].dirty
+            "
             [min]="input.min"
             [max]="input.max"
             [formControl]="viewModel.form.controls[input.name]"
@@ -42,7 +45,10 @@
           <select
             id="type-selection"
             class="form-select"
-            [class.is-invalid]="viewModel.form.controls[input.name].invalid"
+            [class.is-invalid]="
+              viewModel.form.controls[input.name].invalid &&
+              viewModel.form.controls[input.name].dirty
+            "
             [formControl]="viewModel.form.controls[input.name]"
           >
             <ng-container *ngFor="let option of input.options">

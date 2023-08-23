@@ -1,4 +1,9 @@
 import * as mongoose from 'mongoose';
+import { Multifactor } from '../analyse-companies/helpers/models/multifactor-comparer';
+import { CloudEnum } from '../analyse-companies/helpers/models/cloud-comparer';
+import { CyberAttackThreats } from '../analyse-companies/helpers/models/cyber-attack-threats-comparer';
+import { NetworkInfrastructure } from '../analyse-companies/helpers/models/network-infrastructor-comparer';
+import { RemoteAccess } from '../analyse-companies/helpers/models/remote-access-comparer';
 
 const inputType = new mongoose.Schema({
   key: String,
@@ -74,3 +79,25 @@ export const SettingsSchema = new mongoose.Schema({
   userId: String,
   bpf: String,
 });
+
+// export const CompanySchema = new mongoose.Schema({
+//   id: Number,
+//   revenue: Number,
+//   marketShare: Number,
+//   growthRate: Number,
+//   cybersecurityBudget: Number,
+//   cybersecurityStaffing: Number,
+//   cybersecurityTrainingInvestment: Number,
+//   cybersecurityInsuranceInvestment: Number,
+//   cyberAttackThreats: CyberAttackThreats,
+//   networkInfrastructure: NetworkInfrastructure,
+//   remoteAccess: RemoteAccess,
+//   cybersecurityInvestment: Number,
+//   cloud: CloudEnum,
+//   country: String,
+//   multifactor: Multifactor,
+//   organizationSize: Number,
+//   remote: Number,
+//   bpf: String,
+//   sharedData: [String],
+// });

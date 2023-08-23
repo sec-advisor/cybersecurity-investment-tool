@@ -9,8 +9,8 @@ import {
   getNormalizedCloud1,
 } from './models/cloud-comparer';
 import {
+  getNormalizedCountryDb,
   getNormalizedCountry,
-  getNormalizedCountry1,
 } from './models/country-comparer';
 import {
   getNormalizedCyberAttackThreats,
@@ -25,17 +25,14 @@ import {
   getNormalizedNetworkInfrastructure1,
 } from './models/network-infrastructor-comparer';
 import {
+  getNormalizedOrganizationSizeDb,
   getNormalizedOrganizationSize,
-  getNormalizedOrganizationSize1,
 } from './models/organization-size-comparer';
 import {
   getNormalizedRemoteAccess,
   getNormalizedRemoteAccess1,
 } from './models/remote-access-comparer';
-import {
-  getNormalizedRemote,
-  getNormalizedRemote1,
-} from './models/remote_comparer';
+import { getNormalizedRemote1 } from './models/remote_comparer';
 
 // eslint-disable-next-line prettier/prettier
 const calculateCorrelation = require('calculate-correlation');
@@ -69,7 +66,7 @@ export const findSimilarity = (
   return applyCorrelationMeassures(compareCompany, data);
 };
 
-const numericFactors = [
+const numericFactors: (keyof CompanyRawData)[] = [
   'revenue',
   'marketShare',
   'growthRate',
@@ -78,6 +75,7 @@ const numericFactors = [
   'cybersecurityStaffing',
   'cybersecurityTrainingInvestment',
   'cybersecurityInsuranceInvestment',
+  'remote',
 ];
 
 export const normalize = (data: object, prop: string) => {
@@ -92,21 +90,20 @@ const normalizeData = (
 ) => {
   companies.forEach((company) => {
     const country = company.country;
-    const organizationSize = company.org_size;
-    const remote = company.remote;
+    const organizationSize = company.organizationSize;
     const cyberAttackThreats = company.cyberAttackThreats;
     const cloud = company.cloud;
     const multifactor = company.multifactor;
     const networkInfrastructure = company.networkInfrastructure;
     const remoteAccess = company.remoteAccess;
 
-    normalizeProps(company, numericFactors);
+    normalizeNumericFactors(company, numericFactors);
     (company['countryN' as keyof typeof company] as number) =
-      getNormalizedCountry(country);
-    (company['org_sizeN' as keyof typeof company] as number) =
-      getNormalizedOrganizationSize(organizationSize);
-    (company['remoteN' as keyof typeof company] as number) =
-      getNormalizedRemote(remote);
+      getNormalizedCountryDb(country);
+    (company['organizationSizeN' as keyof typeof company] as number) =
+      getNormalizedOrganizationSizeDb(organizationSize);
+    // (company['remoteN' as keyof typeof company] as number) =
+    //   getNormalizedRemote(remote);
     (company['cyberAttackThreatsN' as keyof typeof company] as number) =
       getNormalizedCyberAttackThreats(
         cyberAttackThreats,
@@ -133,24 +130,23 @@ const normalizeData = (
   });
 };
 
-const normalizeProps = (data: object, props: string[]) => {
-  props.forEach((p) => {
-    const boundary = boundaries[p as keyof typeof data] as MinMax;
-    const value = data[p as keyof typeof data] as number;
+const normalizeNumericFactors = (
+  company: CompanyRawData,
+  props: (keyof CompanyRawData)[],
+) => {
+  props.forEach((prop) => {
+    const boundary = boundaries[prop];
+    const value = company[prop] as number;
 
-    (data[`${p}N` as keyof typeof data] as number) =
+    (company[`${prop}N` as keyof typeof company] as number) =
       (value - boundary.min) / (boundary.max - boundary.min);
   });
 };
 
-const findBoundaries = (data: CompanyRawData[]) => {
-  data.forEach((d) => {
-    // const revenue = d['revenue' as keyof typeof d] as number;
-    // const marketShare = d['marketShare' as keyof typeof d] as number;
-    // const growthRate = d['growthRate' as keyof typeof d] as number;
-
+const findBoundaries = (companies: CompanyRawData[]) => {
+  companies.forEach((company) => {
     numericFactors.forEach((factor) => {
-      const value = d[factor as keyof typeof d] as number;
+      const value = company[factor] as number;
       if (!boundaries || !boundaries[factor]) {
         boundaries = {
           ...(boundaries ?? {}),
@@ -163,23 +159,7 @@ const findBoundaries = (data: CompanyRawData[]) => {
           boundaries[factor].max > value ? boundaries[factor].max : value;
       }
     });
-
-    // if (!boundaries) {
-    //   boundaries = {
-    //     revenue: { min: revenue, max: revenue },
-    //     marketShare: { min: marketShare, max: marketShare },
-    //     growthRate: { min: growthRate, max: growthRate }
-    //   }
-    // } else {
-    //   boundaries.revenue.min = boundaries.revenue.min < revenue ? boundaries.revenue.min : revenue;
-    //   boundaries.revenue.max = boundaries.revenue.max > revenue ? boundaries.revenue.max : revenue;
-    //   boundaries.marketShare.min = boundaries.marketShare.min < marketShare ? boundaries.marketShare.min : marketShare;
-    //   boundaries.marketShare.max = boundaries.marketShare.max > marketShare ? boundaries.marketShare.max : marketShare;
-    //   boundaries.growthRate.min = boundaries.growthRate.min < growthRate ? boundaries.growthRate.min : growthRate;
-    //   boundaries.growthRate.max = boundaries.growthRate.max > growthRate ? boundaries.growthRate.max : growthRate;
-    // }
   });
-  // console.log(boundaries);
 };
 
 // TODO CH: Industry missing
@@ -216,8 +196,8 @@ const applyCorrelationMeassures = (
     normalize(compareBusinessCompany(compareCompany), 'revenue'),
     normalize(compareBusinessCompany(compareCompany), 'marketShare'),
     normalize(compareBusinessCompany(compareCompany), 'growthRate'),
-    getNormalizedCountry1(compareBusinessCompany(compareCompany).country),
-    getNormalizedOrganizationSize1(
+    getNormalizedCountry(compareBusinessCompany(compareCompany).country),
+    getNormalizedOrganizationSize(
       compareBusinessCompany(compareCompany).organizationSize,
     ),
     getNormalizedRemote1(compareBusinessCompany(compareCompany).remote),
@@ -249,57 +229,59 @@ const applyCorrelationMeassures = (
   ];
 
   return data.map(
-    (object) =>
+    (company) =>
       ({
-        ...object,
+        ...company,
         euclideanDistanceBusiness: euclideanDistance(compareObject, [
-          object['revenueN' as keyof typeof object],
-          object['marketShareN' as keyof typeof object],
-          object['growthRateN' as keyof typeof object],
-          object['countryN' as keyof typeof object],
-          object['org_sizeN' as keyof typeof object],
-          object['remoteN' as keyof typeof object],
+          company['revenueN' as keyof typeof company],
+          company['marketShareN' as keyof typeof company],
+          company['growthRateN' as keyof typeof company],
+          company['countryN' as keyof typeof company],
+          company['organizationSizeN' as keyof typeof company],
+          company['remoteN' as keyof typeof company],
         ]),
         euclideanDistanceEconomic: euclideanDistance(economicCompareObject, [
-          object['cybersecurityInvestmentN' as keyof typeof object],
-          object['cybersecurityBudgetN' as keyof typeof object],
-          object['cybersecurityStaffingN' as keyof typeof object],
-          object['cybersecurityTrainingInvestmentN' as keyof typeof object],
-          object['cybersecurityInsuranceInvestmentN' as keyof typeof object],
-          object['cyberAttackThreatsN' as keyof typeof object],
+          company['cybersecurityInvestmentN' as keyof typeof company],
+          company['cybersecurityBudgetN' as keyof typeof company],
+          company['cybersecurityStaffingN' as keyof typeof company],
+          company['cybersecurityTrainingInvestmentN' as keyof typeof company],
+          company['cybersecurityInsuranceInvestmentN' as keyof typeof company],
+          company['cyberAttackThreatsN' as keyof typeof company],
         ]),
         euclideanDistanceTechnical: euclideanDistance(technicalCompareObject, [
-          object['cloudN' as keyof typeof object],
-          object['multifactorN' as keyof typeof object],
-          object['networkInfrastructureN' as keyof typeof object],
-          object['remoteAccessN' as keyof typeof object],
+          company['cloudN' as keyof typeof company],
+          company['multifactorN' as keyof typeof company],
+          company['networkInfrastructureN' as keyof typeof company],
+          company['remoteAccessN' as keyof typeof company],
         ]),
         pearsonCorrelationBusiness: calculateCorrelation(compareObject, [
-          object['revenueN' as keyof typeof object],
-          object['marketShareN' as keyof typeof object],
-          object['growthRateN' as keyof typeof object],
-          object['countryN' as keyof typeof object],
-          object['org_sizeN' as keyof typeof object],
-          object['remoteN' as keyof typeof object],
+          company['revenueN' as keyof typeof company],
+          company['marketShareN' as keyof typeof company],
+          company['growthRateN' as keyof typeof company],
+          company['countryN' as keyof typeof company],
+          company['organizationSizeN' as keyof typeof company],
+          company['remoteN' as keyof typeof company],
         ]),
         pearsonCorrelationEconomic: calculateCorrelation(
           economicCompareObject,
           [
-            object['cybersecurityInvestmentN' as keyof typeof object],
-            object['cybersecurityBudgetN' as keyof typeof object],
-            object['cybersecurityStaffingN' as keyof typeof object],
-            object['cybersecurityTrainingInvestmentN' as keyof typeof object],
-            object['cybersecurityInsuranceInvestmentN' as keyof typeof object],
-            object['cyberAttackThreatsN' as keyof typeof object],
+            company['cybersecurityInvestmentN' as keyof typeof company],
+            company['cybersecurityBudgetN' as keyof typeof company],
+            company['cybersecurityStaffingN' as keyof typeof company],
+            company['cybersecurityTrainingInvestmentN' as keyof typeof company],
+            company[
+              'cybersecurityInsuranceInvestmentN' as keyof typeof company
+            ],
+            company['cyberAttackThreatsN' as keyof typeof company],
           ],
         ),
         pearsonCorrelationTechnical: calculateCorrelation(
           technicalCompareObject,
           [
-            object['cloudN' as keyof typeof object],
-            object['multifactorN' as keyof typeof object],
-            object['networkInfrastructureN' as keyof typeof object],
-            object['remoteAccessN' as keyof typeof object],
+            company['cloudN' as keyof typeof company],
+            company['multifactorN' as keyof typeof company],
+            company['networkInfrastructureN' as keyof typeof company],
+            company['remoteAccessN' as keyof typeof company],
           ],
         ),
       } as unknown as CompanyWithDistance),

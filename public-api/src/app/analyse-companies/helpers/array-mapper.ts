@@ -1,4 +1,4 @@
-export const mapArray = (string: string) => {
+export const mapArray = (string: string): string[] => {
   return string
     .replaceAll('[', '')
     .replaceAll(']', '')

@@ -1,4 +1,4 @@
-EV,capital,cloud,country,identity_access,industry,insurance,multifactor,org_size,remote,security_measure,security_training,supplier,year
+EV,capital,cloud,country,identity_access,industry,insurance,multifactor,organizationSize,remote,security_measure,security_training,supplier,year
 52218.74723116843,139720327,['None'],['ESP'],['None'],"['US Federal', 'Travel']",['None'],['None'],['Medium'],['80%'],"['Risk management', 'Security intelligence systems']",['Training'],['Supplier Safe'],2021
 7553.910717518415,81293294,['Private'],['SCA'],['None'],['Capital markets'],['Insurance (i)'],['None'],['Micro'],['80%'],['None'],['None'],['Supplier Breach'],2021
 64297.70361190663,92059666,['Public'],"['GER', 'US', 'ITA']",['None'],"['Public sector', 'High tech']",['None'],['Multifactor'],['Small'],['20%'],['Incident response plan testing'],['None'],['Supplier Breach'],2021
