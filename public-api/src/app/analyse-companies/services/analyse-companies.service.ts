@@ -11,6 +11,7 @@ import {
 import { findSimilarity } from '../helpers/similarity';
 import { sortEuclidean, sortPearson } from '../helpers/sorter';
 import {
+  CompaniesSummary,
   Company,
   CompanyComparisonDto,
   CompanyDto,
@@ -28,7 +29,7 @@ export class AnalyseCompaniesService {
 
   getSharedCompanyData(
     companyId: number,
-  ): Observable<{ company: SharedCompanyData; average: SharedCompanyData }> {
+  ): Observable<{ company: SharedCompanyData; average: CompaniesSummary }> {
     return of(this.readMockJsonFile()).pipe(
       map((companies) => ({
         company: this.getSharedCompanyInformation(

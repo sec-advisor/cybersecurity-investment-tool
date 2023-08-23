@@ -61,6 +61,15 @@ export interface CompanyRawData {
 
 export type SharedCompanyData = Omit<Partial<CompanyRawData>, 'sharedData'>;
 
+export interface CompaniesSummary extends SharedCompanyData {
+  countryPercentage: number;
+  cyberAttackThreatsPercentage: number;
+  networkInfrastructurePercentage: number;
+  remoteAccessPercentage: number;
+  cloudPercentage: number;
+  multifactorPercentage: number;
+}
+
 export const countryDistanceMapping = {
   CAN: -5,
   US: -4,

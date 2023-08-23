@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable, tap } from 'rxjs';
 
 import {
+  CompaniesSummary,
   Company,
   CompanyComparisonDto,
   SharedCompanyData,
@@ -23,7 +24,7 @@ export class AnalyseCompaniesViewService {
 
   getSharedCompanyData(companyId: number): Observable<{
     company: SharedCompanyData;
-    average: SharedCompanyData;
+    average: CompaniesSummary;
   }> {
     return this.similarityDataService
       .getSharedCompanyData(companyId)

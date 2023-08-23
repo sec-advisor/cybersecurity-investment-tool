@@ -4,6 +4,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 import {
   CloudEnum,
+  CompaniesSummary,
   Company,
   CompanyRawData,
   CyberAttackThreats,
@@ -14,6 +15,7 @@ import {
   countryDistanceMapping,
   organizationSizeMapping,
 } from '../../../../models/company.interface';
+import { isUndefined } from 'lodash';
 
 interface TableRow {
   key: string;
@@ -31,7 +33,7 @@ interface TableRow {
 export class AnalyseCompaniesSharedDataModalComponent implements OnInit {
   readonly compareCompanyInformation!: {
     company: SharedCompanyData;
-    average: SharedCompanyData;
+    average: CompaniesSummary;
   };
   readonly companyInformation!: Company;
   viewModel!: TableRow[];
@@ -46,7 +48,7 @@ export class AnalyseCompaniesSharedDataModalComponent implements OnInit {
     //     value ===
     //     (this.companyInformation.organizationSize as unknown as number),
     // )?.[0] as unknown as string;
-
+    console.log(this.compareCompanyInformation);
     this.viewModel = Object.entries(this.compareCompanyInformation.company).map(
       ([key, value]) => ({
         key: this.getDisplayKey(key),
@@ -65,6 +67,9 @@ export class AnalyseCompaniesSharedDataModalComponent implements OnInit {
           this.compareCompanyInformation.average[
             key as keyof SharedCompanyData
           ],
+          this.compareCompanyInformation.average[
+            `${key}Percentage` as keyof SharedCompanyData
+          ] as number,
         ),
       }),
     );
@@ -88,27 +93,44 @@ export class AnalyseCompaniesSharedDataModalComponent implements OnInit {
       | RemoteAccess
       | CloudEnum
       | Multifactor,
+    averagePercentage?: number,
   ): string {
     if (key === 'cyberAttackThreats') {
-      return CyberAttackThreats[value as unknown as CyberAttackThreats];
+      return `${
+        CyberAttackThreats[value as unknown as CyberAttackThreats]
+      }${this.appendPossiblePercentage(averagePercentage)}`;
     } else if (key === 'networkInfrastructure') {
-      return NetworkInfrastructure[value as unknown as NetworkInfrastructure];
+      return `${
+        NetworkInfrastructure[value as unknown as NetworkInfrastructure]
+      }${this.appendPossiblePercentage(averagePercentage)}`;
     } else if (key === 'remoteAccess') {
-      return RemoteAccess[value as unknown as RemoteAccess];
+      return `${
+        RemoteAccess[value as unknown as RemoteAccess]
+      }${this.appendPossiblePercentage(averagePercentage)}`;
     } else if (key === 'cloud') {
-      return CloudEnum[value as unknown as CloudEnum];
+      return `${
+        CloudEnum[value as unknown as CloudEnum]
+      }${this.appendPossiblePercentage(averagePercentage)}`;
     } else if (key === 'multifactor') {
-      return Multifactor[value as unknown as Multifactor];
+      return `${
+        Multifactor[value as unknown as Multifactor]
+      }${this.appendPossiblePercentage(averagePercentage)}`;
     } else if (key === 'organizationSize') {
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       return Object.entries(organizationSizeMapping)
         .find(([_key, value]) => value === value)![0]
         .toString();
-    } else if (key === 'country' && Number.isFinite(value)) {
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      return Object.entries(countryDistanceMapping)
-        .find((_key, value) => value === value)![0]
-        .toString();
+    } else if (key === 'country') {
+      if (Number.isFinite(value)) {
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        return Object.entries(countryDistanceMapping)
+          .find((_key, value) => value === value)![0]
+          .toString();
+      } else {
+        return `${this.cleanStringValue(
+          value as string,
+        )}${this.appendPossiblePercentage(averagePercentage)}`;
+      }
     } else if (
       (key === 'remote' || key === 'marketShare' || key === 'growthRate') &&
       Number.isFinite(value)
@@ -116,10 +138,7 @@ export class AnalyseCompaniesSharedDataModalComponent implements OnInit {
       return `${value}%`;
     } else if (typeof value === 'string') {
       if (value.startsWith('[')) {
-        return value
-          .replaceAll('[', '')
-          .replaceAll(']', '')
-          .replaceAll(`'`, '');
+        return this.cleanStringValue(value);
       } else {
         return value;
       }
@@ -133,5 +152,15 @@ export class AnalyseCompaniesSharedDataModalComponent implements OnInit {
   private getDisplayKey(key: string): string {
     const result = key.replace(/([A-Z])/g, ' $1');
     return result.charAt(0).toUpperCase() + result.slice(1);
+  }
+
+  private appendPossiblePercentage(averagePercentage: number | undefined) {
+    return isUndefined(averagePercentage)
+      ? ''
+      : ` (${Math.round(averagePercentage * 100)}%)`;
+  }
+
+  private cleanStringValue(value: string): string {
+    return value.replaceAll('[', '').replaceAll(']', '').replaceAll(`'`, '');
   }
 }

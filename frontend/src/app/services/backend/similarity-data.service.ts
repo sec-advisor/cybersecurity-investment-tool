@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { backend } from '../../constants/backend.constants';
 import { httpOptions } from '../../constants/http-options.constants';
 import {
+  CompaniesSummary,
   Company,
   CompanyComparisonDto,
   SharedCompanyData,
@@ -29,10 +30,10 @@ export class SimilarityDataService {
 
   getSharedCompanyData(
     companyId: number,
-  ): Observable<{ company: SharedCompanyData; average: SharedCompanyData }> {
+  ): Observable<{ company: SharedCompanyData; average: CompaniesSummary }> {
     return this.http.get<{
       company: SharedCompanyData;
-      average: SharedCompanyData;
+      average: CompaniesSummary;
     }>(`${backend.url}/analyse-companies/company/${companyId}`, httpOptions);
   }
 }
