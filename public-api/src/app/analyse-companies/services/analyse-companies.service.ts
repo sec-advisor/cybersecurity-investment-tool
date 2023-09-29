@@ -20,6 +20,7 @@ import {
   SharedCompanyData,
 } from '../models/company.interface';
 import { AnalyseCompaniesAverageCalculatorService } from './analyse-companies-average-calculator.service';
+import { appendData } from '../helpers/data_appender';
 
 @Injectable()
 export class AnalyseCompaniesService {
@@ -45,9 +46,16 @@ export class AnalyseCompaniesService {
 
   getSimilarity(
     compareCompany: Company,
+    compareCompanies?: CompanyRawData[],
     numberOfClosest?: number,
   ): Observable<CompanyComparisonDto> {
-    return (true ? of(this.readMockJsonFile()) : readCSV()).pipe(
+    return (
+      compareCompanies
+        ? of(compareCompanies)
+        : true
+        ? of(this.readMockJsonFile())
+        : readCSV()
+    ).pipe(
       // map((companies) => appendData(companies) as CompanyRawData[]),
       // tap((x) => writeFileSync('test.json', JSON.stringify(x))),
       map((companies) => findSimilarity(compareCompany, companies)),
@@ -78,6 +86,11 @@ export class AnalyseCompaniesService {
             'technical',
             numberOfClosest,
           ),
+          euclideanDistanceAll: sortEuclidean(
+            companies,
+            'all',
+            numberOfClosest,
+          ),
           pearsonCorrelationBusiness: sortPearson(
             companies,
             'business',
@@ -93,6 +106,7 @@ export class AnalyseCompaniesService {
             'technical',
             numberOfClosest,
           ),
+          pearsonCorrelationAll: sortPearson(companies, 'all', numberOfClosest),
         },
       })),
       map((data) => data.sorted),
@@ -110,6 +124,8 @@ export class AnalyseCompaniesService {
       pearsonCorrelationBusiness: company.pearsonCorrelationBusiness,
       pearsonCorrelationEconomic: company.pearsonCorrelationEconomic,
       pearsonCorrelationTechnical: company.pearsonCorrelationTechnical,
+      euclideanDistanceAll: company.euclideanDistanceAll,
+      pearsonCorrelationAll: company.pearsonCorrelationAll,
     }));
   }
 

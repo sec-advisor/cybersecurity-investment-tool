@@ -3,8 +3,7 @@ export enum CloudEnum {
   Private = 1,
   Public = 2,
   Hybrid = 3,
-};
-
+}
 
 const cloudMapping = {
   None: 0,
@@ -22,16 +21,16 @@ const cloudMapping = {
 
 export type Cloud = keyof typeof cloudMapping;
 
-export const getCloudValue = (cloud: Cloud): number => {
-  return cloudMapping[cloud];
-};
+// export const getCloudValue = (cloud: Cloud): number => {
+//   return cloudMapping[cloud];
+// };
 
-export const getNormalizedCloud1 = (cloud: CloudEnum) => {
-  // const a = CloudEnum.Hybrid;
-  // const b = CloudEnum[a]
-  // const value = cloudMapping[cloud];
-  return cloud / Object.keys(cloudMapping).length;
-};
+// export const getNormalizedCloud1 = (cloud: CloudEnum) => {
+//   // const a = CloudEnum.Hybrid;
+//   // const b = CloudEnum[a]
+//   // const value = cloudMapping[cloud];
+//   return cloud / Object.keys(cloudMapping).length;
+// };
 
 export const getNormalizedCloud = (cloud: CloudEnum) => {
   // if (cloud === `['None']`) {

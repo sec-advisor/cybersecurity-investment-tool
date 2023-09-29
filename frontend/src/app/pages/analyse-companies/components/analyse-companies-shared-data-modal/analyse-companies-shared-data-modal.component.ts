@@ -41,14 +41,6 @@ export class AnalyseCompaniesSharedDataModalComponent implements OnInit {
   constructor(private activeModal: NgbActiveModal) {}
 
   ngOnInit() {
-    // this.companyInformation.organizationSize = Object.entries(
-    //   organizationSizeMapping,
-    // ).find(
-    //   ([key, value]) =>
-    //     value ===
-    //     (this.companyInformation.organizationSize as unknown as number),
-    // )?.[0] as unknown as string;
-    console.log(this.compareCompanyInformation);
     this.viewModel = Object.entries(this.compareCompanyInformation.company).map(
       ([key, value]) => ({
         key: this.getDisplayKey(key),
@@ -116,15 +108,18 @@ export class AnalyseCompaniesSharedDataModalComponent implements OnInit {
         Multifactor[value as unknown as Multifactor]
       }${this.appendPossiblePercentage(averagePercentage)}`;
     } else if (key === 'organizationSize') {
+      if (!Number.isFinite(value)) {
+        return (value ?? '').toString();
+      }
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      return Object.entries(organizationSizeMapping)
-        .find(([_key, value]) => value === value)![0]
-        .toString();
+      return `${Object.entries(organizationSizeMapping)
+        .find(([_key, val]) => val === value)![0]
+        .toString()}${this.appendPossiblePercentage(averagePercentage)}`;
     } else if (key === 'country') {
       if (Number.isFinite(value)) {
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         return Object.entries(countryDistanceMapping)
-          .find((_key, value) => value === value)![0]
+          .find((_key, val) => val === value)![0]
           .toString();
       } else {
         return `${this.cleanStringValue(

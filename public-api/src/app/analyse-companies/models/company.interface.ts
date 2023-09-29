@@ -13,6 +13,8 @@ export interface CompanyComparisonDto {
   pearsonCorrelationBusiness: CompanyDto[];
   pearsonCorrelationEconomic: CompanyDto[];
   pearsonCorrelationTechnical: CompanyDto[];
+  euclideanDistanceAll: CompanyDto[];
+  pearsonCorrelationAll: CompanyDto[];
 }
 
 export interface Company {
@@ -43,6 +45,8 @@ export interface CompanyDto {
   pearsonCorrelationBusiness: number;
   pearsonCorrelationEconomic: number;
   pearsonCorrelationTechnical: number;
+  euclideanDistanceAll: number;
+  pearsonCorrelationAll: number;
 }
 
 export interface CompanyWithDistance extends Company {
@@ -52,6 +56,8 @@ export interface CompanyWithDistance extends Company {
   pearsonCorrelationBusiness: number;
   pearsonCorrelationEconomic: number;
   pearsonCorrelationTechnical: number;
+  euclideanDistanceAll: number;
+  pearsonCorrelationAll: number;
 }
 
 export interface CompanyRawData {
@@ -68,7 +74,7 @@ export interface CompanyRawData {
   remoteAccess: RemoteAccess;
   cybersecurityInvestment: number;
   cloud: CloudEnum;
-  country: string;
+  country: Country;
   multifactor: Multifactor;
   organizationSize: number;
   remote: number;

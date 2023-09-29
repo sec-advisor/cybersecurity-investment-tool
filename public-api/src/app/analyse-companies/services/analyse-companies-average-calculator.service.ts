@@ -36,14 +36,15 @@ export class AnalyseCompaniesAverageCalculatorService {
     'remoteAccess',
     'cloud',
     'multifactor',
+    'organizationSize',
   ];
 
   getAverageData(companies: CompanyRawData[]): CompaniesSummary {
-    const combinedSharedData = companies.map((company) =>
-      this.getSharedCompanyInformation(company),
-    );
+    // const combinedSharedData = companies.map((company) =>
+    //   this.getSharedCompanyInformation(company),
+    // );
 
-    const summarizedSharedProperties = combinedSharedData.reduce<{
+    const summarizedSharedProperties = companies.reduce<{
       numericAggregation: NumericAggregation[];
       noneNumericAggregation: NoneNumericAggregation[];
     }>(

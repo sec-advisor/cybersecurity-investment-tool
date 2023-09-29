@@ -1,40 +1,139 @@
 import { CompanyRawData } from '../models/company.interface';
 import { CloudEnum } from './models/cloud-comparer';
+import { Country } from './models/country-comparer';
 import { CyberAttackThreats } from './models/cyber-attack-threats-comparer';
 import { Multifactor } from './models/multifactor-comparer';
 import { NetworkInfrastructure } from './models/network-infrastructor-comparer';
 import { organizationSizeMapping } from './models/organization-size-comparer';
 import { RemoteAccess } from './models/remote-access-comparer';
 
-export const appendData = (data: object[]): object[] => {
-  return data.map((d, index) => ({ ...d, id: index, ...getRandomData(d) }));
+export const appendData = (data: object[]): CompanyRawData[] => {
+  return data
+    .map((d, index) =>
+      index === 0 ? undefined : { id: index, ...getRandomData(d) },
+    )
+    .filter((company) => !!company);
 };
 
-const getRandomData = (d: object) => {
-  const a = {
-    revenue: randomInteger(270000000, 90000000000),
-    marketShare: randomInteger(0, 100),
-    growthRate: randomInteger(-100, 100),
+const getRandomData = (company: object) => {
+  // const a = {
+  //   // revenue: randomInteger(270000000, 90000000000),
+  //   // marketShare: randomInteger(0, 100),
+  //   // growthRate: randomInteger(-100, 100),
+  //   // country: getCountry(company['country']),
 
-    cybersecurityBudget: randomInteger(1000000, 6000000),
-    cybersecurityStaffing: randomInteger(5, 300),
-    cybersecurityTrainingInvestment: randomInteger(10000, 2000000),
-    cybersecurityInsuranceInvestment: randomInteger(50000, 9000000),
-    cyberAttackThreats: randomEnum(CyberAttackThreats),
+  //   // cybersecurityBudget: randomInteger(1000000, 6000000),
+  //   // cybersecurityStaffing: randomInteger(5, 300),
+  //   cybersecurityTrainingInvestment: randomInteger(10000, 2000000),
+  //   cybersecurityInsuranceInvestment: randomInteger(50000, 9000000),
+  //   // cyberAttackThreats: randomEnum(CyberAttackThreats),
 
+  //   // cloud: randomEnum(CloudEnum),
+  //   // multifactor: randomEnum(Multifactor),
+  //   // networkInfrastructure: randomEnum(NetworkInfrastructure),
+  //   // remoteAccess: randomEnum(RemoteAccess),
+  //   // remote: getRemote(company['remote']),
+  //   // organizationSize: getOrgSizeValue(company['organizationSize']),
+  //   // bpf: getBpf(),
+  //   // sharedData: getSharedProperties(),
+  // } as CompanyRawData;
+  // return {
+  //   ...a,
+  //   cybersecurityInvestment: (a.revenue / 100) * randomInteger(4, 15),
+  // } as CompanyRawData;
+
+  return getCompany(company);
+};
+
+const getCompany = (company: object) => {
+  const organizationSize = getOrgSizeValue(company['organizationSize']);
+  let configuredCompany: Partial<CompanyRawData>;
+  if (organizationSize === 0) {
+    configuredCompany = getMicroCompany();
+  } else if (organizationSize === 1) {
+    configuredCompany = getSmallCompany();
+  } else if (organizationSize === 2) {
+    configuredCompany = getMediumCompany();
+  } else {
+    configuredCompany = getLargeCompany();
+  }
+
+  const b = {
+    ...configuredCompany,
+    country: getCountry(company['country']),
     cloud: randomEnum(CloudEnum),
     multifactor: randomEnum(Multifactor),
     networkInfrastructure: randomEnum(NetworkInfrastructure),
     remoteAccess: randomEnum(RemoteAccess),
-    remote: getRemote(d['remote']),
-    organizationSize: getOrgSizeValue(d['organizationSize']),
+    remote: getRemote(company['remote']),
+    organizationSize,
     bpf: getBpf(),
     sharedData: getSharedProperties(),
+    cyberAttackThreats: randomEnum(CyberAttackThreats),
+    marketShare: randomInteger(0, 100),
+    growthRate: randomInteger(-100, 100),
   } as CompanyRawData;
+
+  if (b.organizationSize === 1 && b.revenue > 10000000) {
+    console.log('danker');
+  }
+  return b;
+};
+
+const getMicroCompany = () => {
+  const revenue = randomInteger(100000, 5000000);
+  const cybersecurityBudget = revenue * 0.005;
+
   return {
-    ...a,
-    cybersecurityInvestment: (a.revenue / 100) * randomInteger(4, 15),
-  } as CompanyRawData;
+    revenue,
+    cybersecurityBudget,
+    cybersecurityStaffing: randomInteger(0, 5),
+    cybersecurityTrainingInvestment: cybersecurityBudget * 0.05,
+    cybersecurityInsuranceInvestment: cybersecurityBudget * 0.07,
+    cybersecurityInvestment: cybersecurityBudget * 0.75,
+  };
+};
+
+const getSmallCompany = () => {
+  const revenue = randomInteger(5000000, 10000000);
+  const cybersecurityBudget = revenue * 0.005;
+
+  return {
+    revenue,
+    cybersecurityBudget,
+    cybersecurityStaffing: randomInteger(5, 30),
+    cybersecurityTrainingInvestment: cybersecurityBudget * 0.05,
+    cybersecurityInsuranceInvestment: cybersecurityBudget * 0.07,
+    cybersecurityInvestment: cybersecurityBudget * 0.75,
+  };
+};
+
+const getMediumCompany = () => {
+  const revenue = randomInteger(10000000, 1000000000);
+  const cybersecurityBudget = revenue * 0.005;
+
+  return {
+    revenue,
+    cybersecurityBudget,
+    cybersecurityStaffing: randomInteger(30, 70),
+    cybersecurityTrainingInvestment: cybersecurityBudget * 0.05,
+    cybersecurityInsuranceInvestment: cybersecurityBudget * 0.07,
+    cybersecurityInvestment: cybersecurityBudget * 0.75,
+  };
+};
+
+const getLargeCompany = () => {
+  const revenue = randomInteger(150000000000, 611000000000);
+  const cybersecurityBudget = revenue * 0.005;
+
+  return {
+    revenue,
+    cybersecurityBudget,
+    cybersecurityStaffing: randomInteger(30, 80),
+    cybersecurityTrainingInvestment: cybersecurityBudget * 0.05,
+    cybersecurityInsuranceInvestment: cybersecurityBudget * 0.07,
+    cybersecurityInvestment: cybersecurityBudget * 0.75,
+  };
 };
 
 const randomInteger = (min: number, max: number) => {
@@ -79,11 +178,7 @@ const getOrgSizeValue = (organizationSizeValue: string): number => {
 
   const isOrgSizeDefined = organizationSizeMapping[value];
 
-  if (!isOrgSizeDefined) {
-    console.log('defineddsd');
-  }
-
-  return isOrgSizeDefined ? isOrgSizeDefined : randomInteger(0, 3);
+  return isOrgSizeDefined ? Number(isOrgSizeDefined) : randomInteger(0, 3);
 };
 
 const getSharedProperties = (): (keyof CompanyRawData)[] => {
@@ -146,4 +241,33 @@ const getSharedProperties = (): (keyof CompanyRawData)[] => {
       'cybersecurityInvestment',
       'bpf',
     ];
+};
+const getCountry = (country: string): string => {
+  const countries = country
+    .replaceAll('[', '')
+    .replaceAll(']', '')
+    .replaceAll(`'`, '')
+    .replaceAll(' ', '')
+    .split(',');
+
+  return countries[0] === 'None' ? getRandomCountry() : countries[0];
+};
+
+const getRandomCountry = (): Country => {
+  const mappingObject = {
+    CAN: -5,
+    US: -4,
+    ESP: -3,
+    UK: -2,
+    FRA: -1,
+    GER: 0,
+    ITA: 1,
+    SCA: 2,
+    TUR: 3,
+  };
+  const randomValue = randomInteger(-5, 3);
+  const b = Object.entries(mappingObject).find(
+    ([_key, value]) => value === randomValue,
+  )[0] as Country;
+  return b;
 };

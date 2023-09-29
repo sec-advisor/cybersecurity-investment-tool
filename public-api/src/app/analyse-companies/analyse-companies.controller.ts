@@ -5,6 +5,7 @@ import {
   CompaniesSummary,
   Company,
   CompanyComparisonDto,
+  CompanyRawData,
   SharedCompanyData,
 } from './models/company.interface';
 import { AnalyseCompaniesService } from './services/analyse-companies.service';
@@ -20,6 +21,23 @@ export class AnalyseCompaniesController {
   ): Observable<CompanyComparisonDto> {
     return this.analyseCompaniesService.getSimilarity(
       body.company,
+      undefined,
+      body.numberOfClosest,
+    );
+  }
+
+  @Post('custom-companies')
+  getSimilarCustomCompanies(
+    @Body()
+    body: {
+      company: Company;
+      compareCompanies: CompanyRawData[];
+      numberOfClosest?: number;
+    },
+  ): Observable<CompanyComparisonDto> {
+    return this.analyseCompaniesService.getSimilarity(
+      body.company,
+      body.compareCompanies,
       body.numberOfClosest,
     );
   }
