@@ -116,7 +116,6 @@ export enum Multifactor {
 export enum NetworkInfrastructure {
   LAN,
   WAN,
-  Wireless,
 }
 
 export enum RemoteAccess {

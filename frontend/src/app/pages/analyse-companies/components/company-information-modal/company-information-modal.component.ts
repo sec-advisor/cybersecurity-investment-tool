@@ -105,10 +105,8 @@ export class CompanyInformationModalComponent implements OnInit {
         return {
           ...pre,
           [curr.name]: [
-            ((definedCompanyInformation &&
-              definedCompanyInformation[
-                curr.name as keyof Company
-              ]) as number) ?? 1,
+            (definedCompanyInformation &&
+              definedCompanyInformation[curr.name as keyof Company]) as number,
             curr.type === 'number'
               ? [
                   Validators.required,

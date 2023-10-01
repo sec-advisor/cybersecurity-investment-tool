@@ -1,7 +1,6 @@
 export enum NetworkInfrastructure {
   LAN,
   WAN,
-  Wireless,
 }
 
 export const getNormalizedNetworkInfrastructure1 = () => {
