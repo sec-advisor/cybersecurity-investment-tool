@@ -17,17 +17,16 @@ export class AnalyseCompaniesViewService {
     company: Company,
     numberOfClosest?: number,
   ): Observable<CompanyComparisonDto> {
-    return this.similarityDataService
-      .getComparisonCompanies(company, numberOfClosest)
-      .pipe(tap(console.log));
+    return this.similarityDataService.getComparisonCompanies(
+      company,
+      numberOfClosest,
+    );
   }
 
   getSharedCompanyData(companyId: number): Observable<{
     company: SharedCompanyData;
     average: CompaniesSummary;
   }> {
-    return this.similarityDataService
-      .getSharedCompanyData(companyId)
-      .pipe(tap(console.log));
+    return this.similarityDataService.getSharedCompanyData(companyId);
   }
 }

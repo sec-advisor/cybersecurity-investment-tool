@@ -19,9 +19,6 @@ export const findClosedEuclidean = (
         : pre.euclideanDistanceTechnical
       : 99999999999;
 
-    // const euclideanDistance = curr[prop as keyof typeof curr];
-    // const currentClosest = pre[prop as keyof typeof pre];
-
     return Math.abs(euclideanDistance) < Math.abs(currentClosest) ? curr : pre;
   }, undefined as unknown as CompanyDto);
 };
@@ -45,9 +42,6 @@ export const findClosedPearson = (
         ? pre.pearsonCorrelationEconomic
         : pre.pearsonCorrelationTechnical
       : -1;
-
-    // const pearsonCorrelation = curr[prop as keyof typeof curr];
-    // const currentClosest = pre[prop as keyof typeof pre];
 
     return pearsonCorrelation > currentClosest ? curr : pre;
   }, undefined as unknown as CompanyWithDistance);

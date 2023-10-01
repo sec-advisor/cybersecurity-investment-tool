@@ -22,19 +22,6 @@ export const getNormalizedCountry = (country: Country) => {
   const value = countryDistanceMapping[country];
   return normalize(value);
 };
-// return value / Object.keys(countryDistanceMapping).length;
-
-// export const getNormalizedCountryDb = (countries: string) => {
-//   if (countries === `['None']`) {
-//     return 1;
-//   }
-//   const array = mapArray(countries);
-
-//   // TODO CH: Currently only taking first country
-//   const value = getCountryValue(array[0] as Country);
-//   return normalize(value);
-//   // return value / Object.keys(countryDistanceMapping).length;
-// };
 
 const normalize = (country: number) =>
   (country - countryDistanceMapping.CAN) /

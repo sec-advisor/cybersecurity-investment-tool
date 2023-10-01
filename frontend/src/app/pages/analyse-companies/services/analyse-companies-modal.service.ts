@@ -3,9 +3,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { BehaviorSubject, from } from 'rxjs';
 
 import { Company } from '../../../models/company.interface';
-import {
-  CompanyInformationModalComponent
-} from '../components/company-information-modal/company-information-modal.component';
+import { CompanyInformationModalComponent } from '../components/company-information-modal/company-information-modal.component';
 
 @Injectable({
   providedIn: 'root',
@@ -31,6 +29,8 @@ export class AnalyseCompaniesModalService {
   }
 
   setCompareCompany(company?: Company, numberOfClosest?: number): void {
-    this.companySubject.next({ company, numberOfClosest });
+    if (company) {
+      this.companySubject.next({ company, numberOfClosest });
+    }
   }
 }

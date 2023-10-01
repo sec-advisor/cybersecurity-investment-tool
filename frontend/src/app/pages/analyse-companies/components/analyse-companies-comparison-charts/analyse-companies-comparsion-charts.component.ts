@@ -1,4 +1,14 @@
-import { Component, EventEmitter, Input, NgZone, OnChanges, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  NgZone,
+  OnChanges,
+  OnInit,
+  Output,
+  SimpleChanges,
+  ViewChild,
+} from '@angular/core';
 import {
   ApexAxisChartSeries,
   ApexChart,
@@ -6,11 +16,24 @@ import {
   ApexTooltip,
   ApexXAxis,
   ApexYAxis,
-  ChartComponent
+  ChartComponent,
 } from 'ng-apexcharts';
-import { BehaviorSubject, map, merge, Observable, of, Subject, switchMap, tap } from 'rxjs';
+import {
+  BehaviorSubject,
+  map,
+  merge,
+  Observable,
+  of,
+  Subject,
+  switchMap,
+  tap,
+} from 'rxjs';
 
-import { Company, CompanyComparisonDto, CompanyDto } from '../../../../models/company.interface';
+import {
+  Company,
+  CompanyComparisonDto,
+  CompanyDto,
+} from '../../../../models/company.interface';
 import { filterUndefined } from '../../../../operators/filter-undefined.operator';
 import { AnalyseCompaniesViewService } from '../../services/analyse-companies-view.service';
 
@@ -310,17 +333,12 @@ export class AnalyseCompaniesComparisonChartsComponent
           dataPointSelection: (_event, _chartContext, opts) => {
             const id = compareData[opts.dataPointIndex].id.toString();
             const selectedCompany = this.findCompanyById(companies, id);
-            console.log(selectedCompany);
             if (selectedCompany) {
               this.ngZone.run(() => {
                 this.selectedCompany.next(selectedCompany);
                 this.companyIdSelected.emit(id);
               });
             }
-            // console.log(chartContext, opts)
-            // console.log(opts.w.config.series[opts.seriesIndex].data[opts.dataPointIndex])
-            // console.log(config.config.series[config.seriesIndex].name)
-            // console.log(config.config.series[config.seriesIndex].data[config.dataPointIndex])
           },
         },
       },

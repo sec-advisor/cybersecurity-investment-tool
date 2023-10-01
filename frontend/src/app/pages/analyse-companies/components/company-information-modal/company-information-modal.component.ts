@@ -121,26 +121,5 @@ export class CompanyInformationModalComponent implements OnInit {
     };
     const form = this.formBuilder.group(formControls) as FormGroup;
     return { form, inputs };
-
-    // const k = this.formBuilder.group({ test: undefined });
-
-    // const a = this.formBuilder.group({
-    //   revenue: [undefined, [Validators.required]],
-    //   marketShare: [undefined, [Validators.required]],
-    //   growthRate: [undefined, [Validators.required]],
-    //   country: [undefined, [Validators.required]],
-    //   organizationSize: [undefined, [Validators.required]],
-    //   remote: [undefined, [Validators.required]],
-    //   cybersecurityInvestment: [undefined, [Validators.required]],
-    //   cybersecurityBudget: [undefined, [Validators.required]],
-    //   cybersecurityStaffing: [undefined, [Validators.required]],
-    //   cybersecurityTrainingInvestment: [undefined, [Validators.required]],
-    //   cybersecurityInsuranceInvestment: [undefined, [Validators.required]],
-    //   cyberAttackThreats: [undefined, [Validators.required]],
-    //   cloud: [undefined, [Validators.required]],
-    //   multifactor: [undefined, [Validators.required]],
-    //   networkInfrastructure: [undefined, [Validators.required]],
-    //   remoteAccess: [undefined, [Validators.required]],
-    // });
   }
 }

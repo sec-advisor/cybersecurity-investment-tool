@@ -3,7 +3,7 @@ export enum Multifactor {
   Multifactor,
 }
 
-export const getNormalizedMultifactor1 = () => {
+export const getNormalizedMultifactorDefault = () => {
   return 0;
 };
 

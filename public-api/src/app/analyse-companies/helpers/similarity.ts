@@ -1,4 +1,3 @@
-// import euclideanDistance from 'euclidean-distance';
 import {
   Company,
   CompanyRawData,
@@ -8,17 +7,17 @@ import { getNormalizedCloud } from './models/cloud-comparer';
 import { getNormalizedCountry } from './models/country-comparer';
 import {
   getNormalizedCyberAttackThreats,
-  getNormalizedCyberAttackThreats1,
+  getNormalizedCyberAttackThreatsDefaultValue,
 } from './models/cyber-attack-threats-comparer';
 import { getNormalizedGrowthRate } from './models/growth-rate-comparer';
 import { getNormalizedMarketShared } from './models/market-shared-comparer';
 import {
   getNormalizedMultifactor,
-  getNormalizedMultifactor1,
+  getNormalizedMultifactorDefault,
 } from './models/multifactor-comparer';
 import {
   getNormalizedNetworkInfrastructure,
-  getNormalizedNetworkInfrastructure1,
+  getNormalizedNetworkInfrastructureDefault,
 } from './models/network-infrastructor-comparer';
 import {
   getNormalizedOrganizationSizeDb,
@@ -225,16 +224,16 @@ const applyCorrelationMeassures = (
       compareEconomicCompany(compareCompany),
       'cybersecurityInsuranceInvestment',
     ),
-    getNormalizedCyberAttackThreats1(),
+    getNormalizedCyberAttackThreatsDefaultValue(),
   ];
 
   const technicalTargetObject = [
     getNormalizedCloud(compareTechnicalCompany(compareCompany).cloud),
-    getNormalizedMultifactor1(),
-    getNormalizedNetworkInfrastructure1(),
+    getNormalizedMultifactorDefault(),
+    getNormalizedNetworkInfrastructureDefault(),
     getNormalizedRemoteAccess1(),
   ];
-  console.log(economicTargetObject);
+
   return data.map(
     (company) =>
       ({

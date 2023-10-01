@@ -6,7 +6,7 @@ export enum CyberAttackThreats {
   SQLInjection,
 }
 
-export const getNormalizedCyberAttackThreats1 = () => {
+export const getNormalizedCyberAttackThreatsDefaultValue = () => {
   return 0;
 };
 

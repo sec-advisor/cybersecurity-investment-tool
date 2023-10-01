@@ -3,7 +3,7 @@ export enum NetworkInfrastructure {
   WAN,
 }
 
-export const getNormalizedNetworkInfrastructure1 = () => {
+export const getNormalizedNetworkInfrastructureDefault = () => {
   return 0;
 };
 

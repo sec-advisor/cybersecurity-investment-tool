@@ -58,7 +58,7 @@ const getCompany = (company: object) => {
     configuredCompany = getLargeCompany();
   }
 
-  const b = {
+  return {
     ...configuredCompany,
     country: getCountry(company['country']),
     cloud: randomEnum(CloudEnum),
@@ -73,11 +73,6 @@ const getCompany = (company: object) => {
     marketShare: randomInteger(0, 100),
     growthRate: randomInteger(-100, 100),
   } as CompanyRawData;
-
-  if (b.organizationSize === 1 && b.revenue > 10000000) {
-    console.log('danker');
-  }
-  return b;
 };
 
 const getMicroCompany = () => {
