@@ -11,9 +11,8 @@ describe('AnalyseCompaniesSharedDataModalComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AnalyseCompaniesSharedDataModalComponent ]
-    })
-    .compileComponents();
+      declarations: [AnalyseCompaniesSharedDataModalComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

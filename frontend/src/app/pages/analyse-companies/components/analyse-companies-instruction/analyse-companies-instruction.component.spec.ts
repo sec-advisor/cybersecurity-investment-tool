@@ -11,9 +11,8 @@ describe('AnalyseCompaniesInstructionComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AnalyseCompaniesInstructionComponent ]
-    })
-    .compileComponents();
+      declarations: [AnalyseCompaniesInstructionComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

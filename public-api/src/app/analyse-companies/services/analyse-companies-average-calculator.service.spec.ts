@@ -9,7 +9,9 @@ describe('AnalyseCompaniesAverageCalculatorService', () => {
       providers: [AnalyseCompaniesAverageCalculatorService],
     }).compile();
 
-    service = module.get<AnalyseCompaniesAverageCalculatorService>(AnalyseCompaniesAverageCalculatorService);
+    service = module.get<AnalyseCompaniesAverageCalculatorService>(
+      AnalyseCompaniesAverageCalculatorService,
+    );
   });
 
   it('should be defined', () => {

@@ -59,8 +59,6 @@ export class AnalyseCompaniesService {
             map((companies) => this.mapToCompanyModel(companies)),
           )
     ).pipe(
-      // map((companies) => appendData(companies) as CompanyRawData[]),
-      // tap((x) => writeFileSync('test.json', JSON.stringify(x))),
       map((companies) => findSimilarity(compareCompany, companies)),
       map((companies) => this.filterCompanyInformation(companies)),
       map((companies) => ({

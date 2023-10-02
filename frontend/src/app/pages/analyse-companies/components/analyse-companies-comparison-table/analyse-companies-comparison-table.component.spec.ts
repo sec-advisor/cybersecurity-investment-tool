@@ -11,9 +11,8 @@ describe('AnalyseCompaniesComparisonTableComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AnalyseCompaniesComparisonTableComponent ]
-    })
-    .compileComponents();
+      declarations: [AnalyseCompaniesComparisonTableComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

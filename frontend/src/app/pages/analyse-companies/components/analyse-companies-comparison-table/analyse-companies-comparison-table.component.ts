@@ -1,13 +1,23 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { BehaviorSubject, map, merge, Observable, of, switchMap, tap } from 'rxjs';
-
-import { Company, CompanyComparisonDto, CompanyDto } from '../../../../models/company.interface';
-import { AnalyseCompaniesViewService } from '../../services/analyse-companies-view.service';
 import {
-  AnalyseCompaniesSharedDataModalComponent
-} from '../analyse-companies-shared-data-modal/analyse-companies-shared-data-modal.component';
+  BehaviorSubject,
+  map,
+  merge,
+  Observable,
+  of,
+  switchMap,
+  tap,
+} from 'rxjs';
+
+import {
+  Company,
+  CompanyComparisonDto,
+  CompanyDto,
+} from '../../../../models/company.interface';
+import { AnalyseCompaniesViewService } from '../../services/analyse-companies-view.service';
+import { AnalyseCompaniesSharedDataModalComponent } from '../analyse-companies-shared-data-modal/analyse-companies-shared-data-modal.component';
 
 @Component({
   selector: 'app-analyse-companies-comparison-table',

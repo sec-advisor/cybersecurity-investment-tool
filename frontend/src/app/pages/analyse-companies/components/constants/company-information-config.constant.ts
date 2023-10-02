@@ -5,7 +5,7 @@ import {
   Multifactor,
   NetworkInfrastructure,
   organizationSizeMapping,
-  RemoteAccess
+  RemoteAccess,
 } from '../../../../models/company.interface';
 import { CompanyInformationAnyInput } from '../models/company-information-input.interface';
 

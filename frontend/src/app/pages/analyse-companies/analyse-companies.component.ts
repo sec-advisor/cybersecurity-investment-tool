@@ -1,13 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { ApexAxisChartSeries, ApexChart, ApexTitleSubtitle, ApexTooltip, ApexXAxis, ApexYAxis } from 'ng-apexcharts';
+import {
+  ApexAxisChartSeries,
+  ApexChart,
+  ApexTitleSubtitle,
+  ApexTooltip,
+  ApexXAxis,
+  ApexYAxis,
+} from 'ng-apexcharts';
 import { filter, map, merge, Observable, of, Subject, switchMap } from 'rxjs';
 
 import { SideBarSection } from '../../layouts/action-sidebar/models/side-bar-button.model';
 import { Company } from '../../models/company.interface';
-import {
-  AnalyseCompaniesSharedDataModalComponent
-} from './components/analyse-companies-shared-data-modal/analyse-companies-shared-data-modal.component';
+import { AnalyseCompaniesSharedDataModalComponent } from './components/analyse-companies-shared-data-modal/analyse-companies-shared-data-modal.component';
 import { AnalyseCompaniesModalService } from './services/analyse-companies-modal.service';
 import { AnalyseCompaniesViewService } from './services/analyse-companies-view.service';
 
