@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { readFileSync, writeFileSync } from 'fs';
 import * as path from 'path';
-import { map, Observable, of, tap } from 'rxjs';
+import { from, map, Observable, of, tap } from 'rxjs';
 
 import { readCSV } from '../helpers/csv-reader';
 import {
@@ -20,11 +20,14 @@ import {
   SharedCompanyData,
 } from '../models/company.interface';
 import { AnalyseCompaniesAverageCalculatorService } from './analyse-companies-average-calculator.service';
-import { appendData } from '../helpers/data_appender';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model, Types, Document } from 'mongoose';
 
 @Injectable()
 export class AnalyseCompaniesService {
   constructor(
+    @InjectModel('companies')
+    private readonly companiesModel: Model<CompanyRawData>,
     private analyseCompaniesAverageCalculatorService: AnalyseCompaniesAverageCalculatorService,
   ) {}
 
@@ -52,9 +55,9 @@ export class AnalyseCompaniesService {
     return (
       compareCompanies
         ? of(compareCompanies)
-        : true
-        ? of(this.readMockJsonFile())
-        : readCSV()
+        : from(this.companiesModel.find().exec()).pipe(
+            map((companies) => this.mapToCompanyModel(companies)),
+          )
     ).pipe(
       // map((companies) => appendData(companies) as CompanyRawData[]),
       // tap((x) => writeFileSync('test.json', JSON.stringify(x))),
@@ -145,5 +148,35 @@ export class AnalyseCompaniesService {
       (pre, curr) => ({ ...pre, [curr]: company[curr] }),
       {},
     );
+  }
+
+  private mapToCompanyModel(
+    companies: (Document<unknown, any, CompanyRawData> &
+      CompanyRawData & {
+        _id: Types.ObjectId;
+      })[],
+  ): CompanyRawData[] {
+    return companies.map((company) => ({
+      id: company.id,
+      revenue: company.revenue,
+      marketShare: company.marketShare,
+      growthRate: company.growthRate,
+      cybersecurityBudget: company.cybersecurityBudget,
+      cybersecurityStaffing: company.cybersecurityStaffing,
+      cybersecurityTrainingInvestment: company.cybersecurityTrainingInvestment,
+      cybersecurityInsuranceInvestment:
+        company.cybersecurityInsuranceInvestment,
+      cyberAttackThreats: company.cyberAttackThreats,
+      networkInfrastructure: company.networkInfrastructure,
+      remoteAccess: company.remoteAccess,
+      cybersecurityInvestment: company.cybersecurityInvestment,
+      cloud: company.cloud,
+      country: company.country,
+      multifactor: company.multifactor,
+      organizationSize: company.organizationSize,
+      remote: company.remote,
+      bpf: company.bpf,
+      sharedData: company.sharedData,
+    }));
   }
 }
