@@ -80,11 +80,11 @@ export class CompanyInformationModalComponent implements OnInit {
           form.controls['cybersecurityTrainingInvestment'].value!,
         cybersecurityInsuranceInvestment:
           form.controls['cybersecurityInsuranceInvestment'].value!,
-        cyberAttackThreats: form.controls['cyberAttackThreats'].value!,
-        cloud: form.controls['cloud'].value!,
-        multifactor: form.controls['multifactor'].value!,
-        networkInfrastructure: form.controls['networkInfrastructure'].value!,
-        remoteAccess: form.controls['remoteAccess'].value!,
+        cyberAttackThreats: +form.controls['cyberAttackThreats'].value!,
+        cloud: +form.controls['cloud'].value!,
+        multifactor: +form.controls['multifactor'].value!,
+        networkInfrastructure: +form.controls['networkInfrastructure'].value!,
+        remoteAccess: +form.controls['remoteAccess'].value!,
       },
       form.controls['numberOfClosest'].value ?? undefined,
     );

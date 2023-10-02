@@ -26,7 +26,8 @@ export const sortPearson = (
           : b.pearsonCorrelationAll;
 
       return (
-        getAbsoluteDistanceToOne(aValue) - getAbsoluteDistanceToOne(bValue)
+        (Number.isFinite(bValue) ? bValue : -1) -
+        (Number.isFinite(aValue) ? aValue : -1)
       );
     }),
   ];
@@ -69,5 +70,3 @@ export const sortEuclidean = (
     ? sortedArray
     : sortedArray.slice(0, xClosests);
 };
-
-const getAbsoluteDistanceToOne = (value: number) => Math.abs(1 - value);
