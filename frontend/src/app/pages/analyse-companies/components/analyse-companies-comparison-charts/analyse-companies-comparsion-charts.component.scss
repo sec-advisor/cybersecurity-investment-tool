@@ -1,9 +1,17 @@
-.con {
-  height: 100vh;
-  overflow-y: scroll;
-}
+:host {
+  ::ng-deep {
+    .apexcharts-toolbar {
+      display: none;
+    }
+  }
 
-.chart-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+  .con {
+    height: 100vh;
+    overflow-y: scroll;
+  }
+
+  .chart-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
 }
